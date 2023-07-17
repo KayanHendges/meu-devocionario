@@ -1,15 +1,43 @@
+import {
+  IsDate,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  validateSync,
+} from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
 
-export class Category {
-  public readonly id: string;
+interface ContructorProps {
+  id?: string;
   name: string;
-  description: string | null;
-  modified: Date;
-  created: Date;
+  description?: string | null;
+  updatedAt?: Date;
+  createdAt?: Date;
+}
 
-  constructor(props: Omit<Category, 'id'>, id?: string) {
+export class Category {
+  @IsString()
+  public readonly id: string;
+
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  description: string | null = null;
+
+  @IsDate()
+  updatedAt: Date = new Date();
+
+  @IsDate()
+  createdAt: Date = new Date();
+
+  constructor(props: ContructorProps) {
+    props.id = props.id || uuidv4();
     Object.assign(this, props);
-
-    if (!id) this.id = uuidv4();
+    const errors = validateSync(this);
+    if (errors.length) throw new Error(JSON.stringify(errors, undefined, 2));
   }
 }

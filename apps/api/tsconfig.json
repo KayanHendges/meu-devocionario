@@ -22,6 +22,7 @@
       "@prayers/*": ["src/modules/prayers/*"],
       "@types/*": ["src/types.d.ts"],
       "@utils/*": ["src/utils/*"],
+      "@global/*": ["src/global/*"],
       "@api/*": ["src/*"],
     }
   }

@@ -819,6 +819,11 @@
   resolved "https://registry.yarnpkg.com/@nestjs/elasticsearch/-/elasticsearch-10.0.1.tgz#5aed1b699e5b3622c6522cbb7f78a16db549d652"
   integrity sha512-rYkcuStF7oDbyt5X3h0BAYS3thZQm8vsHUkGot6dkB8dOTsSIsQJ8UYY9j66LhghzsBiewIwUrKkhY5WM2DVqA==
 
+"@nestjs/mapped-types@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@nestjs/mapped-types/-/mapped-types-2.0.2.tgz#c8a090a8d22145b85ed977414c158534210f2e4f"
+  integrity sha512-V0izw6tWs6fTp9+KiiPUbGHWALy563Frn8X6Bm87ANLRuE46iuBMD5acKBDP5lKL/75QFvrzSJT7HkCbB0jTpg==
+
 "@nestjs/mongoose@^10.0.0":
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/@nestjs/mongoose/-/mongoose-10.0.0.tgz#5ce9e4b817847e83afb690db04eb106acaa43b8a"
@@ -6011,11 +6016,6 @@ setprototypeof@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.2.0.tgz#66c9a24a73f9fc28cbe66b09fed3d33dcaf1b424"
   integrity sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==
-
-shared-types@*:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/shared-types/-/shared-types-1.0.0.tgz#480c76f24a59c760681ebfc099ca26e417d5a697"
-  integrity sha512-07KWxU/WXpbJkff03Wp2CpnoU+7Qs9Rmu+y9ooieVCX4nVa/nOfnbrhyefwvuxdlTfftWI0Vrs9Qm/4Xna+tQg==
 
 shebang-command@^2.0.0:
   version "2.0.0"

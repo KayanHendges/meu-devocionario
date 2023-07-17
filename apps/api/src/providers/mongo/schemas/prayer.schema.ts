@@ -24,10 +24,10 @@ export class Prayer implements PrayerClass {
   relatedCategories: string[];
 
   @Prop({ type: Date, default: Date.now })
-  modified: Date;
+  updatedAt: Date;
 
   @Prop({ type: Date, default: Date.now })
-  created: Date;
+  createdAt: Date;
 }
 
 export const PrayerSchema = SchemaFactory.createForClass(Prayer);

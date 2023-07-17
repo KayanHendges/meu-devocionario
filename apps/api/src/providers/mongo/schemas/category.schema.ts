@@ -14,11 +14,8 @@ export class Category implements Omit<CategoryClass, 'id'> {
   @Prop({ type: String, default: null })
   description: string | null;
 
-  @Prop({ type: Date, default: Date.now })
-  modified: Date;
-
-  @Prop({ type: Date, default: Date.now })
-  created: Date;
+  updatedAt: Date;
+  createdAt: Date;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);

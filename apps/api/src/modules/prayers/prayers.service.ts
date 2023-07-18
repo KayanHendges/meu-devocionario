@@ -1,7 +1,12 @@
 import { Prayer } from '@entities/prayer';
 import { mapQueryToService } from '@global/utils.ts/service';
-import { Inject, Injectable } from '@nestjs/common';
-import { CreatePrayerDTO, ListPrayersQueryDTO } from '@prayers/prayers.dto';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  CreatePrayerDTO,
+  FindPrayerParams,
+  ListPrayersQueryDTO,
+  UpdatePrayerDTO,
+} from '@prayers/prayers.dto';
 import { ICategoriesRepository } from '@repositories/categories/categories.repository.interface';
 import { IPrayersRepository } from '@repositories/prayers/prayers.repository.interface';
 
@@ -27,13 +32,35 @@ export class PrayersService {
     return { list, count, page, pageSize };
   }
 
+  async find(): Promise<Prayer> {
+    return this.prayersRepository.find('id');
+  }
+
   async create(payload: CreatePrayerDTO): Promise<Prayer> {
     const prayer = new Prayer(payload);
 
-    const categories = [...prayer.relatedCategories, prayer.category];
-    const categoriesFound = this.categoriesRepository.findMany(categories);
-    const missingCategories
+    const categoriesFound = (
+      await this.categoriesRepository.findMany(prayer.relatedCategories)
+    ).map((it) => it.name);
+
+    const missingCategories = prayer.relatedCategories.filter(
+      (it) => !categoriesFound.includes(it),
+    );
+
+    if (missingCategories.length)
+      throw new BadRequestException(
+        `The following categories does not exists: ${missingCategories.join(
+          ', ',
+        )}.`,
+      );
 
     return this.prayersRepository.create(prayer);
+  }
+
+  async update(
+    params: FindPrayerParams,
+    payload: UpdatePrayerDTO,
+  ): Promise<Prayer> {
+    return this.prayersRepository.update('id', payload);
   }
 }

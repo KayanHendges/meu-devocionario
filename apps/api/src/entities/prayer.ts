@@ -1,4 +1,6 @@
 import {
+  ArrayMaxSize,
+  ArrayUnique,
   IsDate,
   IsNotEmpty,
   IsOptional,
@@ -37,6 +39,8 @@ export class Prayer {
 
   // Todo: set limit of items
   @IsString({ each: true })
+  @ArrayMaxSize(10)
+  @ArrayUnique()
   @IsOptional()
   relatedCategories: string[] = [];
 
@@ -48,8 +52,14 @@ export class Prayer {
 
   constructor(props: ContructorProps) {
     props.id = props.id || uuidv4();
+    props.relatedCategories = [...new Set(props.relatedCategories || [])];
+
     Object.assign(this, props);
     const errors = validateSync(this);
+
+    if (!this.relatedCategories.find((it) => it === this.category))
+      this.relatedCategories.push(this.category);
+
     if (errors.length) throw new Error(JSON.stringify(errors, undefined, 2));
   }
 }

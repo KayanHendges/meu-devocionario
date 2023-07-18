@@ -13,7 +13,6 @@ export class MongoPrayersRepository
     @InjectModel(Prayer.name)
     private readonly prayersModel: Model<PrayerDocument>,
   ) {
-    console.log(prayersModel.name);
     super(prayersModel);
   }
 }

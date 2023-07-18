@@ -4,11 +4,10 @@ import * as mongoose from 'mongoose';
 
 export type PrayerDocument = mongoose.HydratedDocument<Prayer>;
 
-const { String, ObjectId } = mongoose.Schema.Types;
+const { String } = mongoose.Schema.Types;
 
 @Schema({ timestamps: true })
 export class Prayer implements PrayerClass {
-  @Prop({ type: ObjectId, required: true, _id: true })
   id: string;
 
   @Prop({ type: String, required: true, unique: true })
@@ -23,10 +22,7 @@ export class Prayer implements PrayerClass {
   @Prop({ type: [String], default: [] })
   relatedCategories: string[];
 
-  @Prop({ type: Date, default: Date.now })
   updatedAt: Date;
-
-  @Prop({ type: Date, default: Date.now })
   createdAt: Date;
 }
 

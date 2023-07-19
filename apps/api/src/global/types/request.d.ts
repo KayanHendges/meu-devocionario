@@ -1,4 +1,4 @@
-interface ResponseList<T> {
+export interface ResponseList<T> {
   list: T[];
   count: number;
   page: number;

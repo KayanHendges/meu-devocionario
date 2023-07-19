@@ -1,3 +1,4 @@
+import { ResponseList } from '@api/types';
 import { Prayer } from '@entities/prayer';
 import { mapQueryToService } from '@global/utils.ts/service';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';

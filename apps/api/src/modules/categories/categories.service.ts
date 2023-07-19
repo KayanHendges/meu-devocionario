@@ -1,3 +1,4 @@
+import { ResponseList } from '@api/types';
 import {
   CreateCategoryDTO,
   FindCategoryParams,

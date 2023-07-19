@@ -57,9 +57,6 @@ export class Prayer {
     Object.assign(this, props);
     const errors = validateSync(this);
 
-    if (!this.relatedCategories.find((it) => it === this.category))
-      this.relatedCategories.push(this.category);
-
     if (errors.length) throw new Error(JSON.stringify(errors, undefined, 2));
   }
 }

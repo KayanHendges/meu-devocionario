@@ -32,18 +32,50 @@ export class PrayersService {
     return { list, count, page, pageSize };
   }
 
-  async find(): Promise<Prayer> {
-    return this.prayersRepository.find('id');
+  async find(params: FindPrayerParams): Promise<Prayer> {
+    return this.prayersRepository.find(params);
   }
 
   async create(payload: CreatePrayerDTO): Promise<Prayer> {
     const prayer = new Prayer(payload);
+    await this.validateCategories(prayer);
+
+    return this.prayersRepository.create(prayer);
+  }
+
+  async update(
+    params: FindPrayerParams,
+    payload: UpdatePrayerDTO,
+  ): Promise<Prayer> {
+    if (payload.relatedCategories)
+      payload.relatedCategories = [...new Set(payload.relatedCategories)];
+
+    await this.validateCategories(payload);
+    return this.prayersRepository.update(params, payload);
+  }
+
+  async delete(params: FindPrayerParams): Promise<Prayer> {
+    return this.prayersRepository.delete(params);
+  }
+
+  private async validateCategories({
+    category,
+    relatedCategories,
+  }: Partial<Prayer>) {
+    if (!category && !relatedCategories?.length) return;
+
+    const categories = [
+      ...new Set([
+        ...(relatedCategories || []),
+        ...(category ? [category] : []),
+      ]),
+    ];
 
     const categoriesFound = (
-      await this.categoriesRepository.findMany(prayer.relatedCategories)
+      await this.categoriesRepository.findMany(categories)
     ).map((it) => it.name);
 
-    const missingCategories = prayer.relatedCategories.filter(
+    const missingCategories = categories.filter(
       (it) => !categoriesFound.includes(it),
     );
 
@@ -53,14 +85,5 @@ export class PrayersService {
           ', ',
         )}.`,
       );
-
-    return this.prayersRepository.create(prayer);
-  }
-
-  async update(
-    params: FindPrayerParams,
-    payload: UpdatePrayerDTO,
-  ): Promise<Prayer> {
-    return this.prayersRepository.update('id', payload);
   }
 }

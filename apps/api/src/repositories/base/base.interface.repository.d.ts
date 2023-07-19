@@ -5,8 +5,8 @@ import {
   WhereParams,
 } from '@global/types/repository';
 
-type EntityUniqueParams<Entity, ParamsKey extends keyof Entity> = {
-  [K in keyof ParamsKey]: Entity[K];
+type EntityUniqueParams<T, PK extends keyof T> = {
+  [K in PK]?: T[K];
 };
 
 interface IBaseRepository<Entity, UniqueKeys extends keyof Entity> {

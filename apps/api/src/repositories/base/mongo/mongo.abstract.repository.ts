@@ -5,7 +5,7 @@ import {
   RepositoryUpdateParams,
   WhereParams,
 } from '@global/types/repository';
-import { NotFoundException } from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 import {
   EntityUniqueParams,
   IBaseRepository,
@@ -57,9 +57,15 @@ export class MongoAbstractRepository<
   }
 
   async create(payload: RepositoryCreateParams<Entity>): Promise<Entity> {
-    const createdAt = await this.model.create(payload);
+    try {
+      const createdAt = await this.model.create(payload);
 
-    return mapMongoReturn(createdAt.toJSON()) as Entity;
+      return mapMongoReturn(createdAt.toJSON()) as Entity;
+    } catch (error) {
+      if (error?.name === 'MongoServerError' && error?.code === 11000)
+        throw new ConflictException('Already exists.');
+      throw new Error(error);
+    }
   }
 
   async update(
@@ -72,7 +78,7 @@ export class MongoAbstractRepository<
       new: true,
     });
 
-    if (!updated) throw new NotFoundException('Category not found');
+    if (!updated) throw new NotFoundException('Not found');
 
     return mapMongoReturn(updated.toObject()) as unknown as Entity;
   }
@@ -83,7 +89,7 @@ export class MongoAbstractRepository<
     const params = mapMongoParams(uniqueParam);
 
     const deleted = await this.model.findOneAndDelete(params).lean();
-    if (!deleted) throw new NotFoundException('deleted not found');
+    if (!deleted) throw new NotFoundException('Not found');
 
     return mapMongoReturn(
       deleted as MongoReturnProperties & Record<string, any>,

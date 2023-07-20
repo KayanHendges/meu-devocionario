@@ -1,3 +1,4 @@
+import ContainerApp from "@components/Container/App";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -16,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="w-screen h-screen flex flex-col bg-white dark:bg-black">{children}</main>
+        <ContainerApp>{children}</ContainerApp>
       </body>
     </html>
   );

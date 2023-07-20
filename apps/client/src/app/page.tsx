@@ -3,23 +3,21 @@
 import PrayerCard from "@components/PrayerCard";
 import { prayersProviders } from "@providers/api/prayers";
 import { Prayer } from "api";
-import { ChangeEvent, useEffect, useState } from "react";
-
-type ThemeMode = "light" | "dark";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [prayers, setPrayers] = useState<Prayer[]>([]);
-  const [theme, setTheme] = useState<ThemeMode>(
-    typeof window !== "undefined"
-      ? (localStorage.getItem("theme") as ThemeMode)
-      : "light"
-  );
+  const { theme, setTheme } = useTheme();
 
-  const handleTheme = (event: ChangeEvent<HTMLInputElement>) => {
-    const mode = event.target.value === "light" ? "dark" : "light";
-    typeof window !== "undefined" && localStorage.setItem("theme", mode);
-    setTheme(mode);
-  };
+  const watchMatchMedia = (event: MediaQueryListEvent) =>
+    setTheme(event.matches ? "dark" : "light");
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    mq.addEventListener("change", watchMatchMedia);
+    return () => mq.removeEventListener("change", watchMatchMedia);
+  }, []);
 
   const fetchPrayers = async () => {
     const { list } = await prayersProviders.listPrayers();
@@ -37,9 +35,9 @@ export default function Home() {
           type="checkbox"
           className="toggle"
           checked={theme === "dark"}
-          value={theme}
-          onChange={handleTheme}
+          onChange={() => setTheme(theme === "light" ? "dark" : "light")}
         />
+        {/* {theme || "car "} */}
       </div>
       {prayers.map((prayer) => (
         <PrayerCard key={prayer.id} prayer={prayer} />

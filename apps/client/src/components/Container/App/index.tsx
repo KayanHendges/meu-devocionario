@@ -1,4 +1,5 @@
 "use client";
+import Header from "@components/Header";
 import { ThemeProvider } from "next-themes";
 import { ReactNode } from "react";
 
@@ -9,9 +10,12 @@ interface Props {
 export default function ContainerApp({ children }: Props) {
   return (
     <ThemeProvider attribute="class">
-      <main className="w-screen h-screen flex flex-col bg-white dark:bg-black">
-        {children}
-      </main>
+      <div className="w-screen h-screen flex flex-col overflow-x-hidden">
+        <Header />
+        <main className="flex flex-1 flex-col overflow-y-auto bg-zinc-100 dark:bg-zinc-950">
+          {children}
+        </main>
+      </div>
     </ThemeProvider>
   );
 }

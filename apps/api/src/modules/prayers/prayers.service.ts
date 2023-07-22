@@ -1,4 +1,4 @@
-import { ResponseList } from 'shared-types';
+import { ResponseList } from 'project-types';
 import { Prayer } from '@entities/prayer';
 import { stripHtml } from '@global/utils.ts/formatters';
 import { mapQueryToService } from '@global/utils.ts/service';

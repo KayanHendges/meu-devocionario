@@ -37,7 +37,7 @@
     "mongoose": "^7.3.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "shared-types": "*",
+    "project-types": "*",
     "uui": "^1.0.7"
   },
   "devDependencies": {

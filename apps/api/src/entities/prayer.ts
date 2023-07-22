@@ -14,7 +14,7 @@ import {
   LanguageCodes,
   Prayer as IPrayer,
   LanguageCodesEnum,
-} from 'shared-types';
+} from 'project-types';
 
 // Todo: fix generic type
 interface ContructorProps {

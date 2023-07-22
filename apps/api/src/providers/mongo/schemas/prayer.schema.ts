@@ -2,7 +2,7 @@ import {
   LanguageCodes,
   LanguageCodesEnum,
   Prayer as PrayerClass,
-} from 'shared-types';
+} from 'project-types';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 

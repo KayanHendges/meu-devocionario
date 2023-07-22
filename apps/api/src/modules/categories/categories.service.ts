@@ -1,4 +1,4 @@
-import { ResponseList } from 'shared-types';
+import { ResponseList } from 'project-types';
 import {
   CreateCategoryDTO,
   FindCategoryParams,

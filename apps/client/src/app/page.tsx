@@ -5,7 +5,7 @@ import { Heading } from "@components/Texts/Heading";
 import { Text } from "@components/Texts/Text";
 import { prayersProviders } from "@providers/api/prayers";
 import { useEffect, useState } from "react";
-import { Prayer } from "shared-types";
+import { Prayer } from "project-types";
 
 export default function Home() {
   const [prayers, setPrayers] = useState<Prayer[]>([]);

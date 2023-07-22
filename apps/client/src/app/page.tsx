@@ -1,7 +1,6 @@
 "use client";
 
 import Card from "@components/Card";
-import PrayerCard from "@components/PrayerCard";
 import { Heading } from "@components/Texts/Heading";
 import { Text } from "@components/Texts/Text";
 import { prayersProviders } from "@providers/api/prayers";

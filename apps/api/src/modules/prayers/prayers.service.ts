@@ -1,5 +1,6 @@
 import { ResponseList } from '@api/types';
 import { Prayer } from '@entities/prayer';
+import { stripHtml } from '@global/utils.ts/formatters';
 import { mapQueryToService } from '@global/utils.ts/service';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import {
@@ -48,11 +49,15 @@ export class PrayersService {
     params: FindPrayerParams,
     payload: UpdatePrayerDTO,
   ): Promise<Prayer> {
-    if (payload.relatedCategories)
-      payload.relatedCategories = [...new Set(payload.relatedCategories)];
+    const prayer: Partial<Prayer> = payload;
 
-    await this.validateCategories(payload);
-    return this.prayersRepository.update(params, payload);
+    if (prayer.relatedCategories)
+      prayer.relatedCategories = [...new Set(prayer.relatedCategories)];
+
+    if (prayer.body) prayer.cleanBody = stripHtml(prayer.body);
+
+    await this.validateCategories(prayer);
+    return this.prayersRepository.update(params, prayer);
   }
 
   async delete(params: FindPrayerParams): Promise<Prayer> {

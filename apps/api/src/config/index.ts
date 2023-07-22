@@ -1,5 +1,6 @@
 import { Expose, plainToInstance } from 'class-transformer';
 import {
+  IsBoolean,
   IsEnum,
   IsPositive,
   IsString,
@@ -32,6 +33,10 @@ export class MongoDBConfig {
   @IsString()
   @Expose()
   MONGODB_DATABASE: string;
+
+  @IsBoolean()
+  @Expose()
+  MONGODB_SRV: boolean;
 }
 
 export class EnvironmentConfig {
@@ -56,6 +61,7 @@ const validateEnvironment = () => {
       MONGODB_AUTH_SOURCE: process.env.MONGODB_AUTH_SOURCE,
       MONGODB_HOST: process.env.MONGODB_HOST,
       MONGODB_DATABASE: process.env.MONGODB_DATABASE,
+      MONGODB_SRV: (process.env.MONGODB_SRV || '').toLowerCase() === 'true',
     },
   };
 

@@ -11,11 +11,12 @@ import { MongooseModule, MongooseModuleFactoryOptions } from '@nestjs/mongoose';
           MONGODB_AUTH_SOURCE,
           MONGODB_PASSWORD,
           MONGODB_USERNAME,
+          MONGODB_SRV,
         } = config.mongo;
 
         return {
           authSource: MONGODB_AUTH_SOURCE,
-          uri: `mongodb://${MONGODB_HOST}:27017`,
+          uri: `mongodb${MONGODB_SRV ? '+srv' : ''}://${MONGODB_HOST}`,
           auth: {
             username: MONGODB_USERNAME,
             password: MONGODB_PASSWORD,

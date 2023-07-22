@@ -23,6 +23,7 @@ export class ListPrayersQueryDTO extends PaginationAndSortDTO<Prayer> {
 
 export class CreatePrayerDTO extends OmitType(Prayer, [
   'id',
+  'cleanBody',
   'updatedAt',
   'createdAt',
 ]) {}

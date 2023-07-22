@@ -1,4 +1,8 @@
-import { Prayer as PrayerClass } from '@entities/prayer';
+import {
+  LanguageCodes,
+  LanguageCodesEnum,
+  Prayer as PrayerClass,
+} from '@entities/prayer';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 
@@ -16,8 +20,17 @@ export class Prayer implements PrayerClass {
   @Prop({ type: String, default: null })
   description: string | null;
 
+  @Prop({ type: String, default: null })
+  body: string;
+
+  @Prop({ type: String, default: null })
+  cleanBody: string;
+
   @Prop({ type: String, required: true })
   category: string;
+
+  @Prop({ type: String, enum: LanguageCodesEnum, required: true })
+  language: LanguageCodes;
 
   @Prop({ type: [String], default: [] })
   relatedCategories: string[];

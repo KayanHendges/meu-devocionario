@@ -1,7 +1,9 @@
+import { stripHtml } from '@global/utils.ts/formatters';
 import {
   ArrayMaxSize,
   ArrayUnique,
   IsDate,
+  IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -9,13 +11,22 @@ import {
 } from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
 
+export enum LanguageCodesEnum {
+  pt_BR = 'pt_BR',
+  la = 'la',
+}
+
+export type LanguageCodes = keyof typeof LanguageCodesEnum;
+
 // Todo: fix generic type
 interface ContructorProps {
   id?: string;
   title: string;
   description: string | null;
+  body: string;
   category: string;
   relatedCategories?: string[];
+  language: LanguageCodes;
   updatedAt?: Date;
   createdAt?: Date;
 }
@@ -35,6 +46,15 @@ export class Prayer {
 
   @IsString()
   @IsNotEmpty()
+  body: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  cleanBody: string;
+
+  @IsString()
+  @IsNotEmpty()
   category: string;
 
   // Todo: set limit of items
@@ -43,6 +63,9 @@ export class Prayer {
   @ArrayUnique()
   @IsOptional()
   relatedCategories: string[] = [];
+
+  @IsEnum(LanguageCodesEnum)
+  language: LanguageCodes;
 
   @IsDate()
   updatedAt: Date = new Date();
@@ -55,6 +78,7 @@ export class Prayer {
     props.relatedCategories = [...new Set(props.relatedCategories || [])];
 
     Object.assign(this, props);
+    this.cleanBody = stripHtml(this.body);
     const errors = validateSync(this);
 
     if (errors.length) throw new Error(JSON.stringify(errors, undefined, 2));

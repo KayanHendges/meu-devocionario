@@ -4,9 +4,8 @@ import Card from "@components/Card";
 import { Heading } from "@components/Texts/Heading";
 import { Text } from "@components/Texts/Text";
 import { prayersProviders } from "@providers/api/prayers";
-import { Prayer } from "api";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { Prayer } from "shared-types";
 
 export default function Home() {
   const [prayers, setPrayers] = useState<Prayer[]>([]);

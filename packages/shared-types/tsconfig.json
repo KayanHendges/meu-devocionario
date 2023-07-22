@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "esModuleInterop": true,
+      "module": "CommonJS",
+      "outDir": "./dist",
+      "forceConsistentCasingInFileNames": true,
+      "isolatedModules": true,
+      "moduleResolution": "node",
+      "preserveWatchOutput": true,
+      "skipLibCheck": true,
+      "noEmit": true,
+      "strict": true
+    },
+    "exclude": ["node_modules"]
+  }

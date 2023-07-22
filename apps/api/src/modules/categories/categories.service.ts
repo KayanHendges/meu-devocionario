@@ -1,4 +1,4 @@
-import { ResponseList } from '@api/types';
+import { ResponseList } from 'shared-types';
 import {
   CreateCategoryDTO,
   FindCategoryParams,

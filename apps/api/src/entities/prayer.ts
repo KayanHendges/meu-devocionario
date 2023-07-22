@@ -10,13 +10,11 @@ import {
   validateSync,
 } from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
-
-export enum LanguageCodesEnum {
-  pt_BR = 'pt_BR',
-  la = 'la',
-}
-
-export type LanguageCodes = keyof typeof LanguageCodesEnum;
+import {
+  LanguageCodes,
+  Prayer as IPrayer,
+  LanguageCodesEnum,
+} from 'shared-types';
 
 // Todo: fix generic type
 interface ContructorProps {
@@ -31,7 +29,7 @@ interface ContructorProps {
   createdAt?: Date;
 }
 
-export class Prayer {
+export class Prayer implements IPrayer {
   @IsString()
   public readonly id: string;
 

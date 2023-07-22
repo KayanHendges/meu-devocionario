@@ -1,4 +1,4 @@
-import { ResponseList } from '@api/types';
+import { ResponseList } from 'shared-types';
 import { Prayer } from '@entities/prayer';
 import { stripHtml } from '@global/utils.ts/formatters';
 import { mapQueryToService } from '@global/utils.ts/service';

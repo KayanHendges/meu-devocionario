@@ -1,5 +1,5 @@
 import { api } from "@providers/api";
-import { Prayer, ResponseList } from "api";
+import { Prayer, ResponseList } from "shared-types";
 
 class PrayersProviders {
   listPrayers = async () =>

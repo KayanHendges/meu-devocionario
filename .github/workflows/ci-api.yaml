@@ -16,6 +16,9 @@ jobs:
   setup-aws:
     uses: ./.github/workflows/setup-aws.yaml
     secrets: inherit
+    permissions:
+        id-token: write
+        contents: read
 
   build-and-push:
     needs: setup-aws

@@ -1,4 +1,4 @@
-name: Backend CI
+name: CI API
 
 on:
   push:
@@ -14,7 +14,7 @@ on:
 
 jobs:
   setup-aws:
-    uses: ./.github/workflows/shared-setup-aws.yaml
+    uses: ./.github/workflows/setup-aws.yaml
     secrets: inherit
 
   build-and-push:

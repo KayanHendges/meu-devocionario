@@ -3,74 +3,46 @@ name: CD API
 on:
   push:
     branches:
-      - test
-    paths:
-      - "apps/api/**"
-      - "packages/project-types/**"
-      - ".github/workflows/cd-api.yaml"
-      - ".dockerignore"
-
+      - main
+  
   workflow_dispatch: {}
+
+env:
+  AWS_REGION: ${{ secrets.AWS_ECS_REGION }}
+  ECR_REPOSITORY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/meu-devocionario
+  ECS_SERVICE: meu-devocionario-service
+  ECS_CLUSTER: meu-devocionario-api
+  ECS_TASK_DEFINITION: "./infra/api-task-definition.json"
+  CONTAINER_NAME: meu-devocionario-api
 
 jobs:
   deploy:
+    name: Deploy
     runs-on: ubuntu-latest
-
-    environment: Production
-    permissions:
-      id-token: write
-      contents: read
+    environment: production
 
     steps:
-      - name: Check out repository code
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Creating env file
-        working-directory: apps/api
-        run: |
-          echo "ENVIRONMENT=production" >> .env
-          echo "SERVER_PORT=3333" >> .env
-          echo "MONGODB_USERNAME=${{ secrets.MONGODB_USERNAME }}" >> .env
-          echo "MONGODB_PASSWORD=${{ secrets.MONGODB_PASSWORD }}" >> .env
-          echo "MONGODB_AUTH_SOURCE=${{ secrets.MONGODB_AUTH_SOURCE }}" >> .env
-          echo "MONGODB_HOST=${{ secrets.MONGODB_HOST }}" >> .env
-          echo "MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE }}" >> .env
-          echo "MONGODB_SRV=true" >> .env
-
-      - name: Creating meu-devocionario.pem
-        working-directory: apps/api
-        run: echo "${{ secrets.SSH_KEY }}" >> meu-devocionario.pem
-
-      - name: chmod 400 apps/api/meu-devocionario.pem
-        run: chmod 400 apps/api/meu-devocionario.pem
-
-      - name: Deploy
-        working-directory: apps/api
-        env:
-          SSH_ADDRESS: ${{ secrets.SERVER_ADDRESS  }}
-        run: |
-          rsync -av -e "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i meu-devocionario.pem -p 22" .env $SSH_ADDRESS:/applications/api/
-          rsync -av -e "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i meu-devocionario.pem -p 22" docker-compose.yml $SSH_ADDRESS:/applications/api/
-
-      - name: Building container on server
-        uses: appleboy/ssh-action@master
-        env:
-          ECR_USERNAME: ${{ needs.setup-aws.outputs.ecr_username }}
-          ECR_PASSWORD: ${{ needs.setup-aws.outputs.ecr_password }}
-          ECR_REGISTRY: ${{ steps.get-ecr-registry.outputs.registry }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
         with:
-          debug: true
-          host: ${{ secrets.SERVER_ADDRESS }}
-          username: ${{ secrets.SERVER_SSH_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          port: ${{ secrets.SERVER_SSH_PORT }}
-          envs: ECR_USERNAME,ECR_PASSWORD,ECR_REGISTRY
-          script: |
-            set -e
-            cd /applications/backend
-            echo $ECR_PASSWORD | docker login -u $ECR_USERNAME --password-stdin $ECR_REGISTRY
-            docker compose pull
-            docker compose down
-            docker compose up -d
-            docker system prune -f
-            docker logout $ECR_REGISTRY
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/meu-devocionario-ci-cd
+          aws-region: ${{ secrets.AWS_ECS_REGION }}
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/meu-devocionario
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true

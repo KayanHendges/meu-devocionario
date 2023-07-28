@@ -3,6 +3,9 @@
         {
             "name": "meu-devocionario-api",
             "image": "501613825719.dkr.ecr.us-east-1.amazonaws.com/meu-devocionario",
+            "repositoryCredentials": {
+                "credentialsParameter": "arn:aws:iam::501613825719:role/meu-devocionario-ci-cd"
+            },
             "cpu": 512,
             "memory": 512,
             "portMappings": [

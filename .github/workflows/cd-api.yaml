@@ -4,14 +4,14 @@ on:
   push:
     branches:
       - main
-  
+
   workflow_dispatch: {}
 
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    env: 
+    env:
       AWS_REGION: ${{ secrets.AWS_ECS_REGION }}
       ECR_REPOSITORY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/meu-devocionario
       ECS_SERVICE: meu-devocionario-service
@@ -24,11 +24,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
+      - name: Setup AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/meu-devocionario-ci-cd
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_ECR_REGION }}
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def

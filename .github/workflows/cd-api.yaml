@@ -7,19 +7,18 @@ on:
   
   workflow_dispatch: {}
 
-env:
-  AWS_REGION: ${{ secrets.AWS_ECS_REGION }}
-  ECR_REPOSITORY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/meu-devocionario
-  ECS_SERVICE: meu-devocionario-service
-  ECS_CLUSTER: meu-devocionario-api
-  ECS_TASK_DEFINITION: "./infra/api-task-definition.json"
-  CONTAINER_NAME: meu-devocionario-api
-
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: production
+    env: 
+      AWS_REGION: ${{ secrets.AWS_ECS_REGION }}
+      ECR_REPOSITORY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/meu-devocionario
+      ECS_SERVICE: meu-devocionario-service
+      ECS_CLUSTER: meu-devocionario-api
+      ECS_TASK_DEFINITION: "./infra/api-task-definition.json"
+      CONTAINER_NAME: meu-devocionario-api
+    environment: prod
 
     steps:
       - name: Checkout
@@ -29,7 +28,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/meu-devocionario-ci-cd
-          aws-region: ${{ secrets.AWS_ECS_REGION }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
@@ -38,6 +37,15 @@ jobs:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/meu-devocionario
+          environment-variables: |
+            ENVIRONMENT=production
+            SERVER_PORT=3333
+            MONGODB_USERNAME=${{ secrets.MONGODB_USERNAME }}
+            MONGODB_PASSWORD=${{ secrets.MONGODB_PASSWORD }}
+            MONGODB_AUTH_SOURCE=${{ secrets.MONGODB_AUTH_SOURCE }}
+            MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE }}
+            MONGODB_HOST=${{ secrets.MONGODB_HOST }}
+            MONGODB_SRV=${{ secrets.MONGODB_SRV }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a

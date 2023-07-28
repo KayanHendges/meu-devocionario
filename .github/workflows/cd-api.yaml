@@ -19,6 +19,9 @@ jobs:
       ECS_TASK_DEFINITION: "./infra/api-task-definition.json"
       CONTAINER_NAME: meu-devocionario-api
     environment: prod
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Checkout

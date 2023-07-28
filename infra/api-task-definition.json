@@ -3,13 +3,11 @@
         {
             "name": "meu-devocionario-api",
             "image": "501613825719.dkr.ecr.us-east-1.amazonaws.com/meu-devocionario",
-            "repositoryCredentials": {
-                "credentialsParameter": "arn:aws:iam::501613825719:role/meu-devocionario-ci-cd"
-            },
             "cpu": 512,
             "memory": 512,
             "portMappings": [
                 {
+                    "name": "meu-devocionario-api-3333-tcp",
                     "containerPort": 3333,
                     "hostPort": 0,
                     "protocol": "tcp"
@@ -17,25 +15,42 @@
             ],
             "essential": true,
             "environment": [],
-            "environmentFiles": [],
             "mountPoints": [],
-            "volumesFrom": [],
-            "ulimits": []
+            "volumesFrom": []
         }
     ],
     "family": "meu-devocionario-api",
-    "taskRoleArn": "arn:aws:iam::501613825719:role/meu-devocionario-ci-cd",
-    "executionRoleArn": "arn:aws:iam::501613825719:role/meu-devocionario-ci-cd",
+    "taskRoleArn": "arn:aws:iam::501613825719:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::501613825719:role/ecsTaskExecutionRole",
     "networkMode": "bridge",
+    "revision": 5,
     "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        }
+    ],
     "placementConstraints": [],
-    "runtimePlatform": {
-        "cpuArchitecture": "X86_64",
-        "operatingSystemFamily": "LINUX"
-    },
+    "compatibilities": [
+        "EC2"
+    ],
     "requiresCompatibilities": [
         "EC2"
     ],
     "cpu": "512",
-    "memory": "512"
+    "memory": "512",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "registeredAt": "2023-07-28T11:11:16.704Z",
+    "registeredBy": "arn:aws:iam::501613825719:root",
+    "tags": []
 }

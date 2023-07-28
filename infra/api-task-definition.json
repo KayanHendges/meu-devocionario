@@ -23,7 +23,6 @@
     "taskRoleArn": "arn:aws:iam::501613825719:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::501613825719:role/ecsTaskExecutionRole",
     "networkMode": "bridge",
-    "revision": 5,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [

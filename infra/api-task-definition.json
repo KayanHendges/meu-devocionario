@@ -1,8 +1,8 @@
 {
     "containerDefinitions": [
         {
-            "name": "api-meu-devocionario",
-            "image": "501613825719.dkr.ecr.us-east-1.amazonaws.com/api-meu-devocionario",
+            "name": "meu-devocionario-api",
+            "image": "501613825719.dkr.ecr.us-east-1.amazonaws.com/meu-devocionario",
             "cpu": 512,
             "memory": 512,
             "portMappings": [

@@ -46,7 +46,7 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.get-ecr-registry.outputs.registry }}
-          ECR_REPOSITORY: api-meu-devocionario
+          ECR_REPOSITORY: meu-devocionario
           ECR_USERNAME: ${{ needs.setup-aws.outputs.ecr_username }}
           ECR_PASSWORD: ${{ needs.setup-aws.outputs.ecr_password }}
           IMAGE_TAG: ${{github.sha}}

@@ -8,52 +8,82 @@ on:
   workflow_dispatch: {}
 
 jobs:
+  setup-aws:
+    uses: ./.github/workflows/setup-aws.yaml
+    secrets: inherit
+
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    env:
-      AWS_REGION: ${{ secrets.AWS_ECS_REGION }}
-      ECR_REPOSITORY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/meu-devocionario
-      ECS_SERVICE: meu-devocionario-api-service-3
-      ECS_CLUSTER: meu-devocionario-api
-      ECS_TASK_DEFINITION: "./infra/api-task-definition.json"
-      CONTAINER_NAME: meu-devocionario-api
     environment: prod
     permissions:
       id-token: write
       contents: read
 
     steps:
+      - name: Decode registry
+        env:
+          SECRET: ${{ secrets.SECRET_PASSPHRASE }}
+        id: get-ecr-registry
+        shell: bash
+        run: |
+          registry=$(gpg --decrypt --quiet --batch --passphrase "$SECRET" --output - <(echo "${{ needs.setup-aws.outputs.registry_encrypted }}" | base64 --decode))
+          echo "::add-mask::$registry"
+          echo "registry=$registry" >> "$GITHUB_OUTPUT"
+
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/meu-devocionario-ci-cd
-          aws-region: ${{ secrets.AWS_ECR_REGION }}
+      - name: Creating env file
+        working-directory: apps/api
+        run: |
+          echo "ENVIRONMENT=production" >> .env
+          echo "SERVER_PORT=3333" >> .env
+          echo "MONGODB_USERNAME=${{ secrets.MONGODB_USERNAME }}" >> .env
+          echo "MONGODB_PASSWORD=${{ secrets.MONGODB_PASSWORD }}" >> .env
+          echo "MONGODB_AUTH_SOURCE=${{ secrets.MONGODB_AUTH_SOURCE }}" >> .env
+          echo "MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE }}" >> .env
+          echo "MONGODB_HOST=${{ secrets.MONGODB_HOST }}" >> .env
+          echo "MONGODB_SRV=${{ secrets.MONGODB_SRV }}" >> .env
+          echo "AWS_ACCOUNT_ID=${{ secrets.AWS_ACCOUNT_ID }}" >> .env
+          echo "AWS_ECR_REGION=${{ secrets.AWS_ECR_REGION }}" >> .env
 
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
-        with:
-          task-definition: ${{ env.ECS_TASK_DEFINITION }}
-          container-name: ${{ env.CONTAINER_NAME }}
-          image: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/meu-devocionario
-          environment-variables: |
-            ENVIRONMENT=production
-            SERVER_PORT=3333
-            MONGODB_USERNAME=${{ secrets.MONGODB_USERNAME }}
-            MONGODB_PASSWORD=${{ secrets.MONGODB_PASSWORD }}
-            MONGODB_AUTH_SOURCE=${{ secrets.MONGODB_AUTH_SOURCE }}
-            MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE }}
-            MONGODB_HOST=${{ secrets.MONGODB_HOST }}
-            MONGODB_SRV=${{ secrets.MONGODB_SRV }}
+      - name: Creating ssh pem file
+        working-directory: apps/api
+        run: echo "${{ secrets.SSH_KEY }}" >> api.pem
+  
+      - name: chmod 400 apps/api/api.pem
+        run: chmod 400 apps/api/api.pem
 
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
+      - name: Tranfering data
+        working-directory: apps/api
+        env:
+          SSH_PORT: 22
+          SSH_IP_ADDRESS: ${{ secrets.SERVER_ADDRESS  }}
+          SSH_USER: ${{ secrets.SSH_USER  }}
+        run: |
+          rsync -av -e "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i api.pem -p $SSH_PORT" .env $SSH_USER@$SSH_IP_ADDRESS:/applications/api/
+          rsync -av -e "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i api.pem -p $SSH_PORT" docker-compose.yml $SSH_USER@$SSH_IP_ADDRESS:/applications/api/
+
+      - name: Building container on server
+        uses: appleboy/ssh-action@master
+        env:
+          ECR_USERNAME: ${{ needs.setup-aws.outputs.ecr_username }}
+          ECR_PASSWORD: ${{ needs.setup-aws.outputs.ecr_password }}
+          ECR_REGISTRY: ${{ steps.get-ecr-registry.outputs.registry }}
         with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ${{ env.ECS_SERVICE }}
-          cluster: ${{ env.ECS_CLUSTER }}
-          wait-for-service-stability: true
+          debug: true
+          host: ${{ secrets.SERVER_ADDRESS }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          envs: ECR_USERNAME,ECR_PASSWORD,ECR_REGISTRY
+          script: |
+            set -e
+            cd /applications/api
+            echo $ECR_PASSWORD | docker login -u $ECR_USERNAME --password-stdin $ECR_REGISTRY
+            docker compose pull
+            docker compose down
+            docker compose up -d
+            docker system prune -f
+            docker logout $ECR_REGISTRY

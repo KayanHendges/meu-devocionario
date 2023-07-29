@@ -22,7 +22,9 @@ jobs:
         contents: read
 
   deploy:
-    name: Deploy
+    needs: [setup-aws]
+    if: |
+      always() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
     runs-on: ubuntu-latest
     environment: prod
     permissions:

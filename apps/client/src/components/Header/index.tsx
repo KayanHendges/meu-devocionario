@@ -1,18 +1,20 @@
 import clsx from "clsx";
 import { useTheme } from "next-themes";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
 
-  const watchMatchMedia = (event: MediaQueryListEvent) =>
-    setTheme(event.matches ? "dark" : "light");
+  const watchMatchMedia = useCallback(
+    (event: MediaQueryListEvent) => setTheme(event.matches ? "dark" : "light"),
+    [setTheme]
+  );
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
     mq.addEventListener("change", watchMatchMedia);
     return () => mq.removeEventListener("change", watchMatchMedia);
-  }, []);
+  }, [watchMatchMedia]);
 
   return (
     <div

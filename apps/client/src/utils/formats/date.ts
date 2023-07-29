@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DateTime } from "luxon";
 
 function isIsoDateString(value: any): boolean {

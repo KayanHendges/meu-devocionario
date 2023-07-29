@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+    
+    paths:
+      - "apps/api/**"
+      - "packages/project-types/**"
+      - ".github/workflows/cd-api.yaml"
+      - ".dockerignore"
 
   workflow_dispatch: {}
 

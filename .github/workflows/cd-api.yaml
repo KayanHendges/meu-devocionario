@@ -10,10 +10,10 @@ on:
 jobs:
   setup-aws:
     uses: ./.github/workflows/setup-aws.yaml
-    permissions: 
-      id-token: write
-      contents: read
     secrets: inherit
+    permissions:
+        id-token: write
+        contents: read
 
   deploy:
     name: Deploy

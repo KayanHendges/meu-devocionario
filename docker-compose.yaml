@@ -1,20 +1,16 @@
 version: '3'
 name: "meu-devocionario"
 services:
-  mongo:
-    container_name: database-mongo
-    image: mongo:latest
+  nginx:
+    image: nginx:1.23.1-alpine
     restart: always
-    env_file: .env
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: $MONGODB_USERNAME
-      MONGO_INITDB_ROOT_PASSWORD: $MONGODB_PASSWORD
-      MONGO_INITDB_DATABASE: $MONGODB_DATABASE
-    volumes:
-      - ./data/mongo:/data/db
     ports:
-      - 27017:27017
-    networks:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/sites-enabled/:/etc/nginx/conf.d
+      - /etc/letsencrypt/:/etc/letsencrypt/:ro
+    networks: 
       - default
 
 networks:

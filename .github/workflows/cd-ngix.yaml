@@ -35,7 +35,6 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER  }}
         run: |
           rsync -av -e "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i api.pem -p $SSH_PORT" ./apps/nginx $SSH_USER@$SSH_IP_ADDRESS:/applications
-          rsync -av -e "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i api.pem -p $SSH_PORT" .env $SSH_USER@$SSH_IP_ADDRESS:/applications/
           rsync -av -e "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i api.pem -p $SSH_PORT" ./docker-compose.yml $SSH_USER@$SSH_IP_ADDRESS:/applications/
 
       - name: Building container on server

@@ -5,11 +5,13 @@ import {
   RepositoryUpdateParams,
   WhereParams,
 } from '@global/types/repository';
-import { NotFoundException } from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CategoryDocument } from '@providers/mongo/schemas/category.schema';
+import { Prayer, PrayerDocument } from '@providers/mongo/schemas/prayer.schema';
 import {
   CategoryUniqueParam,
+  FindManyProperty,
   ICategoriesRepository,
 } from '@repositories/categories/categories.repository.interface';
 import {
@@ -23,6 +25,8 @@ export class MongoCategoriesRepository implements ICategoriesRepository {
   constructor(
     @InjectModel(Category.name)
     private readonly categoryModel: Model<CategoryDocument>,
+    @InjectModel(Prayer.name)
+    private readonly prayersModel: Model<PrayerDocument>,
   ) {}
   async list(params: ListParams<Category>): Promise<Category[]> {
     const { filter, pagination, sort } = mapMongoListParams(params);
@@ -44,9 +48,15 @@ export class MongoCategoriesRepository implements ICategoriesRepository {
     return mapMongoReturn(category);
   }
 
-  async findMany(categories: string[]): Promise<Category[]> {
+  async findMany(
+    categories: string[],
+    property: FindManyProperty = 'id',
+  ): Promise<Category[]> {
+    const opa = { [property]: { $in: categories } };
+    console.log({ opa });
+
     const list = await this.categoryModel
-      .find({ name: { $in: categories } })
+      .find({ _id: { $in: categories } })
       .lean();
 
     return list.map(mapMongoReturn);
@@ -81,9 +91,24 @@ export class MongoCategoriesRepository implements ICategoriesRepository {
 
   async delete(uniqueParam: CategoryUniqueParam): Promise<Category> {
     const params = mapMongoParams(uniqueParam);
+    console.log({ params });
 
-    const category = await this.categoryModel.findOneAndDelete(params).lean();
+    const category = await this.categoryModel
+      .findOne({ name: 'Orações' })
+      .lean();
+    console.log({ category });
     if (!category) throw new NotFoundException('Category not found');
+
+    const prayersWith = await this.prayersModel.find({
+      $or: [{ category: category._id }, { relatedCategories: category._id }],
+    });
+
+    if (prayersWith.length)
+      throw new ConflictException(
+        `You can't delete this category. There is ${prayersWith.length} using this caregory.`,
+      );
+
+    await this.categoryModel.deleteOne({ _id: category._id }).lean();
 
     return mapMongoReturn(category);
   }

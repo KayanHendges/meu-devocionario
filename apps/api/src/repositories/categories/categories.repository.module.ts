@@ -4,12 +4,14 @@ import {
   Category,
   CategorySchema,
 } from '@providers/mongo/schemas/category.schema';
+import { Prayer, PrayerSchema } from '@providers/mongo/schemas/prayer.schema';
 import { MongoCategoriesRepository } from '@repositories/categories/implementations/mongo.categories.repository';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Category.name, schema: CategorySchema },
+      { name: Prayer.name, schema: PrayerSchema },
     ]),
   ],
   providers: [

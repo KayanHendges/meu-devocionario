@@ -28,10 +28,6 @@ export class ListCategoriesQueryDTO extends PaginationAndSortDTO<Category> {
   updatedAt?: Date;
 }
 
-export class FindCategoryParams extends PartialType(
+export class UniqueCategoryParams extends PartialType(
   PickType(Category, ['id', 'name']),
 ) {}
-
-export class UpdateCategoryParams extends PickType(Category, ['id']) {}
-
-export class DeleteCategoryParams extends PickType(Category, ['id']) {}

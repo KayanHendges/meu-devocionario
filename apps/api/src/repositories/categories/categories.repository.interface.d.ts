@@ -11,12 +11,17 @@ interface CategoryUniqueParam {
   name?: Category['name'];
 }
 
+type FindManyProperty = 'id' | 'name';
+
 interface ICategoriesRepository {
   list(params: ListParams<Category>): Promise<Category[]>;
 
   find(uniqueParam: CategoryUniqueParam): Promise<Category>;
 
-  findMany(categories: string[]): Promise<Category[]>;
+  findMany(
+    categories: string[],
+    property?: FindManyProperty,
+  ): Promise<Category[]>;
 
   count(param: WhereParams<Category>): Promise<count>;
 

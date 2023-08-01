@@ -91,12 +91,8 @@ export class MongoCategoriesRepository implements ICategoriesRepository {
 
   async delete(uniqueParam: CategoryUniqueParam): Promise<Category> {
     const params = mapMongoParams(uniqueParam);
-    console.log({ params });
 
-    const category = await this.categoryModel
-      .findOne({ name: 'Orações' })
-      .lean();
-    console.log({ category });
+    const category = await this.categoryModel.findOne(params).lean();
     if (!category) throw new NotFoundException('Category not found');
 
     const prayersWith = await this.prayersModel.find({
@@ -105,7 +101,7 @@ export class MongoCategoriesRepository implements ICategoriesRepository {
 
     if (prayersWith.length)
       throw new ConflictException(
-        `You can't delete this category. There is ${prayersWith.length} using this caregory.`,
+        `You can't delete this category. There is ${prayersWith.length} items using this caregory.`,
       );
 
     await this.categoryModel.deleteOne({ _id: category._id }).lean();

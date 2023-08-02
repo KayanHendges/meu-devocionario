@@ -1,17 +1,20 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { GrHomeRounded, GrSearch } from "react-icons/gr";
-import { BiBible } from "react-icons/bi";
 import { useMemo } from "react";
+import { BookBookmark, House, MagnifyingGlass } from "phosphor-react";
 
 export default function useRoutes() {
   const pathname = usePathname();
 
   const routes = useMemo<RouteItem[]>(
     () => [
-      { label: "Início", path: "/", icon: <GrHomeRounded /> },
-      { label: "buscar", path: "/search", icon: <GrSearch /> },
-      { label: "Orações", path: "/prayers", icon: <BiBible /> },
+      { label: "Início", path: "/", icon: <House /> },
+      { label: "buscar", path: "/buscar", icon: <MagnifyingGlass /> },
+      {
+        label: "Meu devocionário",
+        path: "/meu-devocionario",
+        icon: <BookBookmark />,
+      },
     ],
     []
   );

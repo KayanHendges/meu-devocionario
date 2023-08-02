@@ -1,10 +1,9 @@
 import { ResponseList } from 'project-types';
 import {
   CreateCategoryDTO,
-  FindCategoryParams,
+  UniqueCategoryParams,
   ListCategoriesQueryDTO,
   UpdateCategoryDTO,
-  UpdateCategoryParams,
 } from '@categories/categories.dto';
 import { Category } from '@entities/category';
 import { mapQueryToService } from '@global/utils.ts/service';
@@ -31,20 +30,20 @@ export class CategoriesService {
     return { list, count, page, pageSize };
   }
 
-  async find(params: FindCategoryParams): Promise<Category> {
+  async find(params: UniqueCategoryParams): Promise<Category> {
     return this.categoriesRepository.find(params);
   }
 
   async create(payload: CreateCategoryDTO): Promise<any> {
     const category = new Category(payload);
-    return this.categoriesRepository.create(payload);
+    return this.categoriesRepository.create(category);
   }
 
-  async update(params: UpdateCategoryParams, payload: UpdateCategoryDTO) {
+  async update(params: UniqueCategoryParams, payload: UpdateCategoryDTO) {
     return this.categoriesRepository.update(params, payload);
   }
 
-  async delete(params: FindCategoryParams): Promise<Category> {
+  async delete(params: UniqueCategoryParams): Promise<Category> {
     return this.categoriesRepository.delete(params);
   }
 }

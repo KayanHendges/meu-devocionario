@@ -79,7 +79,7 @@ export class PrayersService {
 
     const categoriesFound = (
       await this.categoriesRepository.findMany(categories)
-    ).map((it) => it.name);
+    ).map((it) => it.id);
 
     const missingCategories = categories.filter(
       (it) => !categoriesFound.includes(it),

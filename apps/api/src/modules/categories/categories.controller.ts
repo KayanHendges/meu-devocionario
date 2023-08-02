@@ -1,9 +1,8 @@
 import {
   CreateCategoryDTO,
-  FindCategoryParams,
   ListCategoriesQueryDTO,
+  UniqueCategoryParams,
   UpdateCategoryDTO,
-  UpdateCategoryParams,
 } from '@categories/categories.dto';
 import { CategoriesService } from '@categories/categories.service';
 import { isObjectId } from '@global/utils.ts/regexValidate';
@@ -28,7 +27,7 @@ export class CategoriesController {
   }
 
   @Get('/:id')
-  find(@Param() { id }: FindCategoryParams) {
+  find(@Param() { id }: UniqueCategoryParams) {
     const unique = isObjectId(id) ? { id } : { name: id };
     return this.categoriesService.find(unique);
   }
@@ -40,14 +39,16 @@ export class CategoriesController {
 
   @Patch(':id')
   update(
-    @Param() param: UpdateCategoryParams,
+    @Param() { id }: UniqueCategoryParams,
     @Body() body: UpdateCategoryDTO,
   ) {
-    return this.categoriesService.update(param, body);
+    const unique = isObjectId(id) ? { id } : { name: id };
+    return this.categoriesService.update(unique, body);
   }
 
   @Delete(':id')
-  delete(@Param() param: FindCategoryParams) {
-    return this.categoriesService.delete(param);
+  delete(@Param() { id }: UniqueCategoryParams) {
+    const unique = isObjectId(id) ? { id } : { name: id };
+    return this.categoriesService.delete(unique);
   }
 }

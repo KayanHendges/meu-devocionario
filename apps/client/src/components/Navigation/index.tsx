@@ -15,7 +15,11 @@ export default function Navigation() {
   };
 
   return (
-    <div className={clsx("btm-nav shadow-xl bg-white shadow-black dark:bg-black dark:shadow-white transition-all")}>
+    <div
+      className={clsx(
+        "btm-nav static drop-shadow-xl bg-white shadow-black dark:bg-black dark:shadow-white transition-all"
+      )}
+    >
       {routes.map((route) => {
         const selected = currentRoute?.path === route?.path;
         return (
@@ -30,7 +34,9 @@ export default function Navigation() {
             <Slot
               className={clsx(
                 "w-6 h-6",
-                selected ? "text-primary" : "text-black dark:text-white transition-colors"
+                selected
+                  ? "text-primary"
+                  : "text-black dark:text-white transition-colors"
               )}
             >
               {route.icon}

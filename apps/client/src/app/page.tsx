@@ -20,3 +20,5 @@ export default async function Home() {
     </div>
   );
 }
+
+export const revalidate = 60 * 60;

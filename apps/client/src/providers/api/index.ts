@@ -1,6 +1,6 @@
 import { handleDates } from "@utils/formats/date";
 import axios from "axios";
-import Router from "next/router";
+import Router from "next/navigation";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -9,7 +9,7 @@ const api = axios.create({
 api.interceptors.response.use((originalResponse) => {
   try {
     if (originalResponse.status === 401) {
-      Router.push("/login");
+      Router.redirect("/login");
     }
 
     handleDates(originalResponse.data);

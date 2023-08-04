@@ -1,8 +1,14 @@
-"use client";
-import { useParams } from "next/navigation";
+import PrayerContainer from "src/app/oracoes/[prayer]/PrayerContainer";
 
-export default function Page() {
-  const { prayer } = useParams();
+interface Props {
+  params: { prayer: string };
+}
 
-  return <div>{decodeURI(prayer)}</div>;
+export default function Page({ params }: Props) {
+  const { prayer } = params;
+  return (
+    <div className="flex flex-col">
+      <PrayerContainer prayerTitle={decodeURI(prayer)} />
+    </div>
+  );
 }

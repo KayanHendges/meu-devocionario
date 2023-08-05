@@ -1,13 +1,10 @@
 import clsx from "clsx";
 import { Slot } from "@radix-ui/react-slot";
-import { HTMLAttributes, ReactNode } from "react";
+import { ComponentProps } from "react";
 
-export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
+export interface TextProps extends ComponentProps<"span"> {
   size?: "sm" | "md" | "lg" | "xl";
-  children: ReactNode;
   asChild?: boolean;
-  className?: string;
-  title?: string;
   truncate?: boolean;
 }
 
@@ -37,6 +34,7 @@ export function Text({
       )}
       title={title}
       {...props}
+      ref={undefined}
     >
       {children}
     </Component>

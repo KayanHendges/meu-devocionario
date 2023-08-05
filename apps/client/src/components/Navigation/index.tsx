@@ -17,7 +17,8 @@ export default function Navigation() {
   return (
     <div
       className={clsx(
-        "btm-nav drop-shadow-xl bg-white shadow-black dark:bg-black dark:shadow-white transition-all"
+        "btm-nav h-16 transition-all",
+        "drop-shadow-xl bg-white shadow-black dark:bg-black dark:shadow-white"
       )}
     >
       {routes.map((route) => {

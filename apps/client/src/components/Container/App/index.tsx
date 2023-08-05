@@ -1,5 +1,4 @@
 "use client";
-import Header from "@components/Header";
 import Navigation from "@components/Navigation";
 import ThemeSwitcher from "@components/ThemeSwitcher";
 import { ThemeProvider } from "next-themes";
@@ -17,7 +16,7 @@ export default function ContainerApp({ children }: Props) {
         className="w-screen h-screen flex flex-col overflow-x-hidden"
       >
         {process.env.NODE_ENV === "development" && <ThemeSwitcher />}
-        <main className="flex flex-1 flex-col overflow-y-auto bg-zinc-100 dark:bg-zinc-950">
+        <main className="flex flex-1 flex-col overflow-y-auto pb-16">
           {children}
         </main>
         <Navigation />

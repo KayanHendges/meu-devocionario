@@ -1,4 +1,3 @@
-import HtmlParser from "@components/HtmlParser";
 import { Heading } from "@components/Texts/Heading";
 import { Text } from "@components/Texts/Text";
 import { prayersProviders } from "@providers/api/prayers";
@@ -19,7 +18,7 @@ export default async function PrayerContainer({ prayerTitle }: Props) {
     <div className="flex flex-col">
       <Heading size="lg">{title}</Heading>
       <Text>{description}</Text>
-      <HtmlParser>{body}</HtmlParser>
+      <div dangerouslySetInnerHTML={{ __html: body }} />
     </div>
   );
 }

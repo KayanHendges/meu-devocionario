@@ -9,6 +9,7 @@ import { Category } from '@entities/category';
 import { mapQueryToService } from '@global/utils.ts/service';
 import { Inject, Injectable } from '@nestjs/common';
 import { ICategoriesRepository } from '@repositories/categories/categories.repository.interface';
+import { stripHtml } from '@global/utils.ts/formatters';
 
 @Injectable()
 export class CategoriesService {
@@ -40,6 +41,11 @@ export class CategoriesService {
   }
 
   async update(params: UniqueCategoryParams, payload: UpdateCategoryDTO) {
+    const category: Partial<Category> = payload;
+
+    if (category.description)
+      category.cleanDescription = stripHtml(category.description);
+
     return this.categoriesRepository.update(params, payload);
   }
 

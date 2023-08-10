@@ -14,6 +14,9 @@ export class Category implements Omit<CategoryClass, 'id'> {
   @Prop({ type: String, default: null })
   description: string | null;
 
+  @Prop({ type: String, default: null })
+  cleanDescription: string | null;
+
   updatedAt: Date;
   createdAt: Date;
 }

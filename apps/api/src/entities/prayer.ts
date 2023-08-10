@@ -22,8 +22,8 @@ interface ContructorProps {
   title: string;
   description: string | null;
   body: string;
-  category: string;
-  relatedCategories?: string[];
+  categoryId: string;
+  relatedCategoriesId?: string[];
   language: LanguageCodes;
   updatedAt?: Date;
   createdAt?: Date;
@@ -44,6 +44,11 @@ export class Prayer implements IPrayer {
 
   @IsString()
   @IsNotEmpty()
+  @IsOptional()
+  cleanDescription: string | null = null;
+
+  @IsString()
+  @IsNotEmpty()
   body: string;
 
   @IsString()
@@ -53,14 +58,13 @@ export class Prayer implements IPrayer {
 
   @IsString()
   @IsNotEmpty()
-  category: string;
+  categoryId: string;
 
-  // Todo: set limit of items
   @IsString({ each: true })
   @ArrayMaxSize(10)
   @ArrayUnique()
   @IsOptional()
-  relatedCategories: string[] = [];
+  relatedCategoriesId: string[] = [];
 
   @IsEnum(LanguageCodesEnum)
   language: LanguageCodes;
@@ -73,10 +77,11 @@ export class Prayer implements IPrayer {
 
   constructor(props: ContructorProps) {
     props.id = props.id || uuidv4();
-    props.relatedCategories = [...new Set(props.relatedCategories || [])];
+    props.relatedCategoriesId = [...new Set(props.relatedCategoriesId || [])];
 
     Object.assign(this, props);
     this.cleanBody = stripHtml(this.body);
+    if (this.description) this.cleanDescription = stripHtml(this.description);
     const errors = validateSync(this);
 
     if (errors.length) throw new Error(JSON.stringify(errors, undefined, 2));

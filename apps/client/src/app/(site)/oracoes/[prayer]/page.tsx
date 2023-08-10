@@ -1,4 +1,4 @@
-import PrayerContainer from "src/app/oracoes/[prayer]/PrayerContainer";
+import PrayerContainer from "src/app/(site)/oracoes/[prayer]/PrayerContainer";
 
 interface Props {
   params: { prayer: string };

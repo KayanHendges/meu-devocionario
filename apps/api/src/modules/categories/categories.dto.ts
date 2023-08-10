@@ -1,11 +1,13 @@
 import { Category } from '@entities/category';
 import { PaginationAndSortDTO } from '@global/dto';
 import { IsDate, IsOptional, IsString } from 'class-validator';
-import { PartialType, PickType } from '@nestjs/mapped-types';
+import { OmitType, PartialType, PickType } from '@nestjs/mapped-types';
 
-export class CreateCategoryDTO extends PickType(Category, [
-  'name',
-  'description',
+export class CreateCategoryDTO extends OmitType(Category, [
+  'id',
+  'cleanDescription',
+  'updatedAt',
+  'createdAt',
 ]) {}
 
 export class UpdateCategoryDTO extends PartialType(CreateCategoryDTO) {}

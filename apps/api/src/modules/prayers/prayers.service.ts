@@ -51,10 +51,12 @@ export class PrayersService {
   ): Promise<Prayer> {
     const prayer: Partial<Prayer> = payload;
 
-    if (prayer.relatedCategories)
-      prayer.relatedCategories = [...new Set(prayer.relatedCategories)];
+    if (prayer.relatedCategoriesId)
+      prayer.relatedCategoriesId = [...new Set(prayer.relatedCategoriesId)];
 
     if (prayer.body) prayer.cleanBody = stripHtml(prayer.body);
+    if (prayer.description)
+      prayer.cleanDescription = stripHtml(prayer.description);
 
     await this.validateCategories(prayer);
     return this.prayersRepository.update(params, prayer);
@@ -65,15 +67,15 @@ export class PrayersService {
   }
 
   private async validateCategories({
-    category,
-    relatedCategories,
+    categoryId,
+    relatedCategoriesId,
   }: Partial<Prayer>) {
-    if (!category && !relatedCategories?.length) return;
+    if (!categoryId && !relatedCategoriesId?.length) return;
 
     const categories = [
       ...new Set([
-        ...(relatedCategories || []),
-        ...(category ? [category] : []),
+        ...(relatedCategoriesId || []),
+        ...(categoryId ? [categoryId] : []),
       ]),
     ];
 

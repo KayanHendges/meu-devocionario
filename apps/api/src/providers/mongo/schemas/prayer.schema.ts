@@ -21,19 +21,22 @@ export class Prayer implements PrayerClass {
   description: string | null;
 
   @Prop({ type: String, default: null })
+  cleanDescription: string | null;
+
+  @Prop({ type: String, default: null })
   body: string;
 
   @Prop({ type: String, default: null })
   cleanBody: string;
 
   @Prop({ type: String, required: true })
-  category: string;
+  categoryId: string;
 
   @Prop({ type: String, enum: LanguageCodesEnum, required: true })
   language: LanguageCodes;
 
   @Prop({ type: [String], default: [] })
-  relatedCategories: string[];
+  relatedCategoriesId: string[];
 
   updatedAt: Date;
   createdAt: Date;

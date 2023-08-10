@@ -18,8 +18,6 @@ export default function CreatePrayer() {
     },
   });
 
-  console.log(editor?.getHTML());
-
   return (
     <PageContainer>
       <Heading>Criar Oração</Heading>

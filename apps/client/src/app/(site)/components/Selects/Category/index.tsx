@@ -7,13 +7,11 @@ import { Category } from "project-types";
 import { useCallback, useEffect, useState } from "react";
 import { FieldValues, PathValue } from "react-hook-form";
 
-export default function CategorySelect<T extends FieldValues>({
-  formHook,
-  inputName,
+export default function CategorySelect({
   onSelect,
   initialCategoryId,
   ...props
-}: CategorySelectProps<T>) {
+}: CategorySelectProps) {
   const [categoriesList, setCategoriesList] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
@@ -35,11 +33,6 @@ export default function CategorySelect<T extends FieldValues>({
     if (!selectedCategory) return;
 
     if (onSelect) onSelect(selectedCategory);
-    if (formHook)
-      formHook.setValue(
-        inputName,
-        selectedCategory as PathValue<T, NestedKeysSatifiesType<T, string>>
-      );
   };
 
   useEffect(() => {
@@ -49,8 +42,6 @@ export default function CategorySelect<T extends FieldValues>({
   return (
     <SingleSelect
       onChange={({ target }) => handleSelect(target.value)}
-      formHook={formHook}
-      inputName={inputName}
       {...props}
     >
       {categoriesList.map((category) => (

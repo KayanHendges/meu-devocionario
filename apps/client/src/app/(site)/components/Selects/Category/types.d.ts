@@ -3,9 +3,7 @@ import { Category } from "project-types";
 import { ComponentProps } from "react";
 import { FieldValues } from "react-hook-form";
 
-interface CategorySelectProps<T extends FieldValues>
-  extends ComponentProps<"select">,
-    FieldProps<T> {
+interface CategorySelectProps extends ComponentProps<"select">, FieldProps {
   onSelect?: (value: Category) => void;
-  initialCategoryId?: string
+  initialCategoryId?: string;
 }

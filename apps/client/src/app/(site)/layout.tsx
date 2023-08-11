@@ -16,8 +16,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={twMerge(inter.className, 'bg-zinc-100 dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50')}>
+    <html lang="pt_BR" suppressHydrationWarning>
+      <body
+        className={twMerge(
+          inter.className,
+          "bg-zinc-100 dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50"
+        )}
+      >
         <ContainerApp>{children}</ContainerApp>
       </body>
     </html>

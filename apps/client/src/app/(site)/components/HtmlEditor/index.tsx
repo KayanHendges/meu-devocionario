@@ -24,7 +24,7 @@ export default function HtmlEditor({
     onUpdate: ({ editor }) => onHtmlChange && onHtmlChange(editor.getHTML()),
     editorProps: {
       attributes: {
-        class: twMerge("outline-none h-full", editorClassName),
+        class: twMerge("outline-none h-full w-full", editorClassName),
       },
     },
   });

@@ -10,6 +10,7 @@ import { FormEvent, useState } from "react";
 import CategorySelect from "@components/Selects/Category";
 import TextInput from "@components/Inputs/Text";
 import { handleSubmit } from "@utils/forms";
+import RelatedCategoriesSelect from "@components/Selects/RelatedCategories";
 
 interface Props {
   prayer: Prayer;
@@ -46,14 +47,16 @@ export default function EditPrayerForm({
       console.log(error);
     }
   };
-  console.log("aqua");
 
   return (
-    <form className="form-control gap-4" onSubmit={handlePrayer}>
+    <form
+      className="form-control gap-4 w-full max-w-[720px]"
+      onSubmit={handlePrayer}
+    >
       <label className="label">
         <Text className="label-text">Título da Oração</Text>
       </label>
-      <TextInput formHook={form} inputName={"title"} />
+      <TextInput {...form.register("title")} />
       <label className="label">
         <Text className="label-text">Descrição (opcional)</Text>
       </label>
@@ -71,8 +74,8 @@ export default function EditPrayerForm({
       <CategorySelect
         initialCategoryId={form.getValues("categoryId")}
         onSelect={({ id }) => form.setValue("categoryId", id)}
-        inputName="teste"
       />
+      <RelatedCategoriesSelect initialIds={relatedCategoriesId} />
       <button className="btn btn-primary">Primary</button>
     </form>
   );

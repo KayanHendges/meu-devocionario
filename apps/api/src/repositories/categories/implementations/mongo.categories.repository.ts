@@ -53,7 +53,6 @@ export class MongoCategoriesRepository implements ICategoriesRepository {
     property: FindManyProperty = 'id',
   ): Promise<Category[]> {
     const opa = { [property]: { $in: categories } };
-    console.log({ opa });
 
     const list = await this.categoryModel
       .find({ _id: { $in: categories } })

@@ -1,3 +1,4 @@
+import DisplayAds from "@components/Ads/Display";
 import Card from "@components/Card";
 import { Heading } from "@components/Texts/Heading";
 import { Text } from "@components/Texts/Text";
@@ -25,6 +26,7 @@ export default async function Home() {
           </Link>
         ))}
       </div>
+      <DisplayAds />
     </div>
   );
 }

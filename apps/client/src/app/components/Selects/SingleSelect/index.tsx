@@ -1,19 +1,18 @@
 "use client";
 
+import LabelInput from "@components/Inputs/Label";
 import { SingleSelectProps } from "@components/Selects/SingleSelect/types";
 import { Text } from "@components/Texts/Text";
-import { forwardRef } from "react";
+import { Fragment, forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 const SingleSelect = forwardRef<HTMLSelectElement, SingleSelectProps>(
   ({ className, children, label, ...props }, ref) => {
+    const Container = label ? "div" : Fragment;
+
     return (
-      <div>
-        {label && (
-          <label className="label">
-            <Text className="label-text">Título da Oração</Text>
-          </label>
-        )}
+      <Container>
+        {label && <LabelInput>{label}</LabelInput>}
         <select
           ref={ref}
           className={twMerge(
@@ -27,7 +26,7 @@ const SingleSelect = forwardRef<HTMLSelectElement, SingleSelectProps>(
           </option>
           {children}
         </select>
-      </div>
+      </Container>
     );
   }
 );

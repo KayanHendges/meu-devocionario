@@ -1,6 +1,6 @@
 import PageContainer from "@components/Container/Page";
 import { Heading } from "@components/Texts/Heading";
-import EditPrayerForm from "@components/forms/EditPrayer";
+import CreateOrUpdatePrayerForm from "@components/forms/CreateOrUpdatePrayer";
 import { prayersProviders } from "@providers/api/prayers";
 
 interface Props {
@@ -13,7 +13,7 @@ export default async function EditPrayerPage({ params }: Props) {
   return (
     <PageContainer>
       <Heading>Editar Oração</Heading>
-      <EditPrayerForm prayer={prayer} />
+      <CreateOrUpdatePrayerForm prayer={prayer} />
     </PageContainer>
   );
 }

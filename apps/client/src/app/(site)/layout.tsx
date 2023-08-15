@@ -2,7 +2,6 @@ import ContainerApp from "@components/Container/App";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { twMerge } from "tailwind-merge";
-import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,11 +24,6 @@ export default function RootLayout({
         )}
       >
         <ContainerApp>{children}</ContainerApp>
-        <Script
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_ADS_TAG}`}
-          crossOrigin="anonymous"
-        />
       </body>
     </html>
   );

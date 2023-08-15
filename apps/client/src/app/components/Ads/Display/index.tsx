@@ -13,7 +13,7 @@ export default function DisplayAds() {
       data-development={
         process.env.NODE_ENV === "development" ? true : undefined
       }
-      className={twMerge("bg-zinc-500")}
+      className={twMerge("data-[development]:bg-zinc-500")}
     >
       <ins
         className="adsbygoogle"

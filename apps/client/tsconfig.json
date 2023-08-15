@@ -16,9 +16,9 @@
     "incremental": true,
     "baseUrl": "./",
     "paths": {
-      "@components/*": ["src/app/(site)/components/*"],
+      "@components/*": ["src/app/components/*"],
       "@utils/*": ["src/utils/*"],
-      "@providers/*": ["src/app/(site)/providers/*"],
+      "@providers/*": ["src/app/providers/*"],
       "@contexts/*": ["src/contexts/*"],
       "@hooks/*": ["src/hooks/*"],
       "@routes/*": ["src/routes/*"],

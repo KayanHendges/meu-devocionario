@@ -1,15 +1,17 @@
 import { RelatedCategoriesSelectProps } from "@components/Selects/RelatedCategories/types";
 import SingleSelect from "@components/Selects/SingleSelect";
-import { categoriesProviders } from "@providers/api/categories";
 import { produce } from "immer";
 import { Category } from "project-types";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { X } from "phosphor-react";
+import { categoriesProviders } from "@providers/api/categories";
 
 export default function RelatedCategoriesSelect({
   className,
   initialIds,
   onSelect,
+  label,
   ...props
 }: RelatedCategoriesSelectProps) {
   const [categoriesList, setCategoriesList] = useState<Category[]>([]);
@@ -43,23 +45,49 @@ export default function RelatedCategoriesSelect({
     );
   };
 
+  const handleRemoveItem = (categoryId: string) => {
+    setSelected(
+      produce((draft) => {
+        const index = draft.findIndex((it) => it.id === categoryId);
+        if (typeof index !== "number") return;
+        draft.splice(index, 1);
+        if (onSelect) onSelect(draft);
+      })
+    );
+  };
+
   const options = useMemo(() => {
     return categoriesList.filter((it) => !selected.find((s) => s.id === it.id));
   }, [categoriesList, selected]);
 
   return (
-    <div className={twMerge("", className)} {...props}>
-      <SingleSelect onChange={({ target }) => handleSelect(target.value)}>
-        <option value="">Selectionar</option>
+    <div
+      className={twMerge("w-full flex flex-col gap-4", className)}
+      {...props}
+    >
+      <SingleSelect
+        label={label}
+        onChange={({ target }) => handleSelect(target.value)}
+      >
         {options.map(({ id, name }) => (
           <option key={id} value={id}>
             {name}
           </option>
         ))}
       </SingleSelect>
-      <div className="flex">
+      <div className="flex flex-wrap gap-1">
         {selected.map(({ id, name }) => (
-          <span key={id}>{name}</span>
+          <div
+            key={id}
+            className={twMerge(
+              "badge flex items-center py-4 gap-1 cursor-pointer",
+              "dark:text-black dark:bg-zinc-200"
+            )}
+            onClick={() => handleRemoveItem(id)}
+          >
+            <X size={16} />
+            {name}
+          </div>
         ))}
       </div>
     </div>

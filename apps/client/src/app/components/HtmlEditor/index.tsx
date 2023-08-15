@@ -32,7 +32,7 @@ export default function HtmlEditor({
   return (
     <EditorContent
       className={twMerge(
-        "w-full text-black dark:text-white prose prose-invert",
+        "w-full text-black dark:text-white prose prose-invert ring-1 ring-primary rounded px-4",
         className
       )}
       editor={editor}

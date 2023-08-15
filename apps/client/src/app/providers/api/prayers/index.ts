@@ -16,7 +16,7 @@ class PrayersProviders {
     (await api.patch<Prayer>("prayers", { payload })).data;
 
   updatePrayer = async (prayerUnique: string, payload: UpdatePrayerPayload) =>
-    (await api.patch<Prayer>(`prayers/${prayerUnique}`, { payload })).data;
+    (await api.patch<Prayer>(`prayers/${prayerUnique}`, payload)).data;
 
   deletePrayer = async (prayerUnique: string) =>
     (await api.delete<Prayer>(`prayers/${prayerUnique}`)).data;

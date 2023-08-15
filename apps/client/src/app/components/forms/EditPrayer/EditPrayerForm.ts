@@ -6,6 +6,6 @@ export const EditPrayerFormSchema = Joi.object<CreatePrayerPayload>({
   description: Joi.string().optional(),
   body: Joi.string(),
   categoryId: Joi.string(),
-  relatedCategoriesId: Joi.string(),
+  relatedCategoriesId: Joi.array().items(Joi.string()),
   language: Joi.string().default("pt_BR"),
 });

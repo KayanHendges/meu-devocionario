@@ -1,5 +1,7 @@
+import BackButton from "@components/Buttons/BackButton";
+import PageContainer from "@components/Container/Page";
+import HtmlDisplay from "@components/Html/HtmlDisplay";
 import { Heading } from "@components/Texts/Heading";
-import { Text } from "@components/Texts/Text";
 import { prayersProviders } from "@providers/api/prayers";
 import { cache } from "react";
 
@@ -15,10 +17,11 @@ export default async function PrayerContainer({ prayerTitle }: Props) {
   const { title, description, body } = await getPrayer();
 
   return (
-    <div className="flex flex-col">
-      <Heading size="lg">{title}</Heading>
-      <Text>{description}</Text>
-      <div dangerouslySetInnerHTML={{ __html: body }} />
-    </div>
+    <PageContainer header={title}>
+      <div className="flex flex-col w-full gap-4">
+        {description && <HtmlDisplay>{description}</HtmlDisplay>}
+        <HtmlDisplay>{body}</HtmlDisplay>
+      </div>
+    </PageContainer>
   );
 }

@@ -13,7 +13,7 @@ class PrayersProviders {
     (await api.get<Prayer>(`prayers/${prayerUnique}`)).data;
 
   createPrayer = async (payload: CreatePrayerPayload) =>
-    (await api.patch<Prayer>("prayers", { payload })).data;
+    (await api.post<Prayer>("prayers", payload)).data;
 
   updatePrayer = async (prayerUnique: string, payload: UpdatePrayerPayload) =>
     (await api.patch<Prayer>(`prayers/${prayerUnique}`, payload)).data;

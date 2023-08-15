@@ -9,7 +9,7 @@ import { handleSubmit } from "@utils/forms";
 import RelatedCategoriesSelect from "@components/Selects/RelatedCategories";
 import { CreatePrayerPayload } from "@providers/api/prayers/types";
 import { prayersProviders } from "@providers/api/prayers";
-import HtmlEditor from "@components/HtmlEditor";
+import HtmlEditor from "@components/Html/HtmlEditor";
 import { CreateOrUpdatePrayerFormSchema } from "@components/forms/CreateOrUpdatePrayer/CreateOrUpdatePrayer";
 import Button from "@components/Buttons/Button";
 
@@ -45,9 +45,7 @@ export default function CreateOrUpdatePrayerForm({ prayer }: Props) {
     } catch (error) {
       console.log(error);
     }
-    setTimeout(() => {
-      setIsSubmiting(false);
-    }, 1000);
+    setIsSubmiting(false);
   };
 
   const buttonlabel = useMemo(

@@ -9,18 +9,13 @@ interface Props {
 }
 
 export default function ContainerApp({ children }: Props) {
-
   return (
     <ThemeProvider attribute="class">
-      <div
-        className="w-screen h-screen flex flex-col overflow-x-hidden"
-      >
+      <main className="flex-1 w-full overflow-x-hidden overflow-y-scroll pb-16">
         {process.env.NODE_ENV === "development" && <ThemeSwitcher />}
-        <main className="flex flex-1 flex-col overflow-y-auto pb-16">
-          {children}
-        </main>
-        <Navigation />
-      </div>
+        <div>{children}</div>
+        {/* <Navigation /> */}
+      </main>
     </ThemeProvider>
   );
 }

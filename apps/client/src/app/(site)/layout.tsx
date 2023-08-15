@@ -17,13 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt_BR" suppressHydrationWarning>
-      <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-      </head>
       <body
         className={twMerge(
           inter.className,
-          "bg-zinc-100 dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50"
+          "w-screen h-screen flex flex-col overflow-hidden bg-zinc-100 dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50"
         )}
       >
         <ContainerApp>{children}</ContainerApp>

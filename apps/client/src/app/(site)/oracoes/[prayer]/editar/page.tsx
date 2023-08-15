@@ -11,8 +11,7 @@ export default async function EditPrayerPage({ params }: Props) {
   const prayer = await prayersProviders.getPrayer(params.prayer);
 
   return (
-    <PageContainer>
-      <Heading>Editar Oração</Heading>
+    <PageContainer header="Editar Oração">
       <CreateOrUpdatePrayerForm prayer={prayer} />
     </PageContainer>
   );

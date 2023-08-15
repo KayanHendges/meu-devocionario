@@ -13,14 +13,14 @@ export default async function Home() {
   const { list } = await getPrayers();
 
   return (
-    <div className="flex flex-col p-2">
-      <Heading>Orações</Heading>
-      <div className="space-y-2">
-        {list.map(({ id, title, description }) => (
+    <div className="flex flex-col p-2 gap-4">
+      <Heading className="text-center w-full">Orações</Heading>
+      <div className="flex flex-col gap-4">
+        {list.map(({ id, title, cleanBody }) => (
           <Link key={id} href={`/oracoes/${title}`}>
             <Card>
               <Heading>{title}</Heading>
-              {description && <Text>{description}</Text>}
+              {cleanBody && <Text>{cleanBody}</Text>}
             </Card>
           </Link>
         ))}

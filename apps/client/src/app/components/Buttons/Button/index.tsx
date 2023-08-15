@@ -28,7 +28,8 @@ export default function Button({
         "before:loading before:absolute before:opacity-0 data-[loading]:before:opacity-100",
         primary
           ? "data-[primary]:btn-primary"
-          : "dark:bg-zinc-950 dark:hover:bg-white dark:border-white dark:text-zinc-50 dark:hover:text-black"
+          : "dark:bg-zinc-950 dark:hover:bg-white dark:border-white dark:text-zinc-50 dark:hover:text-black",
+        className
       )}
       {...props}
       disabled={disabled || isLoading}

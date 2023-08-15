@@ -23,7 +23,6 @@ export default function HtmlEditor({
   const editor = useEditor({
     extensions: [StarterKit],
     content: initialContent,
-    autofocus: true,
     onUpdate: ({ editor }) => onHtmlChange && onHtmlChange(editor.getHTML()),
     editorProps: {
       attributes: {

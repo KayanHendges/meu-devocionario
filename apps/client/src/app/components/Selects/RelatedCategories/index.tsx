@@ -81,7 +81,7 @@ export default function RelatedCategoriesSelect({
             key={id}
             className={twMerge(
               "badge flex items-center py-4 gap-1 cursor-pointer",
-              "dark:text-black dark:bg-zinc-200"
+              "text-white dark:text-black dark:bg-zinc-200"
             )}
             onClick={() => handleRemoveItem(id)}
           >

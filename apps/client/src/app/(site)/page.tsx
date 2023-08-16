@@ -1,5 +1,5 @@
-import DisplayAds from "@components/Ads/Display";
 import Card from "@components/Card";
+import PageContainer from "@components/Container/Page";
 import { Heading } from "@components/Texts/Heading";
 import { Text } from "@components/Texts/Text";
 import { prayersProviders } from "@providers/api/prayers";
@@ -14,8 +14,7 @@ export default async function Home() {
   const { list } = await getPrayers();
 
   return (
-    <div className="flex flex-col p-2 gap-4">
-      <Heading className="text-center w-full">Orações</Heading>
+    <PageContainer backButton={false} header="Orações" className="gap-4">
       <div className="flex flex-col gap-4">
         {list.map(({ id, title, cleanBody }) => (
           <Link key={id} href={`/oracoes/${title}`}>
@@ -26,7 +25,6 @@ export default async function Home() {
           </Link>
         ))}
       </div>
-      <DisplayAds />
-    </div>
+    </PageContainer>
   );
 }

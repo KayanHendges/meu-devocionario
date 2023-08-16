@@ -1,9 +1,8 @@
-import BackButton from "@components/Buttons/BackButton";
 import PageContainer from "@components/Container/Page";
 import HtmlDisplay from "@components/Html/HtmlDisplay";
-import { Heading } from "@components/Texts/Heading";
 import { prayersProviders } from "@providers/api/prayers";
 import { cache } from "react";
+import PrayerDescriptionContainer from "src/app/(site)/oracoes/[prayer]/PrayerDescriptionContainer";
 
 interface Props {
   prayerTitle: string;
@@ -19,7 +18,9 @@ export default async function PrayerContainer({ prayerTitle }: Props) {
   return (
     <PageContainer header={title}>
       <div className="flex flex-col w-full gap-4">
-        {description && <HtmlDisplay>{description}</HtmlDisplay>}
+        {description && (
+          <PrayerDescriptionContainer>{description}</PrayerDescriptionContainer>
+        )}
         <HtmlDisplay>{body}</HtmlDisplay>
       </div>
     </PageContainer>

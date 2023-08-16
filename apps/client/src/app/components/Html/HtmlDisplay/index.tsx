@@ -9,7 +9,7 @@ export default function HtmlDisplay({ children, className, ...props }: Props) {
   return (
     <div
       className={twMerge(
-        "prose",
+        "prose-zinc dark:prose-invert",
         className
       )}
       dangerouslySetInnerHTML={{ __html: children }}

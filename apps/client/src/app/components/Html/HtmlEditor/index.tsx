@@ -39,7 +39,7 @@ export default function HtmlEditor({
       <div className="ring-1 bg-zinc-200 dark:bg-zinc-900 ring-primary rounded p-4">
         <EditorContent
           className={twMerge(
-            "w-full text-black dark:text-white prose prose-invert",
+            "w-full text-black dark:text-white prose darkprose-invert",
             className
           )}
           editor={editor}

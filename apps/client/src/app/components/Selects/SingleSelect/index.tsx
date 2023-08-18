@@ -21,8 +21,8 @@ const SingleSelect = forwardRef<HTMLSelectElement, SingleSelectProps>(
           )}
           {...props}
         >
-          <option value="" hidden>
-            Selectionar
+          <option hidden>
+            Selecionar
           </option>
           {children}
         </select>

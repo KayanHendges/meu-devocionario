@@ -2,10 +2,11 @@ import ContainerApp from "@components/Container/App";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { twMerge } from "tailwind-merge";
+import { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Meu devocionário",
   description: "O seu devocionário online",
 };

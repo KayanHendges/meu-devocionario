@@ -12,6 +12,7 @@ import { prayersProviders } from "@providers/api/prayers";
 import HtmlEditor from "@components/Html/HtmlEditor";
 import { CreateOrUpdatePrayerFormSchema } from "@components/forms/CreateOrUpdatePrayer/CreateOrUpdatePrayer";
 import Button from "@components/Buttons/Button";
+import { useRouter } from "next/navigation";
 
 interface Props {
   prayer?: Prayer;
@@ -19,6 +20,7 @@ interface Props {
 
 export default function CreateOrUpdatePrayerForm({ prayer }: Props) {
   const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
+  const router = useRouter();
 
   const form = useForm<CreatePrayerPayload>({
     resolver: joiResolver(CreateOrUpdatePrayerFormSchema),
@@ -40,8 +42,11 @@ export default function CreateOrUpdatePrayerForm({ prayer }: Props) {
     try {
       const payload = await handleSubmit(form);
 
-      if (prayer) await prayersProviders.updatePrayer(prayer.id, payload);
-      else await prayersProviders.createPrayer(payload);
+      const { id } = prayer
+        ? await prayersProviders.updatePrayer(prayer.id, payload)
+        : await prayersProviders.createPrayer(payload);
+
+      router.push(`../${encodeURIComponent(id)}`);
     } catch (error) {
       console.log(error);
     }

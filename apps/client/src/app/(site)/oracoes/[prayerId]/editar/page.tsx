@@ -4,14 +4,20 @@ import CreateOrUpdatePrayerForm from "@components/forms/CreateOrUpdatePrayer";
 import { prayersProviders } from "@providers/api/prayers";
 
 interface Props {
-  params: { prayer: string };
+  params: { prayerId: string };
 }
 
 export default async function EditPrayerPage({ params }: Props) {
-  const prayer = await prayersProviders.getPrayer(params.prayer);
+  const prayer = await prayersProviders.getPrayer(
+    decodeURIComponent(params.prayerId)
+  );
 
   return (
-    <PageContainer header="Editar Oração">
+    <PageContainer
+      header="Editar Oração"
+      backButton={`../${encodeURIComponent(prayer.id)}`}
+    >
+      <title>{prayer.title}</title>
       <CreateOrUpdatePrayerForm prayer={prayer} />
     </PageContainer>
   );

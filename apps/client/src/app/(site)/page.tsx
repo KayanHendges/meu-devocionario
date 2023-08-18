@@ -17,7 +17,7 @@ export default async function Home() {
     <PageContainer backButton={false} header="Orações" className="gap-4">
       <div className="flex flex-col gap-4">
         {list.map(({ id, title, cleanBody }) => (
-          <Link key={id} href={`/oracoes/${title}`}>
+          <Link key={id} href={`/oracoes/${encodeURIComponent(id)}`}>
             <Card>
               <Heading>{title}</Heading>
               {cleanBody && <Text>{cleanBody}</Text>}

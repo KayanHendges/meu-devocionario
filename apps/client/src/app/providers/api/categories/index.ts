@@ -13,13 +13,12 @@ class CategoriesProviders {
     (await api.get<Category>(`categories/${prayerUnique}`)).data;
 
   createCategory = async (payload: CreateCategoryPayload) =>
-    (await api.patch<Category>("categories", { payload })).data;
+    (await api.post<Category>("categories", payload)).data;
 
   updateCategory = async (
     prayerUnique: string,
     payload: UpdateCategoryPayload
-  ) =>
-    (await api.patch<Category>(`categories/${prayerUnique}`, { payload })).data;
+  ) => (await api.patch<Category>(`categories/${prayerUnique}`, payload)).data;
 
   deleteCategory = async (prayerUnique: string) =>
     (await api.delete<Category>(`categories/${prayerUnique}`)).data;

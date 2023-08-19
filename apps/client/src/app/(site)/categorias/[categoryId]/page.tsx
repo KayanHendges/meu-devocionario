@@ -1,32 +1,33 @@
+import { categoriesProviders } from "@providers/api/categories";
 import { prayersProviders } from "@providers/api/prayers";
+import CategoryContainer from "@sites/categorias/[categoryId]/CategoryContainer";
 import PrayerContainer from "@sites/oracoes/[prayerId]/PrayerContainer";
 import { Metadata } from "next";
 import { cache } from "react";
 
 interface Props {
-  params: { prayerId: string };
+  params: { categoryId: string };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const getPrayer = cache(async () =>
-    prayersProviders.getPrayer(decodeURIComponent(params.prayerId))
+  const getCategory = cache(async () =>
+    categoriesProviders.getCategory(decodeURIComponent(params.categoryId))
   );
 
-  const { title, cleanDescription } = await getPrayer();
+  const { name, cleanDescription } = await getCategory();
 
   return {
-    title: title,
+    title: name,
     description: cleanDescription,
     openGraph: {
       type: "article",
-      title,
+      title: name,
       description: cleanDescription || undefined,
-      // url: `meudevocionario.com.br`,
     },
   };
 }
 
 export default function Page({ params }: Props) {
-  const { prayerId } = params;
-  return <PrayerContainer prayerId={decodeURIComponent(prayerId)} />;
+  const { categoryId } = params;
+  return <CategoryContainer categoryId={decodeURIComponent(categoryId)} />;
 }

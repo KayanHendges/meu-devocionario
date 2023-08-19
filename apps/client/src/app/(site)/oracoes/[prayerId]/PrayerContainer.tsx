@@ -16,7 +16,7 @@ export default async function PrayerContainer({ prayerId }: Props) {
   const { title, description, body } = await getPrayer();
 
   return (
-    <PageContainer header={title}>
+    <PageContainer header={title} backButton>
       <div className="flex flex-col w-full gap-4">
         {description && (
           <PrayerDescriptionContainer>{description}</PrayerDescriptionContainer>

@@ -1,6 +1,13 @@
 import { Prayer } from "project-types";
 
-interface CreatePrayerPayload
-  extends Omit<Prayer, "id" | "cleanBody" | 'cleanDescription' | "updatedAt" | "createdAt"> {}
+interface IListPrayersParams {
+  categoryId?: string;
+}
 
-interface UpdatePrayerPayload extends Partial<CreatePrayerPayload> {}
+interface ICreatePrayerPayload
+  extends Omit<
+    Prayer,
+    "id" | "cleanBody" | "cleanDescription" | "updatedAt" | "createdAt"
+  > {}
+
+interface IUpdatePrayerPayload extends Partial<ICreatePrayerPayload> {}

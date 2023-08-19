@@ -9,6 +9,7 @@ export interface Prayer {
   id: string;
   title: string;
   description: string | null;
+  cleanDescription: string | null;
   body: string;
   cleanBody: string;
   categoryId: string;

@@ -2,6 +2,7 @@
 import LabelInput from "@components/Inputs/Label";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { replaceHtmlEntites } from "@utils/formats/html";
 import { ComponentProps, Fragment } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -23,7 +24,8 @@ export default function HtmlEditor({
   const editor = useEditor({
     extensions: [StarterKit],
     content: initialContent,
-    onUpdate: ({ editor }) => onHtmlChange && onHtmlChange(editor.getHTML()),
+    onUpdate: ({ editor }) =>
+      onHtmlChange && onHtmlChange(replaceHtmlEntites(editor.getHTML())),
     editorProps: {
       attributes: {
         class: twMerge("outline-none", editorClassName),
@@ -36,7 +38,11 @@ export default function HtmlEditor({
   return (
     <Container>
       {label && <LabelInput>{label}</LabelInput>}
-      <div className="ring-1 bg-zinc-200 dark:bg-zinc-900 ring-primary rounded p-4">
+      <div
+        data-focused={editor?.isFocused || undefined}
+        className="ring-1 bg-zinc-200 dark:bg-zinc-900 ring-primary rounded p-4 data-[focused]:ring-2 transition-all"
+        onClick={() => editor?.chain().focus().run()}
+      >
         <EditorContent
           className={twMerge(
             "w-full text-black dark:text-white prose-zinc dark:prose-invert",

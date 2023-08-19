@@ -12,6 +12,10 @@ export class ListPrayersQueryDTO extends PaginationAndSortDTO<Prayer> {
   @IsOptional()
   description?: string;
 
+  @IsString()
+  @IsOptional()
+  categoryId?: string;
+
   @IsDate()
   @IsOptional()
   createdAt?: Date;

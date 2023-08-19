@@ -16,13 +16,14 @@
     "incremental": true,
     "baseUrl": "./",
     "paths": {
+      "@sites/*": ["src/app/(site)/*"],
       "@components/*": ["src/app/components/*"],
       "@utils/*": ["src/utils/*"],
       "@providers/*": ["src/app/providers/*"],
       "@contexts/*": ["src/contexts/*"],
       "@hooks/*": ["src/hooks/*"],
       "@routes/*": ["src/routes/*"],
-      "@types": ["src/types.d.ts"]
+      "@types": ["src/types.d.ts"],
     },
     "plugins": [
       {

@@ -1,7 +1,7 @@
 import { prayersProviders } from "@providers/api/prayers";
+import PrayerContainer from "@sites/oracoes/[prayerId]/PrayerContainer";
 import { Metadata, ResolvingMetadata } from "next";
 import { cache } from "react";
-import PrayerContainer from "src/app/(site)/oracoes/[prayerId]/PrayerContainer";
 
 interface Props {
   params: { prayerId: string };

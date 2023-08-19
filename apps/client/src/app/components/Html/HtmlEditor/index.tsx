@@ -2,6 +2,7 @@
 import LabelInput from "@components/Inputs/Label";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { replaceHtmlEntites } from "@utils/formats/html";
 import { ComponentProps, Fragment } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -23,7 +24,8 @@ export default function HtmlEditor({
   const editor = useEditor({
     extensions: [StarterKit],
     content: initialContent,
-    onUpdate: ({ editor }) => onHtmlChange && onHtmlChange(editor.getHTML()),
+    onUpdate: ({ editor }) =>
+      onHtmlChange && onHtmlChange(replaceHtmlEntites(editor.getHTML())),
     editorProps: {
       attributes: {
         class: twMerge("outline-none", editorClassName),

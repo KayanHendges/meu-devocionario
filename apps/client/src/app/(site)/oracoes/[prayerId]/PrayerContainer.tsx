@@ -1,8 +1,8 @@
 import PageContainer from "@components/Container/Page";
 import HtmlDisplay from "@components/Html/HtmlDisplay";
 import { prayersProviders } from "@providers/api/prayers";
+import PrayerDescriptionContainer from "@sites/oracoes/[prayerId]/PrayerDescriptionContainer";
 import { cache } from "react";
-import PrayerDescriptionContainer from "src/app/(site)/oracoes/[prayerId]/PrayerDescriptionContainer";
 
 interface Props {
   prayerId: string;

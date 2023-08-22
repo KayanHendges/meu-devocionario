@@ -28,9 +28,19 @@ export interface Category {
   createdAt: Date;
 }
 
-export interface ResponseList<T> {
-  list: T[];
-  count: number;
-  page: number;
-  pageSize: number;
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  updatedAt: Date;
+  createdAt: Date;
+}
+
+export interface UserCredentials {
+  id: string;
+  userId: string;
+  password?: string;
+  googleId?: string;
+  updatedAt: Date;
+  createdAt: Date;
 }

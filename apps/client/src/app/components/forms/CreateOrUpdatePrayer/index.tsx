@@ -46,7 +46,8 @@ export default function CreateOrUpdatePrayerForm({ prayer }: Props) {
         ? await prayersProviders.updatePrayer(prayer.id, payload)
         : await prayersProviders.createPrayer(payload);
 
-      router.push(`../${encodeURIComponent(id)}`);
+      const path = prayer ? `../` : "/oracoes";
+      router.push(`${path}/${encodeURIComponent(id)}`);
     } catch (error) {
       console.log(error);
     }

@@ -68,9 +68,9 @@ export class MongoCategoriesRepository implements ICategoriesRepository {
   }
 
   async create(payload: RepositoryCreateParams<Category>): Promise<Category> {
-    const createdAt = await this.categoryModel.create(payload);
+    const created = await this.categoryModel.create(payload);
 
-    return mapMongoReturn(createdAt.toJSON());
+    return mapMongoReturn(created.toJSON());
   }
 
   async update(

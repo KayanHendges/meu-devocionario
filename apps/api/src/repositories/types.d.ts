@@ -66,3 +66,15 @@ type RepositoryCreateParams<T extends RepositoryEntity<T>> = Omit<
 type RepositoryUpdateParams<T extends Record<string, any>> = Partial<
   Omit<RepositoryCreateParams<T>, 'id'>
 >;
+
+interface IPagination {
+  page?: number;
+  pageSize?: number;
+}
+
+interface IPrismaListParams<T, W> {
+  where?: W;
+  orderBy?: OrderParam<T>;
+  page?: number;
+  pageSize?: number;
+}

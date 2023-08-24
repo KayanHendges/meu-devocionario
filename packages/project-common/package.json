@@ -1,5 +1,5 @@
 {
-  "name": "project-types",
+  "name": "project-common",
   "version": "1.0.0",
   "description": "shared type declarations between the workspace",
   "main": "./dist/index.js",
@@ -8,5 +8,9 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.2.0",
+    "prisma": "^5.2.0"
   }
 }

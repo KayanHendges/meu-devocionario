@@ -6,7 +6,7 @@ import {
   IsString,
   validateSync,
 } from 'class-validator';
-import { Category as ICategory } from 'project-types';
+import { Category as ICategory } from 'project-common';
 import { v4 as uuidv4 } from 'uuid';
 
 interface ContructorProps {

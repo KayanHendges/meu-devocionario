@@ -9,9 +9,9 @@ datasource db {
 
 model Category {
   id               String   @id @default(auto()) @map("_id") @db.ObjectId
-  cleanDescription String?
   createdAt        DateTime @db.Date
   description      String?
+  cleanDescription String?  @map("clean_description")
   name             String   @unique(map: "name_1")
   updatedAt        DateTime @db.Date
 
@@ -19,17 +19,17 @@ model Category {
 }
 
 model Prayer {
-  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
-  body                String
+  id                  String       @id @default(auto()) @map("_id") @db.ObjectId
+  title               String       @unique(map: "title_1")
   categoryId          String
-  cleanBody           String
-  cleanDescription    String
-  createdAt           DateTime @db.Date
+  body                String
+  cleanBody           String       @map("clean_body")
+  cleanDescription    String       @map("clean_description")
   description         String
-  language            String
+  language            LanguageCode @default(pt_BR)
   relatedCategoriesId String[]
-  title               String   @unique(map: "title_1")
-  updatedAt           DateTime @db.Date
+  updatedAt           DateTime     @db.Date
+  createdAt           DateTime     @db.Date
 
   @@map("prayers")
 }
@@ -38,6 +38,7 @@ model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   email     String   @unique
   name      String
+  role      UserRole @default(user)
   updatedAt DateTime @updatedAt @map("updated_at")
   createdAt DateTime @default(now()) @map("created_at")
 
@@ -52,4 +53,15 @@ model UserCredential {
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("user_credentials")
+}
+
+enum UserRole {
+  admin
+  moderator
+  user
+}
+
+enum LanguageCode {
+  pt_BR
+  la
 }

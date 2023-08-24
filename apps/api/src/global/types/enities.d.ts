@@ -1,4 +1,4 @@
-import { RepositoryMetaProperties } from '@global/types/repository';
+import { RepositoryMetaProperties } from '@repositories/types';
 
 interface ContructorProps<
   T extends RepositoryMetaProperties & Record<string, any>,

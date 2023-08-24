@@ -1,52 +1,51 @@
-import { ResponseList } from 'project-types';
+import { ResponseList } from 'project-common';
 import { Prayer } from '@entities/prayer';
 import { stripHtml } from '@global/utils.ts/formatters';
 import { mapQueryToService } from '@global/utils.ts/service';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import {
   CreatePrayerDTO,
-  FindPrayerParams,
+  UniquePrayer,
   ListPrayersQueryDTO,
   UpdatePrayerDTO,
 } from '@prayers/prayers.dto';
-import { ICategoriesRepository } from '@repositories/categories/categories.repository.interface';
-import { IPrayersRepository } from '@repositories/prayers/prayers.repository.interface';
+import { IPrayerRepository } from '@repositories/prayer/prayer.repository.interface';
+import { ICategoryRepository } from '@repositories/category/category.repository.interface';
 
 @Injectable()
 export class PrayersService {
   constructor(
     @Inject('IPrayersRepository')
-    private readonly prayersRepository: IPrayersRepository,
-    @Inject('ICategoriesRepository')
-    private readonly categoriesRepository: ICategoriesRepository,
+    private readonly prayerRepository: IPrayerRepository,
+    private readonly categoryRepository: ICategoryRepository,
   ) {}
 
   async list(params: ListPrayersQueryDTO): Promise<ResponseList<Prayer>> {
     const query = mapQueryToService(params);
     const { page, pageSize, where } = query;
 
-    const list = await this.prayersRepository.list(query);
+    const list = await this.prayerRepository.list(query);
     const count =
       list.length <= query.pageSize
         ? list.length
-        : await this.prayersRepository.count(where);
+        : await this.prayerRepository.count({ where });
 
     return { list, count, page, pageSize };
   }
 
-  async find(params: FindPrayerParams): Promise<Prayer> {
-    return this.prayersRepository.find(params);
+  async find(params: UniquePrayer): Promise<Prayer> {
+    return this.prayerRepository.find(params);
   }
 
   async create(payload: CreatePrayerDTO): Promise<Prayer> {
     const prayer = new Prayer(payload);
     await this.validateCategories(prayer);
 
-    return this.prayersRepository.create(prayer);
+    return this.prayerRepository.create(prayer);
   }
 
   async update(
-    params: FindPrayerParams,
+    params: UniquePrayer,
     payload: UpdatePrayerDTO,
   ): Promise<Prayer> {
     const prayer: Partial<Prayer> = payload;
@@ -59,11 +58,11 @@ export class PrayersService {
       prayer.cleanDescription = stripHtml(prayer.description);
 
     await this.validateCategories(prayer);
-    return this.prayersRepository.update(params, prayer);
+    return this.prayerRepository.update(params, prayer);
   }
 
-  async delete(params: FindPrayerParams): Promise<Prayer> {
-    return this.prayersRepository.delete(params);
+  async delete(params: UniquePrayer): Promise<Prayer> {
+    return this.prayerRepository.delete(params);
   }
 
   private async validateCategories({
@@ -80,7 +79,7 @@ export class PrayersService {
     ];
 
     const categoriesFound = (
-      await this.categoriesRepository.findMany(categories)
+      await this.categoryRepository.list({ where: { id: { in: categories } } })
     ).map((it) => it.id);
 
     const missingCategories = categories.filter(

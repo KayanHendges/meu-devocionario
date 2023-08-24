@@ -1,6 +1,12 @@
-import { IsDate, IsNotEmpty, IsString, validateSync } from 'class-validator';
+import {
+  IsDate,
+  IsEnum,
+  IsNotEmpty,
+  IsString,
+  validateSync,
+} from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
-import { User as IUser } from 'project-types';
+import { User as IUser, UserRole } from 'project-common';
 
 interface ContructorProps
   extends Omit<IUser, 'id' | 'updatedAt' | 'createdAt'> {
@@ -17,6 +23,11 @@ export class User implements IUser {
   @IsString()
   @IsNotEmpty()
   name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsEnum(UserRole)
+  role: UserRole;
 
   @IsString()
   @IsNotEmpty()

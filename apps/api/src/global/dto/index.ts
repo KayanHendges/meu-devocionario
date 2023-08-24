@@ -1,4 +1,4 @@
-import { OrderBy, OrderParam } from '@global/types/repository';
+import { OrderBy, OrderParam } from '@repositories/types';
 import { Transform, Type } from 'class-transformer';
 import { IsInt, IsObject, IsOptional, IsPositive, Max } from 'class-validator';
 

@@ -4,7 +4,7 @@ import {
   RepositoryEntity,
   RepositoryUpdateParams,
   WhereParams,
-} from '@global/types/repository';
+} from '@repositories/types';
 
 export type EntityUniqueParams<T, PK extends keyof T> = {
   [K in PK]?: T[K];

@@ -1,5 +1,5 @@
 "use client";
-import { Prayer } from "project-types";
+import { Prayer } from "project-common";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { FormEvent, useMemo, useState } from "react";

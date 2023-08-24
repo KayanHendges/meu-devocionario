@@ -1,14 +1,24 @@
-import { User } from '@entities/user';
-import {
-  EntityUniqueParams,
-  IBaseRepository,
-} from '@repositories/base/base.interface.repository';
+import { Prisma, User } from '@prisma/client';
+import { IPrismaListParams } from '@repositories/types';
 
-export type UserUniqueKeys = 'id' | 'email';
+export type IListUserParams = IPrismaListParams<User, Prisma.UserWhereInput>;
+export type IFindUserParams = Prisma.UserWhereUniqueInput;
+export type ICreateUserPayload = Prisma.UserCreateInput;
+export type IUpdateUserPayload = Prisma.UserUpdateInput;
 
-export type UserUniqueParams = EntityUniqueParams<User, UserUniqueKeys>;
+export abstract class IUserRepository {
+  abstract list(params: IListUserParams): Promise<User[]>;
 
-export abstract class IUserRepository extends IBaseRepository<
-  User,
-  UserUniqueKeys
-> {}
+  abstract find(params: IFindUserParams): Promise<User>;
+
+  abstract count(params: IListUserParams): Promise<number>;
+
+  abstract create(payload: ICreateUserPayload): Promise<User>;
+
+  abstract update(
+    params: IFindUserParams,
+    payload: IUpdateUserPayload,
+  ): Promise<User>;
+
+  abstract delete(params: IFindUserParams): Promise<User>;
+}

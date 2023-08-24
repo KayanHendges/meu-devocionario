@@ -1,6 +1,6 @@
 import { Category } from '@entities/category';
 import { PaginationAndSortDTO } from '@global/dto';
-import { IsDate, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { OmitType, PartialType, PickType } from '@nestjs/mapped-types';
 
 export class CreateCategoryDTO extends OmitType(Category, [
@@ -30,6 +30,14 @@ export class ListCategoriesQueryDTO extends PaginationAndSortDTO<Category> {
   updatedAt?: Date;
 }
 
-export class UniqueCategoryParams extends PartialType(
-  PickType(Category, ['id', 'name']),
-) {}
+export class UniqueCategoryParams {
+  @IsString()
+  @IsNotEmpty()
+  unique: string;
+}
+
+export type UniqueCategory =
+  | {
+      id: string;
+    }
+  | { name: string };

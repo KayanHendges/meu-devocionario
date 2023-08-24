@@ -27,9 +27,9 @@ export class CategoriesController {
   }
 
   @Get('/:id')
-  find(@Param() { id }: UniqueCategoryParams) {
-    const unique = isObjectId(id) ? { id } : { name: id };
-    return this.categoriesService.find(unique);
+  find(@Param() { unique }: UniqueCategoryParams) {
+    const uniqueParam = isObjectId(unique) ? { id: unique } : { name: unique };
+    return this.categoriesService.find(uniqueParam);
   }
 
   @Post()
@@ -39,16 +39,16 @@ export class CategoriesController {
 
   @Patch(':id')
   update(
-    @Param() { id }: UniqueCategoryParams,
+    @Param() { unique }: UniqueCategoryParams,
     @Body() body: UpdateCategoryDTO,
   ) {
-    const unique = isObjectId(id) ? { id } : { name: id };
-    return this.categoriesService.update(unique, body);
+    const uniqueParam = isObjectId(unique) ? { id: unique } : { name: unique };
+    return this.categoriesService.update(uniqueParam, body);
   }
 
   @Delete(':id')
-  delete(@Param() { id }: UniqueCategoryParams) {
-    const unique = isObjectId(id) ? { id } : { name: id };
-    return this.categoriesService.delete(unique);
+  delete(@Param() { unique }: UniqueCategoryParams) {
+    const uniqueParam = isObjectId(unique) ? { id: unique } : { name: unique };
+    return this.categoriesService.delete(uniqueParam);
   }
 }

@@ -1,7 +1,7 @@
 import { Prayer } from '@entities/prayer';
 import { PaginationAndSortDTO } from '@global/dto';
 import { OmitType, PartialType, PickType } from '@nestjs/mapped-types';
-import { IsDate, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class ListPrayersQueryDTO extends PaginationAndSortDTO<Prayer> {
   @IsString()
@@ -35,6 +35,14 @@ export class CreatePrayerDTO extends OmitType(Prayer, [
 
 export class UpdatePrayerDTO extends PartialType(CreatePrayerDTO) {}
 
-export class FindPrayerParams extends PartialType(
-  PickType(Prayer, ['id', 'title']),
-) {}
+export class UniquePrayerParams {
+  @IsString()
+  @IsNotEmpty()
+  unique: string;
+}
+
+export type UniquePrayer =
+  | {
+      id: string;
+    }
+  | { title: string };

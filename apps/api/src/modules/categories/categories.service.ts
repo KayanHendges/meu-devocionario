@@ -1,55 +1,52 @@
-import { ResponseList } from 'project-types';
+import { ResponseList } from 'project-common';
 import {
   CreateCategoryDTO,
-  UniqueCategoryParams,
+  UniqueCategory,
   ListCategoriesQueryDTO,
   UpdateCategoryDTO,
 } from '@categories/categories.dto';
 import { Category } from '@entities/category';
 import { mapQueryToService } from '@global/utils.ts/service';
 import { Inject, Injectable } from '@nestjs/common';
-import { ICategoriesRepository } from '@repositories/categories/categories.repository.interface';
 import { stripHtml } from '@global/utils.ts/formatters';
+import { ICategoryRepository } from '@repositories/category/category.repository.interface';
 
 @Injectable()
 export class CategoriesService {
-  constructor(
-    @Inject('ICategoriesRepository')
-    private readonly categoriesRepository: ICategoriesRepository,
-  ) {}
+  constructor(private readonly categoryRepository: ICategoryRepository) {}
 
   async list(params: ListCategoriesQueryDTO): Promise<ResponseList<Category>> {
     const query = mapQueryToService(params);
     const { page, pageSize, where } = query;
 
-    const list = await this.categoriesRepository.list(query);
+    const list = await this.categoryRepository.list(query);
     const count =
       list.length <= query.pageSize
         ? list.length
-        : await this.categoriesRepository.count(where);
+        : await this.categoryRepository.count({ where });
 
     return { list, count, page, pageSize };
   }
 
-  async find(params: UniqueCategoryParams): Promise<Category> {
-    return this.categoriesRepository.find(params);
+  async find(params: UniqueCategory): Promise<Category> {
+    return this.categoryRepository.find(params);
   }
 
   async create(payload: CreateCategoryDTO): Promise<any> {
     const category = new Category(payload);
-    return this.categoriesRepository.create(category);
+    return this.categoryRepository.create(category);
   }
 
-  async update(params: UniqueCategoryParams, payload: UpdateCategoryDTO) {
+  async update(params: UniqueCategory, payload: UpdateCategoryDTO) {
     const category: Partial<Category> = payload;
 
     if (category.description)
       category.cleanDescription = stripHtml(category.description);
 
-    return this.categoriesRepository.update(params, payload);
+    return this.categoryRepository.update(params, payload);
   }
 
-  async delete(params: UniqueCategoryParams): Promise<Category> {
-    return this.categoriesRepository.delete(params);
+  async delete(params: UniqueCategory): Promise<Category> {
+    return this.categoryRepository.delete(params);
   }
 }

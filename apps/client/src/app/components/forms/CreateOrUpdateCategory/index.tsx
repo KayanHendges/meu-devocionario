@@ -1,5 +1,5 @@
 "use client";
-import { Category } from "project-types";
+import { Category } from "project-common";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { FormEvent, useMemo, useState } from "react";
@@ -40,7 +40,8 @@ export default function CreateOrUpdateCategoryForm({ category }: Props) {
         ? await categoriesProviders.updateCategory(category.id, payload)
         : await categoriesProviders.createCategory(payload);
 
-      router.push(`../${encodeURIComponent(id)}`);
+      const path = category ? `../` : "/categorias";
+      router.push(`${path}/${encodeURIComponent(id)}`);
     } catch (error) {
       console.log(error);
     }

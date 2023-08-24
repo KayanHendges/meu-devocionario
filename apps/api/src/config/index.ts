@@ -1,42 +1,9 @@
-import { Expose, plainToInstance } from 'class-transformer';
-import {
-  IsBoolean,
-  IsEnum,
-  IsPositive,
-  IsString,
-  ValidateNested,
-  validateSync,
-} from 'class-validator';
+import { plainToInstance } from 'class-transformer';
+import { IsEnum, IsPositive, IsString, validateSync } from 'class-validator';
 
 enum Environment {
   development = 'development',
   production = 'production',
-}
-
-export class MongoDBConfig {
-  @IsString()
-  @Expose()
-  MONGODB_USERNAME: string;
-
-  @IsString()
-  @Expose()
-  MONGODB_PASSWORD: string;
-
-  @IsString()
-  @Expose()
-  MONGODB_AUTH_SOURCE: string;
-
-  @IsString()
-  @Expose()
-  MONGODB_HOST: string;
-
-  @IsString()
-  @Expose()
-  MONGODB_DATABASE: string;
-
-  @IsBoolean()
-  @Expose()
-  MONGODB_SRV: boolean;
 }
 
 export class EnvironmentConfig {
@@ -46,23 +13,15 @@ export class EnvironmentConfig {
   @IsPositive()
   SERVER_PORT = 3333;
 
-  @Expose()
-  @ValidateNested()
-  mongo: MongoDBConfig;
+  @IsString()
+  DATABASE_URL: string;
 }
 
 const validateEnvironment = () => {
-  const environments = {
+  const environments: Record<keyof EnvironmentConfig, string | undefined> = {
     ENVIRONMENT: process.env.ENVIRONMENT,
     SERVER_PORT: process.env.SERVER_PORT,
-    mongo: {
-      MONGODB_USERNAME: process.env.MONGODB_USERNAME,
-      MONGODB_PASSWORD: process.env.MONGODB_PASSWORD,
-      MONGODB_AUTH_SOURCE: process.env.MONGODB_AUTH_SOURCE,
-      MONGODB_HOST: process.env.MONGODB_HOST,
-      MONGODB_DATABASE: process.env.MONGODB_DATABASE,
-      MONGODB_SRV: (process.env.MONGODB_SRV || '').toLowerCase() === 'true',
-    },
+    DATABASE_URL: process.env.DATABASE_URL,
   };
 
   const configInstance = plainToInstance(EnvironmentConfig, environments, {

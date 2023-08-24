@@ -25,8 +25,8 @@ RUN yarn install
 COPY --from=builder /app/out/full/ .
 RUN yarn turbo run build --filter=api
  
-# Build project-types
-WORKDIR /app/build/packages/project-types
+# Build project-common
+WORKDIR /app/build/packages/project-common
 
 RUN yarn build
 

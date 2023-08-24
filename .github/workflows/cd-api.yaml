@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - main
-    
+
     paths:
       - "apps/api/**"
-      - "packages/project-types/**"
+      - "packages/project-common/**"
       - ".github/workflows/cd-api.yaml"
       - ".dockerignore"
 
@@ -18,8 +18,8 @@ jobs:
     uses: ./.github/workflows/setup-aws.yaml
     secrets: inherit
     permissions:
-        id-token: write
-        contents: read
+      id-token: write
+      contents: read
 
   deploy:
     needs: [setup-aws]
@@ -50,19 +50,14 @@ jobs:
         run: |
           echo "ENVIRONMENT=production" >> .env
           echo "SERVER_PORT=3333" >> .env
-          echo "MONGODB_USERNAME=${{ secrets.MONGODB_USERNAME }}" >> .env
-          echo "MONGODB_PASSWORD=${{ secrets.MONGODB_PASSWORD }}" >> .env
-          echo "MONGODB_AUTH_SOURCE=${{ secrets.MONGODB_AUTH_SOURCE }}" >> .env
-          echo "MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE }}" >> .env
-          echo "MONGODB_HOST=${{ secrets.MONGODB_HOST }}" >> .env
-          echo "MONGODB_SRV=${{ secrets.MONGODB_SRV }}" >> .env
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
           echo "AWS_ACCOUNT_ID=${{ secrets.AWS_ACCOUNT_ID }}" >> .env
           echo "AWS_ECR_REGION=${{ secrets.AWS_ECR_REGION }}" >> .env
 
       - name: Creating ssh pem file
         working-directory: apps/api
         run: echo "${{ secrets.SSH_KEY }}" >> api.pem
-  
+
       - name: chmod 400 apps/api/api.pem
         run: chmod 400 apps/api/api.pem
 

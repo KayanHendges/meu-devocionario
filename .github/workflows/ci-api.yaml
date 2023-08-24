@@ -6,7 +6,7 @@ on:
       - develop
     paths:
       - "apps/api/**"
-      - "packages/project-types/**"
+      - "packages/project-common/**"
       - ".github/workflows/ci-api.yaml"
       - ".dockerignore"
 

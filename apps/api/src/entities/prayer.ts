@@ -10,11 +10,7 @@ import {
   validateSync,
 } from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  LanguageCodes,
-  Prayer as IPrayer,
-  LanguageCodesEnum,
-} from 'project-types';
+import { Prayer as IPrayer, LanguageCode } from 'project-common';
 
 // Todo: fix generic type
 interface ContructorProps {
@@ -24,7 +20,7 @@ interface ContructorProps {
   body: string;
   categoryId: string;
   relatedCategoriesId?: string[];
-  language: LanguageCodes;
+  language: LanguageCode;
   updatedAt?: Date;
   createdAt?: Date;
 }
@@ -39,13 +35,11 @@ export class Prayer implements IPrayer {
 
   @IsString()
   @IsNotEmpty()
-  @IsOptional()
-  description: string | null = null;
+  description: string;
 
   @IsString()
   @IsNotEmpty()
-  @IsOptional()
-  cleanDescription: string | null = null;
+  cleanDescription: string;
 
   @IsString()
   @IsNotEmpty()
@@ -66,8 +60,8 @@ export class Prayer implements IPrayer {
   @IsOptional()
   relatedCategoriesId: string[] = [];
 
-  @IsEnum(LanguageCodesEnum)
-  language: LanguageCodes;
+  @IsEnum(LanguageCode)
+  language: LanguageCode;
 
   @IsDate()
   updatedAt: Date = new Date();

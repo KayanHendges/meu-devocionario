@@ -11,8 +11,8 @@ import {
 } from '@nestjs/common';
 import {
   CreatePrayerDTO,
-  FindPrayerParams,
   ListPrayersQueryDTO,
+  UniquePrayerParams,
   UpdatePrayerDTO,
 } from '@prayers/prayers.dto';
 import { PrayersService } from '@prayers/prayers.service';
@@ -27,9 +27,9 @@ export class PrayersController {
   }
 
   @Get('/:id')
-  find(@Param() { id }: FindPrayerParams) {
-    const unique = isObjectId(id) ? { id } : { title: id };
-    return this.prayersService.find(unique);
+  find(@Param() { unique }: UniquePrayerParams) {
+    const uniqueParam = isObjectId(unique) ? { id: unique } : { title: unique };
+    return this.prayersService.find(uniqueParam);
   }
 
   @Post()
@@ -38,14 +38,17 @@ export class PrayersController {
   }
 
   @Patch(':id')
-  update(@Param() { id }: FindPrayerParams, @Body() body: UpdatePrayerDTO) {
-    const unique = isObjectId(id) ? { id } : { title: id };
-    return this.prayersService.update(unique, body);
+  update(
+    @Param() { unique }: UniquePrayerParams,
+    @Body() body: UpdatePrayerDTO,
+  ) {
+    const uniqueParam = isObjectId(unique) ? { id: unique } : { title: unique };
+    return this.prayersService.update(uniqueParam, body);
   }
 
   @Delete(':id')
-  delete(@Param() { id }: FindPrayerParams) {
-    const unique = isObjectId(id) ? { id } : { title: id };
-    return this.prayersService.delete(unique);
+  delete(@Param() { unique }: UniquePrayerParams) {
+    const uniqueParam = isObjectId(unique) ? { id: unique } : { title: unique };
+    return this.prayersService.delete(uniqueParam);
   }
 }

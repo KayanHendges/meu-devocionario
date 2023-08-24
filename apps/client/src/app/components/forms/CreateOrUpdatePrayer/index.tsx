@@ -1,5 +1,5 @@
 "use client";
-import { Prayer } from "project-types";
+import { Prayer } from "project-common";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { FormEvent, useMemo, useState } from "react";
@@ -46,7 +46,8 @@ export default function CreateOrUpdatePrayerForm({ prayer }: Props) {
         ? await prayersProviders.updatePrayer(prayer.id, payload)
         : await prayersProviders.createPrayer(payload);
 
-      router.push(`../${encodeURIComponent(id)}`);
+      const path = prayer ? `../` : "/oracoes";
+      router.push(`${path}/${encodeURIComponent(id)}`);
     } catch (error) {
       console.log(error);
     }

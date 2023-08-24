@@ -1,7 +1,7 @@
 import { RelatedCategoriesSelectProps } from "@components/Selects/RelatedCategories/types";
 import SingleSelect from "@components/Selects/SingleSelect";
 import { produce } from "immer";
-import { Category } from "project-types";
+import { Category } from "project-common";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { X } from "phosphor-react";

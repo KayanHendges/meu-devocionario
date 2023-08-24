@@ -2,7 +2,7 @@
 import { CategorySelectProps } from "@components/Selects/Category/types";
 import SingleSelect from "@components/Selects/SingleSelect";
 import { categoriesProviders } from "@providers/api/categories";
-import { Category } from "project-types";
+import { Category } from "project-common";
 import { forwardRef, useCallback, useEffect, useState } from "react";
 
 const CategorySelect = forwardRef<HTMLSelectElement, CategorySelectProps>(

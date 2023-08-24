@@ -1,4 +1,4 @@
-import { Prayer } from "project-types";
+import { Prayer } from "project-common";
 
 interface IListPrayersParams {
   categoryId?: string;

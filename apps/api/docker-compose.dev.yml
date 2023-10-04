@@ -1,0 +1,33 @@
+version: "3"
+ 
+services:
+  api:
+    env_file: ../../.env
+    build:
+      context: ../../
+      dockerfile: ./apps/api/Dockerfile
+    ports:
+      - 3333:3333
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.50'
+          memory: 256M
+    restart: on-failure
+    networks: 
+      - default
+    expose:
+      - 3333
+    working_dir: /app
+    entrypoint: ["yarn", "start:prod"]
+    
+
+networks:
+  default:
+    name: web
+    external: true
+      

@@ -1,5 +1,5 @@
 "use client";
-import { Category } from "project-common";
+import { Category } from "database";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { FormEvent, useMemo, useState } from "react";

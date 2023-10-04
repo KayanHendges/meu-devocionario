@@ -1,4 +1,4 @@
-import { Category } from "project-common";
+import { Category } from "database";
 import { ComponentProps } from "react";
 import { FieldValues } from "react-hook-form";
 

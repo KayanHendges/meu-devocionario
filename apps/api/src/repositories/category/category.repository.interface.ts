@@ -1,4 +1,4 @@
-import { Prisma, Category } from '@prisma/client';
+import { Prisma, Category } from 'database';
 import { IPrismaListParams } from '@repositories/types';
 
 export type IListCategoryParams = IPrismaListParams<

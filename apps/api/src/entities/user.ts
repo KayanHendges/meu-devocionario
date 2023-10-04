@@ -6,7 +6,7 @@ import {
   validateSync,
 } from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
-import { User as IUser, UserRole } from 'project-common';
+import { User as IUser, UserRole } from 'database';
 
 interface ContructorProps
   extends Omit<IUser, 'id' | 'updatedAt' | 'createdAt'> {

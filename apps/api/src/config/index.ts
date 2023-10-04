@@ -1,5 +1,11 @@
-import { plainToInstance } from 'class-transformer';
-import { IsEnum, IsPositive, IsString, validateSync } from 'class-validator';
+import { Expose, plainToInstance } from 'class-transformer';
+import {
+  IsEnum,
+  IsOptional,
+  IsPositive,
+  IsString,
+  validateSync,
+} from 'class-validator';
 
 enum Environment {
   development = 'development',
@@ -8,19 +14,23 @@ enum Environment {
 
 export class EnvironmentConfig {
   @IsEnum(Environment)
+  @Expose()
   ENVIRONMENT: keyof typeof Environment = 'development';
 
   @IsPositive()
+  @IsOptional()
+  @Expose()
   SERVER_PORT = 3333;
 
   @IsString()
+  @Expose()
   DATABASE_URL: string;
 }
 
 const validateEnvironment = () => {
-  const environments: Record<keyof EnvironmentConfig, string | undefined> = {
+  const environments: Record<keyof EnvironmentConfig, any> = {
     ENVIRONMENT: process.env.ENVIRONMENT,
-    SERVER_PORT: process.env.SERVER_PORT,
+    SERVER_PORT: Number(process.env.SERVER_PORT),
     DATABASE_URL: process.env.DATABASE_URL,
   };
 

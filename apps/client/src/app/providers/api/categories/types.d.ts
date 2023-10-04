@@ -1,4 +1,4 @@
-import { Category } from "project-common";
+import { Category } from "database";
 
 interface CreateCategoryPayload
   extends Omit<

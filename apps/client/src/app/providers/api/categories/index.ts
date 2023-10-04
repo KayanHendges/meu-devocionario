@@ -3,7 +3,8 @@ import {
   CreateCategoryPayload,
   UpdateCategoryPayload,
 } from "@providers/api/categories/types";
-import { Category, ResponseList } from "project-common";
+import { Category } from "database";
+import { ResponseList } from "project-common";
 
 class CategoriesProviders {
   listCategories = async () =>

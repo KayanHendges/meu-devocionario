@@ -4,7 +4,8 @@ import {
   IListPrayersParams,
   IUpdatePrayerPayload,
 } from "@providers/api/prayers/types";
-import { Prayer, ResponseList } from "project-common";
+import { Prayer } from "database";
+import { ResponseList } from "project-common";
 
 class PrayersProviders {
   listPrayers = async (params?: IListPrayersParams) =>

@@ -1,4 +1,4 @@
-import { Prisma, UserCredential } from '@prisma/client';
+import { Prisma, UserCredential } from 'database';
 import { IPrismaListParams } from '@repositories/types';
 
 export type IListUserCredentialParams = IPrismaListParams<

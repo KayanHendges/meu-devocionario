@@ -1,4 +1,4 @@
-import { Prisma, User } from '@prisma/client';
+import { Prisma, User } from 'database';
 import { IPrismaListParams } from '@repositories/types';
 
 export type IListUserParams = IPrismaListParams<User, Prisma.UserWhereInput>;

@@ -1,4 +1,4 @@
-import { Prisma, Prayer } from '@prisma/client';
+import { Prisma, Prayer } from 'database';
 import { IPrismaListParams } from '@repositories/types';
 
 export type IListPrayerParams = IPrismaListParams<

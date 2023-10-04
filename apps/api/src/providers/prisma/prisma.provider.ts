@@ -1,6 +1,6 @@
 import { config } from '@config/index';
 import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
-import { PrismaClient, Prisma } from '@prisma/client';
+import { PrismaClient, Prisma } from 'database';
 
 let _isConnected = false;
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Category } from '@prisma/client';
+import { Category } from 'database';
 import { PrismaProvider } from '@providers/prisma/prisma.provider';
 import { PrismaBaseRepository } from '@repositories/base/prisma/prisma.abstract.repository';
 import {

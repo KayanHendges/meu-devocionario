@@ -7,7 +7,7 @@ import {
 } from '@categories/categories.dto';
 import { Category } from '@entities/category';
 import { mapQueryToService } from '@global/utils.ts/service';
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { stripHtml } from '@global/utils.ts/formatters';
 import { ICategoryRepository } from '@repositories/category/category.repository.interface';
 

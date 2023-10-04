@@ -10,7 +10,7 @@ import {
   validateSync,
 } from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
-import { Prayer as IPrayer, LanguageCode } from 'project-common';
+import { Prayer as IPrayer, LanguageCode } from 'database';
 
 // Todo: fix generic type
 interface ContructorProps {

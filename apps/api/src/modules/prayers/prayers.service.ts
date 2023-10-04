@@ -2,7 +2,7 @@ import { ResponseList } from 'project-common';
 import { Prayer } from '@entities/prayer';
 import { stripHtml } from '@global/utils.ts/formatters';
 import { mapQueryToService } from '@global/utils.ts/service';
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import {
   CreatePrayerDTO,
   UniquePrayer,
@@ -15,7 +15,6 @@ import { ICategoryRepository } from '@repositories/category/category.repository.
 @Injectable()
 export class PrayersService {
   constructor(
-    @Inject('IPrayersRepository')
     private readonly prayerRepository: IPrayerRepository,
     private readonly categoryRepository: ICategoryRepository,
   ) {}

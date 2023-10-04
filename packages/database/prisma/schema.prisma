@@ -21,13 +21,13 @@ model Category {
 model Prayer {
   id                  String       @id @default(auto()) @map("_id") @db.ObjectId
   title               String       @unique(map: "title_1")
-  categoryId          String
+  categoryId          String       @map("category_id")
   body                String
   cleanBody           String       @map("clean_body")
   cleanDescription    String       @map("clean_description")
   description         String
   language            LanguageCode @default(pt_BR)
-  relatedCategoriesId String[]
+  relatedCategoriesId String[]     @map("related_categories_id")
   updatedAt           DateTime     @db.Date
   createdAt           DateTime     @db.Date
 

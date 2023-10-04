@@ -8,6 +8,7 @@ on:
     paths:
       - "apps/api/**"
       - "packages/project-common/**"
+      - "packages/database/**"
       - ".github/workflows/cd-api.yaml"
       - ".dockerignore"
 

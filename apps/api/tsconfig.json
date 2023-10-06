@@ -16,13 +16,17 @@
     "paths": {
       "@providers/*": ["src/providers/*"],
       "@config/*": ["src/config/*"],
+      "@decorators/*": ["src/decorators/*"],
       "@entities/*": ["src/entities/*"],
       "@repositories/*": ["src/repositories/*"],
+      "@auth/*": ["src/modules/auth/*"],
       "@categories/*": ["src/modules/categories/*"],
       "@prayers/*": ["src/modules/prayers/*"],
+      "@users/*": ["src/modules/users/*"],
       "@utils/*": ["src/utils/*"],
       "@global/*": ["src/global/*"],
-      "@api/*": ["src/*"],
+      "@guards/*": ["src/guards/*"],
+      "@api/*": ["src/*"]
     }
   }
 }

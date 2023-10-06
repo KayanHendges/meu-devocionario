@@ -52,6 +52,8 @@ jobs:
           echo "ENVIRONMENT=production" >> .env
           echo "SERVER_PORT=3333" >> .env
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "JWT_EXPIRES_IN=${{ secrets.JWT_EXPIRES_IN }}" >> .env
           echo "AWS_ACCOUNT_ID=${{ secrets.AWS_ACCOUNT_ID }}" >> .env
           echo "AWS_ECR_REGION=${{ secrets.AWS_ECR_REGION }}" >> .env
 

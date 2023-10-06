@@ -1,3 +1,4 @@
+import { Public } from '@api/decorators/auth/public.route';
 import {
   CreateCategoryDTO,
   ListCategoriesQueryDTO,
@@ -5,6 +6,7 @@ import {
   UpdateCategoryDTO,
 } from '@categories/categories.dto';
 import { CategoriesService } from '@categories/categories.service';
+import { Claim } from '@decorators/claim/claim.decorator';
 import { isObjectId } from '@global/utils.ts/regexValidate';
 import {
   Body,
@@ -21,23 +23,27 @@ import {
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
+  @Public()
   @Get()
   list(@Query() query: ListCategoriesQueryDTO) {
     return this.categoriesService.list(query);
   }
 
-  @Get('/:id')
+  @Public()
+  @Get(':unique')
   find(@Param() { unique }: UniqueCategoryParams) {
     const uniqueParam = isObjectId(unique) ? { id: unique } : { name: unique };
     return this.categoriesService.find(uniqueParam);
   }
 
+  @Claim('category.create')
   @Post()
   create(@Body() body: CreateCategoryDTO) {
     return this.categoriesService.create(body);
   }
 
-  @Patch(':id')
+  @Claim('category.update')
+  @Patch(':unique')
   update(
     @Param() { unique }: UniqueCategoryParams,
     @Body() body: UpdateCategoryDTO,
@@ -46,7 +52,8 @@ export class CategoriesController {
     return this.categoriesService.update(uniqueParam, body);
   }
 
-  @Delete(':id')
+  @Claim('category.delete')
+  @Delete(':unique')
   delete(@Param() { unique }: UniqueCategoryParams) {
     const uniqueParam = isObjectId(unique) ? { id: unique } : { name: unique };
     return this.categoriesService.delete(uniqueParam);

@@ -6,8 +6,10 @@ export type IListUserCredentialParams = IPrismaListParams<
   Prisma.UserCredentialWhereInput
 >;
 export type IFindUserCredentialParams = Prisma.UserCredentialWhereUniqueInput;
-export type ICreateUserCredentialPayload = Prisma.UserCredentialCreateInput;
-export type IUpdateUserCredentialPayload = Prisma.UserCredentialUpdateInput;
+export type ICreateUserCredentialPayload =
+  Prisma.UserCredentialUncheckedCreateInput;
+export type IUpdateUserCredentialPayload =
+  Prisma.UserCredentialUncheckedUpdateInput;
 
 export abstract class IUserCredentialRepository {
   abstract list(params: IListUserCredentialParams): Promise<UserCredential[]>;

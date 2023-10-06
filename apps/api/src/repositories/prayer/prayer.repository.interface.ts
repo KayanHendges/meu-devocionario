@@ -6,8 +6,8 @@ export type IListPrayerParams = IPrismaListParams<
   Prisma.PrayerWhereInput
 >;
 export type IFindPrayerParams = Prisma.PrayerWhereUniqueInput;
-export type ICreatePrayerPayload = Prisma.PrayerCreateInput;
-export type IUpdatePrayerPayload = Prisma.PrayerUpdateInput;
+export type ICreatePrayerPayload = Prisma.PrayerUncheckedCreateInput;
+export type IUpdatePrayerPayload = Prisma.PrayerUncheckedUpdateInput;
 
 export abstract class IPrayerRepository {
   abstract list(params: IListPrayerParams): Promise<Prayer[]>;

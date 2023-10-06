@@ -7,7 +7,7 @@
   "scripts": {
     "db:build": "rimraf ./dist && tsc",
     "db:generate": "prisma generate",
-    "db:migrate-dev": "dotenv -e ../../.env prisma migrate dev"
+    "db:push": "dotenv -e ../../.env prisma db push"
   },
   "devDependencies": {
     "rimraf": "^5.0.1"

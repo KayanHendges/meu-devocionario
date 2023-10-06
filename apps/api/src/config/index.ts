@@ -25,6 +25,14 @@ export class EnvironmentConfig {
   @IsString()
   @Expose()
   DATABASE_URL: string;
+
+  @IsString()
+  @Expose()
+  JWT_SECRET: string;
+
+  @IsString()
+  @Expose()
+  JWT_EXPIRES_IN: string;
 }
 
 const validateEnvironment = () => {
@@ -32,6 +40,8 @@ const validateEnvironment = () => {
     ENVIRONMENT: process.env.ENVIRONMENT,
     SERVER_PORT: Number(process.env.SERVER_PORT),
     DATABASE_URL: process.env.DATABASE_URL,
+    JWT_SECRET: process.env.JWT_SECRET,
+    JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
   };
 
   const configInstance = plainToInstance(EnvironmentConfig, environments, {

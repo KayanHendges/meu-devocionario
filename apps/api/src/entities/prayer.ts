@@ -1,4 +1,5 @@
 import { stripHtml } from '@global/utils.ts/formatters';
+import ObjectID from 'bson-objectid';
 import {
   ArrayMaxSize,
   ArrayUnique,
@@ -9,18 +10,12 @@ import {
   IsString,
   validateSync,
 } from 'class-validator';
-import { v4 as uuidv4 } from 'uuid';
 import { Prayer as IPrayer, LanguageCode } from 'database';
 
 // Todo: fix generic type
-interface ContructorProps {
+interface ContructorProps
+  extends Omit<IPrayer, EntityCommonOmit | 'cleanBody' | 'cleanDescription'> {
   id?: string;
-  title: string;
-  description: string | null;
-  body: string;
-  categoryId: string;
-  relatedCategoriesId?: string[];
-  language: LanguageCode;
   updatedAt?: Date;
   createdAt?: Date;
 }
@@ -63,14 +58,22 @@ export class Prayer implements IPrayer {
   @IsEnum(LanguageCode)
   language: LanguageCode;
 
-  @IsDate()
-  updatedAt: Date = new Date();
+  @IsString()
+  @IsNotEmpty()
+  createdBy: string;
 
   @IsDate()
   createdAt: Date = new Date();
 
+  @IsString()
+  @IsNotEmpty()
+  lastUpdatedBy: string;
+
+  @IsDate()
+  updatedAt: Date = new Date();
+
   constructor(props: ContructorProps) {
-    props.id = props.id || uuidv4();
+    props.id = props.id || ObjectID().toHexString();
     props.relatedCategoriesId = [...new Set(props.relatedCategoriesId || [])];
 
     Object.assign(this, props);

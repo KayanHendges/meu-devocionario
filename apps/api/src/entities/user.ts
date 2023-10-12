@@ -5,11 +5,10 @@ import {
   IsString,
   validateSync,
 } from 'class-validator';
-import { v4 as uuidv4 } from 'uuid';
 import { User as IUser, UserRole } from 'database';
+import ObjectID from 'bson-objectid';
 
-interface ContructorProps
-  extends Omit<IUser, 'id' | 'updatedAt' | 'createdAt'> {
+interface ContructorProps extends Omit<IUser, EntityCommonOmit> {
   id?: string;
   updatedAt?: Date;
   createdAt?: Date;
@@ -40,7 +39,7 @@ export class User implements IUser {
   createdAt: Date = new Date();
 
   constructor(props: ContructorProps) {
-    props.id = props.id || uuidv4();
+    props.id = props.id || ObjectID().toHexString();
     Object.assign(this, props);
 
     const errors = validateSync(this);

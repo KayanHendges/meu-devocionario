@@ -10,6 +10,7 @@ import { mapQueryToService } from '@global/utils.ts/service';
 import { Injectable } from '@nestjs/common';
 import { stripHtml } from '@global/utils.ts/formatters';
 import { ICategoryRepository } from '@repositories/category/category.repository.interface';
+import { JwtPayload } from '@auth/types';
 
 @Injectable()
 export class CategoriesService {
@@ -32,18 +33,29 @@ export class CategoriesService {
     return this.categoryRepository.find(params);
   }
 
-  async create(payload: CreateCategoryDTO): Promise<any> {
-    const category = new Category(payload);
+  async create(payload: CreateCategoryDTO, user: JwtPayload): Promise<any> {
+    const category = new Category({
+      ...payload,
+      createdBy: user.id,
+      lastUpdatedBy: user.id,
+    });
+
     return this.categoryRepository.create(category);
   }
 
-  async update(params: UniqueCategory, payload: UpdateCategoryDTO) {
-    const category: Partial<Category> = payload;
+  async update(
+    params: UniqueCategory,
+    payload: UpdateCategoryDTO,
+    user: JwtPayload,
+  ) {
+    const dbCategory = await this.categoryRepository.find(params);
+    const { id, ...category } = new Category({
+      ...dbCategory,
+      ...payload,
+      lastUpdatedBy: user.id,
+    });
 
-    if (category.description)
-      category.cleanDescription = stripHtml(category.description);
-
-    return this.categoryRepository.update(params, payload);
+    return this.categoryRepository.update({ id }, category);
   }
 
   async delete(params: UniqueCategory): Promise<Category> {

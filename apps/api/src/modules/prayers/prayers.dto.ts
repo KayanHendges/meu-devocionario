@@ -1,6 +1,7 @@
 import { Prayer } from '@entities/prayer';
 import { PaginationAndSortDTO } from '@global/dto';
-import { OmitType, PartialType, PickType } from '@nestjs/mapped-types';
+import { OmitType, PartialType } from '@nestjs/mapped-types';
+import { entityAuditCommonOmit, entityCommonOmit } from '@utils/dto';
 import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class ListPrayersQueryDTO extends PaginationAndSortDTO<Prayer> {
@@ -26,11 +27,9 @@ export class ListPrayersQueryDTO extends PaginationAndSortDTO<Prayer> {
 }
 
 export class CreatePrayerDTO extends OmitType(Prayer, [
-  'id',
   'cleanBody',
   'cleanDescription',
-  'updatedAt',
-  'createdAt',
+  ...entityAuditCommonOmit,
 ]) {}
 
 export class UpdatePrayerDTO extends PartialType(CreatePrayerDTO) {}

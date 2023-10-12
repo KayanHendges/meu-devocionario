@@ -3,4 +3,5 @@ export class APIException {
   readonly time: string;
   readonly statusCode: number;
   readonly message: string;
+  readonly details: any;
 }

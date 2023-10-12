@@ -7,12 +7,11 @@ import {
   validateSync,
 } from 'class-validator';
 import { Category as ICategory } from 'database';
-import { v4 as uuidv4 } from 'uuid';
+import ObjectId from 'bson-objectid';
 
-interface ContructorProps {
+interface ContructorProps
+  extends Omit<ICategory, EntityCommonOmit | 'cleanDescription'> {
   id?: string;
-  name: string;
-  description?: string | null;
   updatedAt?: Date;
   createdAt?: Date;
 }
@@ -35,14 +34,22 @@ export class Category implements ICategory {
   @IsOptional()
   cleanDescription: string | null = null;
 
-  @IsDate()
-  updatedAt: Date = new Date();
+  @IsString()
+  @IsNotEmpty()
+  createdBy: string;
 
   @IsDate()
   createdAt: Date = new Date();
 
+  @IsString()
+  @IsNotEmpty()
+  lastUpdatedBy: string;
+
+  @IsDate()
+  updatedAt: Date = new Date();
+
   constructor(props: ContructorProps) {
-    props.id = props.id || uuidv4();
+    props.id = props.id || ObjectId().toHexString();
     Object.assign(this, props);
     if (this.description) this.cleanDescription = stripHtml(this.description);
 

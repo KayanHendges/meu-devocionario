@@ -2,9 +2,12 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { config } from '@api/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import { GlobalErrorHandler } from '@api/exceptions/global.error.handler';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
+
+  app.useGlobalFilters(new GlobalErrorHandler());
 
   app.useGlobalPipes(
     new ValidationPipe({

@@ -1,5 +1,7 @@
+import { JwtPayload } from '@auth/types';
 import { Public } from '@decorators/auth/public.route';
 import { Claim } from '@decorators/claim/claim.decorator';
+import { CurrentUser } from '@decorators/user/current.user.decorator';
 import { isObjectId } from '@global/utils.ts/regexValidate';
 import {
   Body,
@@ -38,8 +40,8 @@ export class PrayersController {
 
   @Post()
   @Claim('prayer.create', 'user.all')
-  create(@Body() body: CreatePrayerDTO) {
-    return this.prayersService.create(body);
+  create(@Body() body: CreatePrayerDTO, @CurrentUser() user: JwtPayload) {
+    return this.prayersService.create(body, user);
   }
 
   @Claim('prayer.update')
@@ -47,9 +49,10 @@ export class PrayersController {
   update(
     @Param() { unique }: UniquePrayerParams,
     @Body() body: UpdatePrayerDTO,
+    @CurrentUser() user: JwtPayload,
   ) {
     const uniqueParam = isObjectId(unique) ? { id: unique } : { title: unique };
-    return this.prayersService.update(uniqueParam, body);
+    return this.prayersService.update(uniqueParam, body, user);
   }
 
   @Claim('prayer.delete')

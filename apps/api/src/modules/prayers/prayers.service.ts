@@ -11,6 +11,7 @@ import {
 } from '@prayers/prayers.dto';
 import { IPrayerRepository } from '@repositories/prayer/prayer.repository.interface';
 import { ICategoryRepository } from '@repositories/category/category.repository.interface';
+import { JwtPayload } from '@auth/types';
 
 @Injectable()
 export class PrayersService {
@@ -36,8 +37,12 @@ export class PrayersService {
     return this.prayerRepository.find(params);
   }
 
-  async create(payload: CreatePrayerDTO): Promise<Prayer> {
-    const prayer = new Prayer(payload);
+  async create(payload: CreatePrayerDTO, user: JwtPayload): Promise<Prayer> {
+    const prayer = new Prayer({
+      ...payload,
+      createdBy: user.id,
+      lastUpdatedBy: user.id,
+    });
     await this.validateCategories(prayer);
 
     return this.prayerRepository.create(prayer);
@@ -46,18 +51,18 @@ export class PrayersService {
   async update(
     params: UniquePrayer,
     payload: UpdatePrayerDTO,
+    user: JwtPayload,
   ): Promise<Prayer> {
-    const prayer: Partial<Prayer> = payload;
+    const dbPrayer = await this.prayerRepository.find(params);
 
-    if (prayer.relatedCategoriesId)
-      prayer.relatedCategoriesId = [...new Set(prayer.relatedCategoriesId)];
-
-    if (prayer.body) prayer.cleanBody = stripHtml(prayer.body);
-    if (prayer.description)
-      prayer.cleanDescription = stripHtml(prayer.description);
+    const { id, ...prayer } = new Prayer({
+      ...dbPrayer,
+      ...payload,
+      lastUpdatedBy: user.id,
+    });
 
     await this.validateCategories(prayer);
-    return this.prayerRepository.update(params, prayer);
+    return this.prayerRepository.update({ id }, prayer);
   }
 
   async delete(params: UniquePrayer): Promise<Prayer> {

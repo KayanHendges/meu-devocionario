@@ -1,9 +1,9 @@
 import { api } from "@providers/api";
-import { Category } from "project-common";
 import {
   CreateCategoryDTO,
   ResponseList,
   UpdateCategoryDTO,
+  Category
 } from "project-common";
 
 class CategoriesProviders {

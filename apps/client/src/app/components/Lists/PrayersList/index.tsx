@@ -22,7 +22,6 @@ export default async function PrayersList({
       categoryId,
       page: 1,
       pageSize: 10,
-      orderBy: { body: "asc" },
     })
   );
 

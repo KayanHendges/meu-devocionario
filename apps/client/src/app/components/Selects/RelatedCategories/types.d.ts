@@ -1,4 +1,4 @@
-import { Category } from "database";
+import { Category } from "project-common";
 import { ComponentProps } from "react";
 
 interface RelatedCategoriesSelectProps

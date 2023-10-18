@@ -1,10 +1,10 @@
 import { api } from "@providers/api";
+import { Category } from "project-common";
 import {
-  CreateCategoryPayload,
-  UpdateCategoryPayload,
-} from "@providers/api/categories/types";
-import { Category } from "database";
-import { ResponseList } from "project-common";
+  CreateCategoryDTO,
+  ResponseList,
+  UpdateCategoryDTO,
+} from "project-common";
 
 class CategoriesProviders {
   listCategories = async () =>
@@ -13,13 +13,11 @@ class CategoriesProviders {
   getCategory = async (prayerUnique: string) =>
     (await api.get<Category>(`categories/${prayerUnique}`)).data;
 
-  createCategory = async (payload: CreateCategoryPayload) =>
+  createCategory = async (payload: CreateCategoryDTO) =>
     (await api.post<Category>("categories", payload)).data;
 
-  updateCategory = async (
-    prayerUnique: string,
-    payload: UpdateCategoryPayload
-  ) => (await api.patch<Category>(`categories/${prayerUnique}`, payload)).data;
+  updateCategory = async (prayerUnique: string, payload: UpdateCategoryDTO) =>
+    (await api.patch<Category>(`categories/${prayerUnique}`, payload)).data;
 
   deleteCategory = async (prayerUnique: string) =>
     (await api.delete<Category>(`categories/${prayerUnique}`)).data;

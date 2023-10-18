@@ -4,11 +4,10 @@ import {
   UniqueCategory,
   ListCategoriesQueryDTO,
   UpdateCategoryDTO,
-} from '@categories/categories.dto';
-import { Category } from '@entities/category';
+  Category,
+} from 'project-common';
 import { mapQueryToService } from '@global/utils.ts/service';
 import { Injectable } from '@nestjs/common';
-import { stripHtml } from '@global/utils.ts/formatters';
 import { ICategoryRepository } from '@repositories/category/category.repository.interface';
 import { JwtPayload } from '@auth/types';
 

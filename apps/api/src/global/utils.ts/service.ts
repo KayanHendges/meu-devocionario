@@ -1,4 +1,4 @@
-import { PaginationAndSortDTO } from '@global/dto';
+import { PaginationAndSortDTO } from 'project-common';
 import { ListParams, WhereParams } from '@repositories/types';
 
 type Query<T extends Record<keyof T, any>> = PaginationAndSortDTO<T> &

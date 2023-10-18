@@ -1,5 +1,6 @@
-import { stripHtml } from '@global/utils.ts/formatters';
-import ObjectID from 'bson-objectid';
+import { EntityCommonOmit } from "../dto";
+import { stripHtml } from "../utils";
+import ObjectID from "bson-objectid";
 import {
   ArrayMaxSize,
   ArrayUnique,
@@ -9,12 +10,12 @@ import {
   IsOptional,
   IsString,
   validateSync,
-} from 'class-validator';
-import { Prayer as IPrayer, LanguageCode } from 'database';
+} from "class-validator";
+import { Prayer as IPrayer, LanguageCode } from "database";
 
 // Todo: fix generic type
 interface ContructorProps
-  extends Omit<IPrayer, EntityCommonOmit | 'cleanBody' | 'cleanDescription'> {
+  extends Omit<IPrayer, EntityCommonOmit | "cleanBody" | "cleanDescription"> {
   id?: string;
   updatedAt?: Date;
   createdAt?: Date;

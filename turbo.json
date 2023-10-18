@@ -18,6 +18,7 @@
       "persistent": true
     },
     "project-common:build": {
+      "dependsOn": ["^db:build"],
       "cache": false
     },
     "db:build": {

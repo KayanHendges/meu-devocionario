@@ -1,16 +1,17 @@
-import { stripHtml } from '@global/utils.ts/formatters';
 import {
   IsDate,
   IsNotEmpty,
   IsOptional,
   IsString,
   validateSync,
-} from 'class-validator';
-import { Category as ICategory } from 'database';
-import ObjectId from 'bson-objectid';
+} from "class-validator";
+import { Category as ICategory } from "database";
+import ObjectId from "bson-objectid";
+import { EntityCommonOmit } from "../dto";
+import { stripHtml } from "../utils";
 
 interface ContructorProps
-  extends Omit<ICategory, EntityCommonOmit | 'cleanDescription'> {
+  extends Omit<ICategory, EntityCommonOmit | "cleanDescription"> {
   id?: string;
   updatedAt?: Date;
   createdAt?: Date;

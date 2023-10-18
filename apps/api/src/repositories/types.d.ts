@@ -38,11 +38,14 @@ type OrderBy = 'asc' | 'desc';
 
 type OrderParam<T> = Record<keyof T, OrderBy>;
 
-interface ListParams<T> {
+interface Pagination {
+  page: number;
+  pageSize: number;
+}
+
+interface ListParams<T> extends Partial<Pagination> {
   where?: WhereParams<T>;
   orderBy?: OrderParam<T>;
-  page?: number;
-  pageSize?: number;
 }
 
 interface RepositoryMetaProperties {

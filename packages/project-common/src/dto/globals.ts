@@ -54,5 +54,5 @@ export class PaginationAndSortDTO<T> {
       "orderBy must have the following format: key_direction(asc or desc)",
   })
   @Transform((value) => orderByFromString<T>(value.value))
-  orderBy: OrderParam<T>;
+  orderBy?: OrderParam<T>;
 }

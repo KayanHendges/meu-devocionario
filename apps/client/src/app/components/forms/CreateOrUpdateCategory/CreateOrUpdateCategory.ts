@@ -1,8 +1,7 @@
-import { CreateCategoryPayload } from "@providers/api/categories/types";
 import Joi from "joi";
+import { CreateCategoryDTO } from "project-common";
 
-export const CreateOrUpdateCategoryFormSchema =
-  Joi.object<CreateCategoryPayload>({
-    name: Joi.string(),
-    description: Joi.string().optional(),
-  });
+export const CreateOrUpdateCategoryFormSchema = Joi.object<CreateCategoryDTO>({
+  name: Joi.string(),
+  description: Joi.string().optional(),
+});

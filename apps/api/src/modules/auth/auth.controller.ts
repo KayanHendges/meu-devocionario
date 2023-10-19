@@ -1,5 +1,5 @@
 import { Public } from '@api/decorators/auth/public.route';
-import { LoginUserDTO, RegisterUserDTO } from '@auth/auth.dto';
+import { LoginUserDTO, RegisterUserDTO } from 'project-common';
 import { AuthService } from '@auth/auth.service';
 import { Body, Controller, Post } from '@nestjs/common';
 

@@ -1,5 +1,5 @@
 "use client";
-import { Category } from "database";
+import { Category, CreateCategoryDTO } from "project-common";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { FormEvent, useMemo, useState } from "react";
@@ -8,7 +8,6 @@ import { handleSubmit } from "@utils/forms";
 import HtmlEditor from "@components/Html/HtmlEditor";
 import Button from "@components/Buttons/Button";
 import { useRouter } from "next/navigation";
-import { CreateCategoryPayload } from "@providers/api/categories/types";
 import { CreateOrUpdateCategoryFormSchema } from "@components/forms/CreateOrUpdateCategory/CreateOrUpdateCategory";
 import { categoriesProviders } from "@providers/api/categories";
 
@@ -20,7 +19,7 @@ export default function CreateOrUpdateCategoryForm({ category }: Props) {
   const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
   const router = useRouter();
 
-  const form = useForm<CreateCategoryPayload>({
+  const form = useForm<CreateCategoryDTO>({
     resolver: joiResolver(CreateOrUpdateCategoryFormSchema),
     values: category
       ? {

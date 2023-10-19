@@ -13,11 +13,12 @@
     },
     "lint": {},
     "dev": {
-      "dependsOn": ["^db:build", "^db:generate", "^project-common:build"],
+      "dependsOn": ["^project-common:build"],
       "cache": false,
       "persistent": true
     },
     "project-common:build": {
+      "dependsOn": ["^db:build", "^db:generate"],
       "cache": false
     },
     "db:build": {

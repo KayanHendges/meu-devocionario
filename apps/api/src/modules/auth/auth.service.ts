@@ -1,10 +1,9 @@
-import { LoginUserDTO, RegisterUserDTO } from '@auth/auth.dto';
+import { LoginUserDTO, RegisterUserDTO, User } from 'project-common';
 import { JwtPayload, LoginResponse } from '@auth/types';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { IUserRepository } from '@repositories/user/user.repository.interface';
 import { IUserCredentialRepository } from '@repositories/userCredential/user.credential.repository.interface';
-import { User } from 'database';
 
 @Injectable()
 export class AuthService {
@@ -16,6 +15,7 @@ export class AuthService {
 
   async register(user: RegisterUserDTO): Promise<User> {
     const { password, ...payload } = user;
+    payload;
 
     const createdUser = await this.userRepository.create({
       ...payload,

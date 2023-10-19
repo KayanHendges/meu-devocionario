@@ -1,14 +1,13 @@
 import { ResponseList } from 'project-common';
-import { Prayer } from '@entities/prayer';
-import { stripHtml } from '@global/utils.ts/formatters';
 import { mapQueryToService } from '@global/utils.ts/service';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import {
+  Prayer,
   CreatePrayerDTO,
   UniquePrayer,
   ListPrayersQueryDTO,
   UpdatePrayerDTO,
-} from '@prayers/prayers.dto';
+} from 'project-common';
 import { IPrayerRepository } from '@repositories/prayer/prayer.repository.interface';
 import { ICategoryRepository } from '@repositories/category/category.repository.interface';
 import { JwtPayload } from '@auth/types';

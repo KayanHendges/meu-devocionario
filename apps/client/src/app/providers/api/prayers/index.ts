@@ -1,23 +1,23 @@
 import { api } from "@providers/api";
 import {
-  ICreatePrayerPayload,
-  IListPrayersParams,
-  IUpdatePrayerPayload,
-} from "@providers/api/prayers/types";
-import { Prayer } from "database";
-import { ResponseList } from "project-common";
+  CreatePrayerDTO,
+  ListPrayersQueryDTO,
+  Prayer,
+  ResponseList,
+  UpdatePrayerDTO,
+} from "project-common";
 
 class PrayersProviders {
-  listPrayers = async (params?: IListPrayersParams) =>
+  listPrayers = async (params?: ListPrayersQueryDTO) =>
     (await api.get<ResponseList<Prayer>>("prayers", { params })).data;
 
   getPrayer = async (prayerUnique: string) =>
     (await api.get<Prayer>(`prayers/${prayerUnique}`)).data;
 
-  createPrayer = async (payload: ICreatePrayerPayload) =>
+  createPrayer = async (payload: CreatePrayerDTO) =>
     (await api.post<Prayer>("prayers", payload)).data;
 
-  updatePrayer = async (prayerUnique: string, payload: IUpdatePrayerPayload) =>
+  updatePrayer = async (prayerUnique: string, payload: UpdatePrayerDTO) =>
     (await api.patch<Prayer>(`prayers/${prayerUnique}`, payload)).data;
 
   deletePrayer = async (prayerUnique: string) =>

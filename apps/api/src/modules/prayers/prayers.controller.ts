@@ -18,7 +18,7 @@ import {
   ListPrayersQueryDTO,
   UniquePrayerParams,
   UpdatePrayerDTO,
-} from '@prayers/prayers.dto';
+} from 'project-common';
 import { PrayersService } from '@prayers/prayers.service';
 
 @Controller('prayers')

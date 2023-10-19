@@ -1,5 +1,5 @@
 "use client";
-import { Prayer } from "database";
+import { CreatePrayerDTO, Prayer } from "project-common";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { FormEvent, useMemo, useState } from "react";
@@ -7,7 +7,6 @@ import CategorySelect from "@components/Selects/Category";
 import TextInput from "@components/Inputs/Text";
 import { handleSubmit } from "@utils/forms";
 import RelatedCategoriesSelect from "@components/Selects/RelatedCategories";
-import { ICreatePrayerPayload } from "@providers/api/prayers/types";
 import { prayersProviders } from "@providers/api/prayers";
 import HtmlEditor from "@components/Html/HtmlEditor";
 import { CreateOrUpdatePrayerFormSchema } from "@components/forms/CreateOrUpdatePrayer/CreateOrUpdatePrayer";
@@ -22,7 +21,7 @@ export default function CreateOrUpdatePrayerForm({ prayer }: Props) {
   const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
   const router = useRouter();
 
-  const form = useForm<ICreatePrayerPayload>({
+  const form = useForm<CreatePrayerDTO>({
     resolver: joiResolver(CreateOrUpdatePrayerFormSchema),
     values: prayer
       ? {

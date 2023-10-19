@@ -18,7 +18,11 @@ export default async function PrayersList({
   ...props
 }: Props) {
   const getPrayers = cache(async () =>
-    prayersProviders.listPrayers({ categoryId })
+    prayersProviders.listPrayers({
+      categoryId,
+      page: 1,
+      pageSize: 10,
+    })
   );
 
   const { list } = await getPrayers();

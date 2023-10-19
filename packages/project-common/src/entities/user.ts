@@ -4,9 +4,10 @@ import {
   IsNotEmpty,
   IsString,
   validateSync,
-} from 'class-validator';
-import { User as IUser, UserRole } from 'database';
-import ObjectID from 'bson-objectid';
+} from "class-validator";
+import { User as IUser, UserRole } from "database";
+import ObjectID from "bson-objectid";
+import { EntityCommonOmit } from "../dto";
 
 interface ContructorProps extends Omit<IUser, EntityCommonOmit> {
   id?: string;

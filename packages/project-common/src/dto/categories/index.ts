@@ -1,15 +1,14 @@
-import { Category } from '@entities/category';
-import { PaginationAndSortDTO } from '@global/dto';
-import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { OmitType, PartialType } from '@nestjs/mapped-types';
-import { entityAuditCommonOmit } from '@utils/dto';
+import { Category } from "../../entities";
+import { IsDate, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { OmitClass, PartialClass } from "../../mappedClasses";
+import { PaginationAndSortDTO, entityAuditCommonOmit } from "../globals";
 
-export class CreateCategoryDTO extends OmitType(Category, [
-  'cleanDescription',
+export class CreateCategoryDTO extends OmitClass(Category, [
+  "cleanDescription",
   ...entityAuditCommonOmit,
 ]) {}
 
-export class UpdateCategoryDTO extends PartialType(CreateCategoryDTO) {}
+export class UpdateCategoryDTO extends PartialClass(CreateCategoryDTO) {}
 
 export class ListCategoriesQueryDTO extends PaginationAndSortDTO<Category> {
   @IsString()

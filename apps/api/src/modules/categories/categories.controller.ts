@@ -5,7 +5,7 @@ import {
   ListCategoriesQueryDTO,
   UniqueCategoryParams,
   UpdateCategoryDTO,
-} from '@categories/categories.dto';
+} from 'project-common';
 import { CategoriesService } from '@categories/categories.service';
 import { Claim } from '@decorators/claim/claim.decorator';
 import { CurrentUser } from '@decorators/user/current.user.decorator';

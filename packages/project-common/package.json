@@ -4,7 +4,6 @@
   "description": "shared type declarations between the workspace",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "type": "module",
   "scripts": {
     "project-common:build": "rimraf ./dist && tsc"
   },

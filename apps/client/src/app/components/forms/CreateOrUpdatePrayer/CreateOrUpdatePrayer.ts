@@ -1,7 +1,7 @@
-import { ICreatePrayerPayload } from "@providers/api/prayers/types";
 import Joi from "joi";
+import { CreatePrayerDTO } from "project-common";
 
-export const CreateOrUpdatePrayerFormSchema = Joi.object<ICreatePrayerPayload>({
+export const CreateOrUpdatePrayerFormSchema = Joi.object<CreatePrayerDTO>({
   title: Joi.string(),
   description: Joi.string().optional(),
   body: Joi.string(),

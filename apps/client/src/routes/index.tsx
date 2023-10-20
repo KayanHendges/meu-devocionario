@@ -8,8 +8,8 @@ export default function useRoutes() {
 
   const routes = useMemo<RouteItem[]>(
     () => [
-      { label: "Início", path: "/", icon: <House /> },
-      { label: "buscar", path: "/buscar", icon: <MagnifyingGlass /> },
+      { label: "Início", icon: <House />, path: "/" },
+      // { label: "buscar", path: "/buscar", icon: <MagnifyingGlass /> },
       {
         label: "Meu devocionário",
         path: "/meu-devocionario",

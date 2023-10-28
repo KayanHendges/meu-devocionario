@@ -12,6 +12,7 @@ import HtmlEditor from "@components/Html/HtmlEditor";
 import { CreateOrUpdatePrayerFormSchema } from "@components/forms/CreateOrUpdatePrayer/CreateOrUpdatePrayer";
 import Button from "@components/Buttons/Button";
 import { useRouter } from "next/navigation";
+import FormContainer from "@components/forms/FormContainer";
 
 interface Props {
   prayer?: Prayer;
@@ -59,10 +60,7 @@ export default function CreateOrUpdatePrayerForm({ prayer }: Props) {
   );
 
   return (
-    <form
-      className="form-control gap-4 w-full max-w-[720px]"
-      onSubmit={handlePrayer}
-    >
+    <FormContainer onSubmit={handlePrayer}>
       <TextInput label="Título da Oração" {...form.register("title")} />
       <HtmlEditor
         label="Descrição (opcional)"
@@ -92,6 +90,6 @@ export default function CreateOrUpdatePrayerForm({ prayer }: Props) {
       <Button isLoading={isSubmiting} primary>
         {buttonlabel.default}
       </Button>
-    </form>
+    </FormContainer>
   );
 }

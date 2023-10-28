@@ -10,6 +10,7 @@ import Button from "@components/Buttons/Button";
 import { useRouter } from "next/navigation";
 import { CreateOrUpdateCategoryFormSchema } from "@components/forms/CreateOrUpdateCategory/CreateOrUpdateCategory";
 import { categoriesProviders } from "@providers/api/categories";
+import FormContainer from "@components/forms/FormContainer";
 
 interface Props {
   category?: Category;
@@ -53,10 +54,7 @@ export default function CreateOrUpdateCategoryForm({ category }: Props) {
   );
 
   return (
-    <form
-      className="form-control gap-4 w-full max-w-[720px]"
-      onSubmit={handleCategory}
-    >
+    <FormContainer onSubmit={handleCategory}>
       <TextInput label="Título da Oração" {...form.register("name")} />
       <HtmlEditor
         label="Descrição (opcional)"
@@ -66,6 +64,6 @@ export default function CreateOrUpdateCategoryForm({ category }: Props) {
       <Button isLoading={isSubmiting} primary>
         {buttonlabel.default}
       </Button>
-    </form>
+    </FormContainer>
   );
 }

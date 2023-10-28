@@ -19,7 +19,7 @@ export default function PageContainer({
   return (
     <div
       className={twMerge(
-        "w-full h-full flex flex-col items-center p-3",
+        "w-full flex-1 flex flex-col items-center p-3",
         className
       )}
       {...props}

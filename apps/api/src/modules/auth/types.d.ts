@@ -4,7 +4,3 @@ interface JwtPayload {
   id: string;
   role: UserRole;
 }
-
-interface LoginResponse {
-  accessToken: string;
-}

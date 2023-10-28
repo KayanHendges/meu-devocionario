@@ -1,3 +1,4 @@
+import CreateContentButton from "@components/Buttons/CreateContentButton";
 import Card from "@components/Card";
 import PageContainer from "@components/Container/Page";
 import { Heading } from "@components/Texts/Heading";
@@ -16,6 +17,11 @@ export default async function Page() {
   return (
     <PageContainer header="Categorias">
       <div className="flex flex-col gap-4">
+        <Link href={"criar-categoria"}>
+          <CreateContentButton className="w-full" primary type="button">
+            Criar Categoria
+          </CreateContentButton>
+        </Link>
         {list.map(({ id, name, cleanDescription }) => (
           <Link key={id} href={`categorias/${encodeURIComponent(id)}`}>
             <Card>

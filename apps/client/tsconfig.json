@@ -20,10 +20,11 @@
       "@components/*": ["src/app/components/*"],
       "@utils/*": ["src/utils/*"],
       "@providers/*": ["src/app/providers/*"],
-      "@contexts/*": ["src/contexts/*"],
+      "@contexts/*": ["src/app/contexts/*"],
       "@hooks/*": ["src/hooks/*"],
       "@routes/*": ["src/routes/*"],
       "@types": ["src/types.d.ts"],
+      "@config/*": ["src/config/*"],
     },
     "plugins": [
       {

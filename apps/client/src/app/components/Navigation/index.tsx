@@ -3,15 +3,19 @@
 import { Slot } from "@radix-ui/react-slot";
 import useRoutes from "@routes/index";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Navigation() {
   const { routes, currentRoute } = useRoutes();
+  const pathname = usePathname();
   const router = useRouter();
 
   const handleNavigation = ({ path, action }: RouteItem) => {
+    if (pathname === path) return;
+
+    if (action) return action();
     if (path) router.push(path);
-    if (action) action();
   };
 
   return (
@@ -30,7 +34,7 @@ export default function Navigation() {
               selected ? "active text-primary" : "",
               "bg-transparent"
             )}
-            onClick={() => !selected && handleNavigation(route)}
+            onClick={() => handleNavigation(route)}
           >
             <Slot
               className={clsx(

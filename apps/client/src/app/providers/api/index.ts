@@ -1,15 +1,15 @@
 import { handleDates } from "@utils/formats/date";
 import axios from "axios";
 import Router from "next/navigation";
-import { cookies } from "next/headers";
+import { getCookie } from "cookies-next";
+import { config } from "@config/variables";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
 });
 
 api.interceptors.request.use((request) => {
-  const cookieStore = cookies();
-  const token = cookieStore.get("auth.token");
+  const token = getCookie(config.accessToken);
 
   if (request.headers && token)
     Object.assign(request.headers, { Authorization: `Bearer ${token}` });

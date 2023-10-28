@@ -3,6 +3,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 import { Metadata } from "next";
+import { cookies } from "next/headers";
 
 const inter = Inter({ subsets: ["latin"] });
 

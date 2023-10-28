@@ -22,7 +22,7 @@
       "@auth/*": ["src/modules/auth/*"],
       "@categories/*": ["src/modules/categories/*"],
       "@prayers/*": ["src/modules/prayers/*"],
-      "@users/*": ["src/modules/users/*"],
+      "@user/*": ["src/modules/user/*"],
       "@utils/*": ["src/utils/*"],
       "@global/*": ["src/global/*"],
       "@guards/*": ["src/guards/*"],

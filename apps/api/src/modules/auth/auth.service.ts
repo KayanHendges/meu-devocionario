@@ -18,10 +18,6 @@ export class AuthService {
     private readonly userCredentialRepository: IUserCredentialRepository,
   ) {}
 
-  async user({ id }: JwtPayload): Promise<User> {
-    return this.userRepository.find({ id });
-  }
-
   async register(user: RegisterUserDTO): Promise<User> {
     const { password, ...payload } = user;
     payload;

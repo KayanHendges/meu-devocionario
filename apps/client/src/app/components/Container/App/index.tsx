@@ -1,8 +1,8 @@
 "use client";
 import Navigation from "@components/Navigation";
 import ThemeSwitcher from "@components/ThemeSwitcher";
-import AuthContextProvider from "@contexts/auth/AuthContext";
-import UserProvider from "@contexts/user/UserContext";
+import AuthContextProvider from "@contexts/Auth/AuthContext";
+import UserProvider from "@contexts/User/UserContext";
 import { ThemeProvider } from "next-themes";
 import Script from "next/script";
 import { ReactNode } from "react";
@@ -23,9 +23,9 @@ export default function ContainerApp({ children }: Props) {
             onError={(e) => console.error("Failed to load google script", e)}
             crossOrigin="anonymous"
           />
-          <main className="flex-1 w-full overflow-x-hidden overflow-y-scroll pb-16">
+          <main className="flex-1 w-full flex flex-col overflow-x-hidden overflow-y-auto pb-16">
             {process.env.NODE_ENV === "development" && <ThemeSwitcher />}
-            <div>{children}</div>
+            <div className="w-full flex-1">{children}</div>
             <Navigation />
           </main>
         </UserProvider>

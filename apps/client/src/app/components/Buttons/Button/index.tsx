@@ -2,7 +2,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface ButtonProps extends Omit<ComponentProps<"button">, "ref"> {
+export interface ButtonProps extends Omit<ComponentProps<"button">, "ref"> {
   isLoading?: boolean;
   primary?: boolean;
   asChild?: boolean;

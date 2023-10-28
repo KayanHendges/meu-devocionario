@@ -1,8 +1,11 @@
 import {
   IsDate,
+  IsEmail,
   IsEnum,
   IsNotEmpty,
   IsString,
+  MaxLength,
+  MinLength,
   validateSync,
 } from "class-validator";
 import { User as IUser, UserRole } from "database";
@@ -22,6 +25,8 @@ export class User implements IUser {
 
   @IsString()
   @IsNotEmpty()
+  @MaxLength(200)
+  @MinLength(2)
   name: string;
 
   @IsString()
@@ -31,6 +36,7 @@ export class User implements IUser {
 
   @IsString()
   @IsNotEmpty()
+  @IsEmail()
   email: string;
 
   @IsDate()

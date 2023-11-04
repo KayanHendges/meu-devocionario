@@ -66,11 +66,8 @@ export default function RegisterForm({ redirectPath, ...props }: Props) {
       </div>
       <div className="flex flex-col gap-4">
         <Button isLoading={isSubmiting} primary>
-          Entrar
+          Criar
         </Button>
-        <Link href={"/registrar"}>
-          <Button className="w-full">Crie uma conta</Button>
-        </Link>
       </div>
     </FormContainer>
   );

@@ -9,6 +9,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { IUserRepository } from '@repositories/user/user.repository.interface';
 import { IUserCredentialRepository } from '@repositories/userCredential/user.credential.repository.interface';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +21,7 @@ export class AuthService {
 
   async register(user: RegisterUserDTO): Promise<User> {
     const { password, ...payload } = user;
-    payload;
+    const passwordHash = bcrypt.hashSync(password, 8);
 
     const createdUser = await this.userRepository.create({
       ...payload,
@@ -30,7 +31,7 @@ export class AuthService {
     try {
       await this.userCredentialRepository.create({
         userId: createdUser.id,
-        password,
+        password: passwordHash,
       });
 
       return createdUser;
@@ -42,12 +43,22 @@ export class AuthService {
   }
 
   async login({ email, password }: LoginUserDTO): Promise<LoginResponse> {
-    const [userFound] = await this.userRepository.list({
-      where: { email, AND: { credentials: { some: { password } } } },
+    const userFound = await this.userRepository.find({ email });
+
+    const [credentialFound] = await this.userCredentialRepository.list({
+      where: { userId: userFound.id },
       pageSize: 1,
     });
 
-    if (!userFound) throw new UnauthorizedException();
+    if (!credentialFound || !credentialFound.password)
+      throw new UnauthorizedException();
+
+    const passwordMatch = bcrypt.compareSync(
+      password,
+      credentialFound.password,
+    );
+
+    if (!passwordMatch) throw new UnauthorizedException();
 
     const payload: JwtPayload = {
       id: userFound.id,

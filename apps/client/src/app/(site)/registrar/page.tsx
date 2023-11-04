@@ -6,7 +6,7 @@ import RegisterForm from "@components/forms/Auth/Register";
 
 export default function LoginPage() {
   return (
-    <PageContainer header="Entre com sua Conta">
+    <PageContainer header="Criar uma conta">
       <RegisterForm />
     </PageContainer>
   );

@@ -5,22 +5,15 @@ import LineDivider from "@components/Dividers/Line";
 import HtmlDisplay from "@components/Html/HtmlDisplay";
 import PrayersList from "@components/Lists/PrayersList";
 import { Heading } from "@components/Texts/Heading";
-import { categoriesProviders } from "@providers/api/categories";
+import { getCategory } from "@utils/cachedRequests/categories/getCategory";
 import Link from "next/link";
-import { cache } from "react";
 
 interface Props {
   categoryId: string;
 }
 
-export const revalidate = 60 * 60 * 24;
-
 export default async function CategoryContainer({ categoryId }: Props) {
-  const getCategory = cache(async () =>
-    categoriesProviders.getCategory(categoryId)
-  );
-
-  const { name, description } = await getCategory();
+  const { name, description } = await getCategory(categoryId);
 
   return (
     <PageContainer header={name} backButton="/categorias">

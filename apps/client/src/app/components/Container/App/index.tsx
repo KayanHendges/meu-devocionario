@@ -25,7 +25,7 @@ export default function ContainerApp({ children }: Props) {
           />
           <main className="flex-1 w-full flex flex-col overflow-x-hidden overflow-y-auto pb-16">
             {process.env.NODE_ENV === "development" && <ThemeSwitcher />}
-            <div className="w-full flex-1">{children}</div>
+            <div className="w-full flex-1 flex flex-col">{children}</div>
             <Navigation />
           </main>
         </UserProvider>

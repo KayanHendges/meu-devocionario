@@ -2,6 +2,7 @@ import { categoriesProviders } from "@providers/api/categories";
 import { prayersProviders } from "@providers/api/prayers";
 import CategoryContainer from "@sites/categorias/[categoryId]/CategoryContainer";
 import PrayerContainer from "@sites/oracoes/[prayerId]/PrayerContainer";
+import { getCategory } from "@utils/cachedRequests/categories/getCategory";
 import { Metadata } from "next";
 import { cache } from "react";
 
@@ -10,11 +11,7 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const getCategory = cache(async () =>
-    categoriesProviders.getCategory(decodeURIComponent(params.categoryId))
-  );
-
-  const { name, cleanDescription } = await getCategory();
+  const { name, cleanDescription } = await getCategory(params.categoryId);
 
   return {
     title: name,

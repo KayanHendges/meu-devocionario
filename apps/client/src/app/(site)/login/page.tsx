@@ -5,7 +5,7 @@ import LoginForm from "@components/forms/Auth/Login";
 
 export default function LoginPage() {
   return (
-    <PageContainer header="Entre com sua Conta">
+    <PageContainer header="Entre com sua conta">
       <LoginForm />
     </PageContainer>
   );

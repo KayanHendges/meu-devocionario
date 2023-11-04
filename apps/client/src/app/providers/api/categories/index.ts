@@ -3,7 +3,7 @@ import {
   CreateCategoryDTO,
   ResponseList,
   UpdateCategoryDTO,
-  Category
+  Category,
 } from "project-common";
 
 class CategoriesProviders {

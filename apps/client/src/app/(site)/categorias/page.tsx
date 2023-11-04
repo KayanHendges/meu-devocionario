@@ -4,12 +4,8 @@ import PageContainer from "@components/Container/Page";
 import RoleContainer from "@components/Container/Role";
 import { Heading } from "@components/Texts/Heading";
 import { Text } from "@components/Texts/Text";
-import { categoriesProviders } from "@providers/api/categories";
 import { listCategories } from "@utils/cachedRequests/categories/listCategories";
 import Link from "next/link";
-import { cache } from "react";
-
-export const revalidate = 60 * 60 * 3;
 
 export default async function Page() {
   const { list } = await listCategories();

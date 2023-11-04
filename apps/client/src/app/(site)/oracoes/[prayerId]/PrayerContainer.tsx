@@ -4,6 +4,7 @@ import RoleContainer from "@components/Container/Role";
 import HtmlDisplay from "@components/Html/HtmlDisplay";
 import { prayersProviders } from "@providers/api/prayers";
 import PrayerDescriptionContainer from "@sites/oracoes/[prayerId]/PrayerDescriptionContainer";
+import { getPrayer } from "@utils/cachedRequests/prayers/getPrayer";
 import Link from "next/link";
 import { cache } from "react";
 
@@ -11,12 +12,8 @@ interface Props {
   prayerId: string;
 }
 
-export const revalidate = 60 * 60 * 24;
-
 export default async function PrayerContainer({ prayerId }: Props) {
-  const getPrayer = cache(async () => prayersProviders.getPrayer(prayerId));
-
-  const { title, description, body } = await getPrayer();
+  const { title, description, body } = await getPrayer(prayerId);
 
   return (
     <PageContainer header={title} backButton>

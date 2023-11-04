@@ -1,18 +1,13 @@
-import { prayersProviders } from "@providers/api/prayers";
 import PrayerContainer from "@sites/oracoes/[prayerId]/PrayerContainer";
+import { getPrayer } from "@utils/cachedRequests/prayers/getPrayer";
 import { Metadata } from "next";
-import { cache } from "react";
 
 interface Props {
   params: { prayerId: string };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const getPrayer = cache(async () =>
-    prayersProviders.getPrayer(decodeURIComponent(params.prayerId))
-  );
-
-  const { title, cleanDescription } = await getPrayer();
+  const { title, cleanDescription } = await getPrayer(params.prayerId);
 
   return {
     title: title,

@@ -36,6 +36,7 @@ model Prayer {
   updatedAt           DateTime     @db.Date
   createdAt           DateTime     @db.Date
   category            Category     @relation(fields: [categoryId], references: [id])
+  userPrayers         UserPrayer[]
 
   @@map("prayers")
 }
@@ -48,6 +49,7 @@ model User {
   updatedAt   DateTime         @updatedAt @map("updated_at")
   createdAt   DateTime         @default(now()) @map("created_at")
   credentials UserCredential[]
+  userPrayers UserPrayer[]
 
   @@map("users")
 }
@@ -62,6 +64,18 @@ model UserCredential {
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("user_credentials")
+}
+
+model UserPrayer {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @map("user_id") @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  prayerId  String   @map("prayer_id") @db.ObjectId
+  prayer    Prayer   @relation(fields: [prayerId], references: [id])
+  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("user_prayer")
 }
 
 enum UserRole {

@@ -1,6 +1,6 @@
 import Button from "@components/Buttons/Button";
 import PageContainer from "@components/Container/Page";
-import RoleContainer from "@components/Container/Role";
+import ClaimContainer from "@components/Container/Claim";
 import HtmlDisplay from "@components/Html/HtmlDisplay";
 import { prayersProviders } from "@providers/api/prayers";
 import PrayerDescriptionContainer from "@sites/oracoes/[prayerId]/PrayerDescriptionContainer";
@@ -22,14 +22,16 @@ export default async function PrayerContainer({ prayerId }: Props) {
           <PrayerDescriptionContainer>{description}</PrayerDescriptionContainer>
         )}
         <HtmlDisplay>{body}</HtmlDisplay>
-        <RoleContainer roles={["admin", "moderator"]}>
-          <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2">
+          <ClaimContainer requiredClaims={["prayer.update"]}>
             <Link href={`${prayerId}/editar`}>
               <Button className="w-full">Editar</Button>
             </Link>
+          </ClaimContainer>
+          <ClaimContainer requiredClaims={["prayer.delete"]}>
             <Button>Excluir</Button>
-          </div>
-        </RoleContainer>
+          </ClaimContainer>
+        </div>
       </div>
     </PageContainer>
   );

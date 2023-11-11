@@ -3,3 +3,4 @@ export * from "./exception";
 export * from "./entities";
 export * from "./utils";
 export * from "./mappedClasses";
+export * from "./roles";

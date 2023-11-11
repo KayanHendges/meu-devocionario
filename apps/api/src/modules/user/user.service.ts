@@ -23,7 +23,7 @@ export class UserService {
 
   async getPrayers({ id }: JwtPayload) {
     return this.prayerRepository.list({
-      where: { userPrayers: { every: { userId: id } } },
+      where: { userPrayers: { some: { userId: id } } },
     });
   }
 
@@ -33,7 +33,8 @@ export class UserService {
       pageSize: 1,
     });
 
-    if (isAlreadyIncluded) throw new ConflictException();
+    if (isAlreadyIncluded)
+      throw new ConflictException('This user already included this prayer.');
 
     return this.userPrayerRepository.include({ userId: id, prayerId });
   }

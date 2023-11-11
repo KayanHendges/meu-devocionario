@@ -13,7 +13,6 @@
     },
     "lint": {},
     "dev": {
-      "dependsOn": ["^project-common:build"],
       "cache": false,
       "persistent": true
     },

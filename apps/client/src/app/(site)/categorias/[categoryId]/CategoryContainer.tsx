@@ -1,11 +1,12 @@
 import Button from "@components/Buttons/Button";
 import PageContainer from "@components/Container/Page";
-import RoleContainer from "@components/Container/Role";
+import ClaimContainer from "@components/Container/Claim";
 import LineDivider from "@components/Dividers/Line";
 import HtmlDisplay from "@components/Html/HtmlDisplay";
 import PrayersList from "@components/Lists/PrayersList";
 import { Heading } from "@components/Texts/Heading";
 import { getCategory } from "@utils/cachedRequests/categories/getCategory";
+import { listPrayers } from "@utils/cachedRequests/prayers/listPrayers";
 import Link from "next/link";
 
 interface Props {
@@ -14,6 +15,11 @@ interface Props {
 
 export default async function CategoryContainer({ categoryId }: Props) {
   const { name, description } = await getCategory(categoryId);
+  const { list: prayers } = await listPrayers({
+    page: 1,
+    pageSize: 100,
+    categoryId,
+  });
 
   return (
     <PageContainer header={name} backButton="/categorias">
@@ -22,15 +28,17 @@ export default async function CategoryContainer({ categoryId }: Props) {
       </div>
       <LineDivider />
       <Heading>Orações</Heading>
-      <PrayersList categoryId={categoryId} />
-      <RoleContainer roles={["admin", "moderator"]}>
-        <div className="flex flex-col gap-2">
+      <PrayersList list={prayers} />
+      <div className="flex flex-col gap-2">
+        <ClaimContainer requiredClaims={["category.update"]}>
           <Link href={`${categoryId}/editar`}>
             <Button className="w-full">Editar</Button>
           </Link>
+        </ClaimContainer>
+        <ClaimContainer requiredClaims={["category.delete"]}>
           <Button>Excluir</Button>
-        </div>
-      </RoleContainer>
+        </ClaimContainer>
+      </div>
     </PageContainer>
   );
 }

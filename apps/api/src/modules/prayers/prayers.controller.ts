@@ -39,7 +39,7 @@ export class PrayersController {
   }
 
   @Post()
-  @Claim('prayer.create', 'user.all')
+  @Claim('prayer.create', 'users.all')
   create(@Body() body: CreatePrayerDTO, @CurrentUser() user: JwtPayload) {
     return this.prayersService.create(body, user);
   }

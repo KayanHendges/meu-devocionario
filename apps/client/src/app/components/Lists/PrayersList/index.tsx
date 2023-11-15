@@ -1,3 +1,4 @@
+import HandleUserPrayerButton from "@components/Buttons/HandleUserPrayerButton";
 import Card from "@components/Card";
 import { Heading } from "@components/Texts/Heading";
 import { Text } from "@components/Texts/Text";
@@ -18,11 +19,17 @@ export default async function PrayersList({
 }: Props) {
   return (
     <div className={twMerge("flex flex-col gap-4", className)} {...props}>
-      {list.map(({ id, title, cleanBody }) => (
-        <Link key={id} href={`/oracoes/${encodeURIComponent(id)}`}>
+      {list.map((prayer) => (
+        <Link
+          key={prayer.id}
+          href={`/oracoes/${encodeURIComponent(prayer.id)}`}
+        >
           <Card>
-            <Heading>{title}</Heading>
-            {cleanBody && <Text>{cleanBody}</Text>}
+            <Heading>{prayer.title}</Heading>
+            <div className="flex items-center justify-between gap-4">
+              {prayer.cleanBody && <Text className="flex-1">{prayer.cleanBody}</Text>}
+              <HandleUserPrayerButton prayer={prayer} />
+            </div>
           </Card>
         </Link>
       ))}

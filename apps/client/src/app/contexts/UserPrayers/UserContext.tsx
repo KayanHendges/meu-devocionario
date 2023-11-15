@@ -1,17 +1,8 @@
 "use client";
-import { AuthContext } from "@contexts/Auth/AuthContext";
-import { Prayer, User } from "project-common";
-import {
-  ReactNode,
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { Prayer } from "project-common";
+import { ReactNode, createContext, useContext, useEffect } from "react";
 import { IUserPrayersContext } from "@contexts/UserPrayers/types";
 import { userProvider } from "@providers/api/user";
-import { produce } from "immer";
 import useSWR from "swr";
 import { UserContext } from "@contexts/User/UserContext";
 
@@ -24,43 +15,60 @@ export default function UserPrayersProvider({
 }) {
   const { user } = useContext(UserContext);
 
-  const { data: prayers, mutate } = useSWR(
+  const {
+    data: prayers,
+    mutate,
+    isLoading: isFetchingPrayers,
+    error,
+    isValidating,
+  } = useSWR(
     "userPrayers",
     () => {
-      console.log("revalidating", { user });
       return user ? userProvider.listUserPrayers() : [];
     },
-    { fallbackData: [] }
-  );
-  const [isFetchingPrayers, setIsFetchingPrayers] = useState<boolean>(true);
-
-  const includePrayer = async (prayer: Prayer) => {
-    setIsFetchingPrayers(true);
-
-    try {
-      await userProvider.includePrayer({ prayerId: prayer.id });
-
-      mutate([...prayers, prayer], false);
-    } catch (error) {
-      console.error(error);
+    {
+      fallbackData: [],
+      revalidateOnFocus: false,
     }
+  );
 
-    setIsFetchingPrayers(false);
+  const includePrayer = async (prayer: Prayer): Promise<Prayer> => {
+    const newList: Prayer[] = [
+      ...prayers,
+      { ...prayer, updatedAt: new Date() },
+    ];
+
+    const promise = async () => {
+      // await userProvider.includePrayer({ prayerId: prayer.id });
+      return newList;
+    };
+
+    mutate(promise, {
+      optimisticData: newList,
+      revalidate: false,
+    });
+
+    return prayer;
   };
 
   const removePrayer = async (prayer: Prayer): Promise<Prayer> => {
-    await userProvider.removePrayer(prayer.id);
-
     const removeIndex = prayers.findIndex((it) => it.id === prayer.id);
-    if (removeIndex < 0) return prayer;
+    const newList = prayers;
 
-    const updatedList = prayers.splice(removeIndex, 1);
-    mutate(updatedList, false);
+    if (removeIndex >= 0) newList.splice(removeIndex, 1);
+
+    const promise = async () => {
+      // await userProvider.removePrayer(prayer.id);
+      return newList;
+    };
+
+    mutate(promise, { optimisticData: newList, revalidate: false });
+
     return prayer;
   };
 
   useEffect(() => {
-    if (user) mutate();
+    mutate();
   }, [mutate, user]);
 
   return (

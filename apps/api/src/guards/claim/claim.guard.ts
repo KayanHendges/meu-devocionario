@@ -22,8 +22,6 @@ export class ClaimGuard implements CanActivate {
 
     if (!user) return false;
 
-    console.log(user.role, requiredClaims);
-
     return validateRoleClaim(user.role, requiredClaims);
   }
 }

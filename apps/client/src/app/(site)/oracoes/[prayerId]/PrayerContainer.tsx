@@ -7,13 +7,15 @@ import PrayerDescriptionContainer from "@sites/oracoes/[prayerId]/PrayerDescript
 import { getPrayer } from "@utils/cachedRequests/prayers/getPrayer";
 import Link from "next/link";
 import { cache } from "react";
+import HandleUserPrayerButton from "@components/Buttons/HandleUserPrayerButton";
 
 interface Props {
   prayerId: string;
 }
 
 export default async function PrayerContainer({ prayerId }: Props) {
-  const { title, description, body } = await getPrayer(prayerId);
+  const prayer = await getPrayer(prayerId);
+  const { title, description, body } = prayer;
 
   return (
     <PageContainer header={title} backButton>
@@ -31,6 +33,7 @@ export default async function PrayerContainer({ prayerId }: Props) {
           <ClaimContainer requiredClaims={["prayer.delete"]}>
             <Button>Excluir</Button>
           </ClaimContainer>
+          <HandleUserPrayerButton prayer={prayer} />
         </div>
       </div>
     </PageContainer>

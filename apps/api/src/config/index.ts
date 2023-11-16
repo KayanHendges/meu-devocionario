@@ -1,9 +1,11 @@
 import { Expose, plainToInstance } from 'class-transformer';
 import {
   IsEnum,
+  IsNumber,
   IsOptional,
   IsPositive,
   IsString,
+  isEmail,
   validateSync,
 } from 'class-validator';
 
@@ -33,6 +35,23 @@ export class EnvironmentConfig {
   @IsString()
   @Expose()
   JWT_EXPIRES_IN: string;
+
+  @IsString()
+  @Expose()
+  SMTP_HOST: string;
+
+  @IsString()
+  @Expose()
+  SMTP_EMAIL: string;
+
+  @IsString()
+  @Expose()
+  SMTP_PASSWORD: string;
+
+  @IsPositive()
+  @IsNumber()
+  @Expose()
+  SMTP_PORT: number;
 }
 
 const validateEnvironment = () => {
@@ -42,6 +61,10 @@ const validateEnvironment = () => {
     DATABASE_URL: process.env.DATABASE_URL,
     JWT_SECRET: process.env.JWT_SECRET,
     JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
+    SMTP_HOST: process.env.SMTP_HOST,
+    SMTP_EMAIL: process.env.SMTP_EMAIL,
+    SMTP_PASSWORD: process.env.SMTP_PASSWORD,
+    SMTP_PORT: process.env.SMTP_PORT,
   };
 
   const configInstance = plainToInstance(EnvironmentConfig, environments, {

@@ -39,7 +39,7 @@ export default function UserPrayersProvider({
     ];
 
     const promise = async () => {
-      // await userProvider.includePrayer({ prayerId: prayer.id });
+      await userProvider.includePrayer({ prayerId: prayer.id });
       return newList;
     };
 
@@ -58,7 +58,7 @@ export default function UserPrayersProvider({
     if (removeIndex >= 0) newList.splice(removeIndex, 1);
 
     const promise = async () => {
-      // await userProvider.removePrayer(prayer.id);
+      await userProvider.removePrayer(prayer.id);
       return newList;
     };
 

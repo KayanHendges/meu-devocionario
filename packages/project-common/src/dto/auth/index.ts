@@ -1,5 +1,11 @@
 import { User } from "../../entities";
-import { IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
+import {
+  IsNotEmpty,
+  IsString,
+  Matches,
+  MaxLength,
+  MinLength,
+} from "class-validator";
 import { PickClass } from "../../mappedClasses";
 
 export interface LoginResponse {
@@ -21,4 +27,10 @@ export class LoginUserDTO {
   @IsString()
   @IsNotEmpty()
   password: string;
+}
+
+export class ValidateCodeDTO {
+  @IsString()
+  @Matches(/^\d{6}$/)
+  code: string;
 }

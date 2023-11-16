@@ -9,11 +9,13 @@ import { JwtStrategy } from '@guards/auth/strategies/jwt.strategy';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtGuard } from '@guards/auth/auth.guard';
 import { ClaimGuard } from '@guards/claim/claim.guard';
+import { AuthRepositoryModule } from '@repositories/auth/auth.repository.module';
 
 @Module({
   imports: [
     UserRepositoryModule,
     UserCredentialRepositoryModule,
+    AuthRepositoryModule,
     JwtModule.register({
       global: true,
       secret: config.JWT_SECRET,

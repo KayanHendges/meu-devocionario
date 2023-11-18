@@ -1,4 +1,9 @@
-import { Expose, plainToInstance } from 'class-transformer';
+import {
+  Expose,
+  Transform,
+  TransformFnParams,
+  plainToInstance,
+} from 'class-transformer';
 import {
   IsEnum,
   IsNumber,
@@ -14,6 +19,9 @@ enum Environment {
   production = 'production',
 }
 
+const transformEnvNumber = ({ value }: TransformFnParams) =>
+  Number(value) || value;
+
 export class EnvironmentConfig {
   @IsEnum(Environment)
   @Expose()
@@ -21,8 +29,9 @@ export class EnvironmentConfig {
 
   @IsPositive()
   @IsOptional()
+  @Transform(transformEnvNumber)
   @Expose()
-  SERVER_PORT = 3333;
+  SERVER_PORT: number;
 
   @IsString()
   @Expose()
@@ -50,6 +59,7 @@ export class EnvironmentConfig {
 
   @IsPositive()
   @IsNumber()
+  @Transform(transformEnvNumber)
   @Expose()
   SMTP_PORT: number;
 }

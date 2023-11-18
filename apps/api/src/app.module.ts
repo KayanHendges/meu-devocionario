@@ -6,6 +6,7 @@ import { AuthModule } from '@auth/auth.module';
 import { UserModule } from '@api/modules/user/user.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { config } from '@config/index';
+import { HealthModule } from './modules/health/health.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { config } from '@config/index';
       },
     }),
     ConfigModule.forRoot(),
+    HealthModule,
   ],
   controllers: [],
   providers: [],

@@ -1,10 +1,8 @@
 import { JwtPayload } from '@auth/types';
 import { CLAIM_KEY } from '@decorators/claim/claim.decorator';
-import { roles } from '@guards/claim/roles';
-import { ClaimKeys } from '@guards/claim/types';
+import { ClaimKeys, validateRoleClaim } from 'project-common';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import * as _ from 'lodash';
 
 @Injectable()
 export class ClaimGuard implements CanActivate {
@@ -24,13 +22,6 @@ export class ClaimGuard implements CanActivate {
 
     if (!user) return false;
 
-    const roleClaim = roles[user.role];
-
-    if (!roleClaim) return false;
-
-    return requiredClaims.every((role) => {
-      const claimAll = role.replace(/\w*$/, 'all');
-      return _.get(roleClaim, role) || _.get(roleClaim, claimAll);
-    });
+    return validateRoleClaim(user.role, requiredClaims);
   }
 }

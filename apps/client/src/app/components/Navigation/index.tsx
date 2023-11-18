@@ -4,7 +4,6 @@ import { Slot } from "@radix-ui/react-slot";
 import useRoutes from "@routes/index";
 import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
 
 export default function Navigation() {
   const { routes, currentRoute } = useRoutes();

@@ -1,7 +1,8 @@
-import { UserRole } from 'database';
+import { UserRole } from "database";
+import { DeepPartial, DeepestNestedKeys } from "src/utils";
 
-interface Claim {
-  user: {
+export interface Claim {
+  users: {
     all: boolean;
     read: boolean;
     create: boolean;
@@ -21,6 +22,6 @@ interface Claim {
     delete: boolean;
   };
 }
-type ClaimKeys = DeepestNestedKeys<Claim>;
+export type ClaimKeys = DeepestNestedKeys<Claim>;
 
-type ClaimRole = Record<UserRole, DeepPartial<Claim>>;
+export type ClaimRole = Record<UserRole, DeepPartial<Claim>>;

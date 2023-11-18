@@ -56,6 +56,10 @@ jobs:
           echo "JWT_EXPIRES_IN=${{ secrets.JWT_EXPIRES_IN }}" >> .env
           echo "AWS_ACCOUNT_ID=${{ secrets.AWS_ACCOUNT_ID }}" >> .env
           echo "AWS_ECR_REGION=${{ secrets.AWS_ECR_REGION }}" >> .env
+          echo "SMTP_HOST=${{ secrets.SMTP_HOST }}" >> .env
+          echo "SMTP_EMAIL=${{ secrets.SMTP_EMAIL }}" >> .env
+          echo "SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}" >> .env
+          echo "SMPT_PORT=${{ secrets.SMPT_PORT }}" >> .env
 
       - name: Creating ssh pem file
         working-directory: apps/api

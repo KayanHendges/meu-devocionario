@@ -5,14 +5,18 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "dev": "tsc-watch --noClear",
     "project-common:build": "rimraf ./dist && tsc"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.201",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
-    "database": "*"
+    "database": "*",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "rimraf": "^5.0.5"
+    "rimraf": "^5.0.5",
+    "tsc-watch": "^6.0.4"
   }
 }

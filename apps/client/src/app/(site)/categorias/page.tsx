@@ -1,7 +1,7 @@
 import Button from "@components/Buttons/Button";
 import Card from "@components/Card";
 import PageContainer from "@components/Container/Page";
-import RoleContainer from "@components/Container/Role";
+import ClaimContainer from "@components/Container/Claim";
 import { Heading } from "@components/Texts/Heading";
 import { Text } from "@components/Texts/Text";
 import { listCategories } from "@utils/cachedRequests/categories/listCategories";
@@ -13,13 +13,13 @@ export default async function Page() {
   return (
     <PageContainer header="Categorias">
       <div className="flex flex-col gap-4">
-        <RoleContainer roles={["admin", "moderator"]}>
+        <ClaimContainer requiredClaims={["category.create"]}>
           <Link href={"criar-categoria"}>
             <Button className="w-full" primary type="button">
               Criar Categoria
             </Button>
           </Link>
-        </RoleContainer>
+        </ClaimContainer>
         {list.map(({ id, name, cleanDescription }) => (
           <Link key={id} href={`categorias/${encodeURIComponent(id)}`}>
             <Card>

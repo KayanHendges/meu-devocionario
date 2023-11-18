@@ -10,7 +10,6 @@ import {
   IsOptional,
   IsPositive,
   IsString,
-  isEmail,
   validateSync,
 } from 'class-validator';
 
@@ -27,9 +26,9 @@ export class EnvironmentConfig {
   @Expose()
   ENVIRONMENT: keyof typeof Environment = 'development';
 
+  @Transform(transformEnvNumber)
   @IsPositive()
   @IsOptional()
-  @Transform(transformEnvNumber)
   @Expose()
   SERVER_PORT: number;
 
@@ -57,9 +56,9 @@ export class EnvironmentConfig {
   @Expose()
   SMTP_PASSWORD: string;
 
+  @Transform(transformEnvNumber)
   @IsPositive()
   @IsNumber()
-  @Transform(transformEnvNumber)
   @Expose()
   SMTP_PORT: number;
 }
@@ -74,7 +73,7 @@ const validateEnvironment = () => {
     SMTP_HOST: process.env.SMTP_HOST,
     SMTP_EMAIL: process.env.SMTP_EMAIL,
     SMTP_PASSWORD: process.env.SMTP_PASSWORD,
-    SMTP_PORT: process.env.SMTP_PORT,
+    SMTP_PORT: Number(process.env.SMTP_PORT),
   };
 
   const configInstance = plainToInstance(EnvironmentConfig, environments, {

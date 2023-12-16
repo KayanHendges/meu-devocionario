@@ -60,7 +60,7 @@ export default function LoginForm({ redirectPath, ...props }: Props) {
           Entrar
         </Button>
         <Link href={"/registrar"}>
-          <Button className="w-full" isLoading={isSubmiting}>
+          <Button className="w-full" disabled={isSubmiting}>
             Crie uma conta
           </Button>
         </Link>

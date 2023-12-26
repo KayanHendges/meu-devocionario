@@ -1,11 +1,15 @@
-import { Expose, plainToInstance } from 'class-transformer';
+import {
+  Expose,
+  Transform,
+  TransformFnParams,
+  plainToInstance,
+} from 'class-transformer';
 import {
   IsEnum,
   IsNumber,
   IsOptional,
   IsPositive,
   IsString,
-  isEmail,
   validateSync,
 } from 'class-validator';
 
@@ -14,15 +18,19 @@ enum Environment {
   production = 'production',
 }
 
+const transformEnvNumber = ({ value }: TransformFnParams) =>
+  Number(value) || value;
+
 export class EnvironmentConfig {
   @IsEnum(Environment)
   @Expose()
   ENVIRONMENT: keyof typeof Environment = 'development';
 
+  @Transform(transformEnvNumber)
   @IsPositive()
   @IsOptional()
   @Expose()
-  SERVER_PORT = 3333;
+  SERVER_PORT: number;
 
   @IsString()
   @Expose()
@@ -48,6 +56,7 @@ export class EnvironmentConfig {
   @Expose()
   SMTP_PASSWORD: string;
 
+  @Transform(transformEnvNumber)
   @IsPositive()
   @IsNumber()
   @Expose()
@@ -64,7 +73,7 @@ const validateEnvironment = () => {
     SMTP_HOST: process.env.SMTP_HOST,
     SMTP_EMAIL: process.env.SMTP_EMAIL,
     SMTP_PASSWORD: process.env.SMTP_PASSWORD,
-    SMTP_PORT: process.env.SMTP_PORT,
+    SMTP_PORT: Number(process.env.SMTP_PORT),
   };
 
   const configInstance = plainToInstance(EnvironmentConfig, environments, {

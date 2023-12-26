@@ -46,4 +46,4 @@ COPY --from=installer --chown=nestjs:nodejs /app/node_modules node_modules/
 COPY --from=installer --chown=nestjs:nodejs /app/packages packages/
 
  
-# CMD node apps/api/main.js
+CMD ["/bin/sh", "-c", "node dist/main.js"]

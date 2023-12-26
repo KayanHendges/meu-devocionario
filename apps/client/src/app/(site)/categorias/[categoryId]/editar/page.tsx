@@ -8,7 +8,8 @@ interface Props {
 
 export default async function EditPrayerPage({ params }: Props) {
   const category = await categoriesProviders.getCategory(
-    decodeURIComponent(params.categoryId)
+    decodeURIComponent(params.categoryId),
+    {cache: "no-cache"}
   );
 
   return (

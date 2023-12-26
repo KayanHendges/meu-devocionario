@@ -2,7 +2,6 @@ import HandleUserPrayerButton from "@components/Buttons/HandleUserPrayerButton";
 import Card from "@components/Card";
 import { Heading } from "@components/Texts/Heading";
 import { Text } from "@components/Texts/Text";
-import { listPrayers } from "@utils/cachedRequests/prayers/listPrayers";
 import Link from "next/link";
 import { Prayer } from "project-common";
 import { ComponentProps } from "react";

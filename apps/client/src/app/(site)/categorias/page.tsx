@@ -4,11 +4,12 @@ import PageContainer from "@components/Container/Page";
 import ClaimContainer from "@components/Container/Claim";
 import { Heading } from "@components/Texts/Heading";
 import { Text } from "@components/Texts/Text";
-import { listCategories } from "@utils/cachedRequests/categories/listCategories";
 import Link from "next/link";
+import { categoriesProviders } from "@providers/api/categories";
+import cachedRequests from "@config/cachedRequests";
 
 export default async function Page() {
-  const { list } = await listCategories();
+  const { list } = await categoriesProviders.listCategories({ next: cachedRequests.categories.list });
 
   return (
     <PageContainer header="Categorias">

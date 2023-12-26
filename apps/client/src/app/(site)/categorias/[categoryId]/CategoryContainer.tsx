@@ -5,21 +5,29 @@ import LineDivider from "@components/Dividers/Line";
 import HtmlDisplay from "@components/Html/HtmlDisplay";
 import PrayersList from "@components/Lists/PrayersList";
 import { Heading } from "@components/Texts/Heading";
-import { getCategory } from "@utils/cachedRequests/categories/getCategory";
-import { listPrayers } from "@utils/cachedRequests/prayers/listPrayers";
 import Link from "next/link";
+import { categoriesProviders } from "@providers/api/categories";
+import cachedRequests from "@config/cachedRequests";
+import { prayersProviders } from "@providers/api/prayers";
 
 interface Props {
   categoryId: string;
 }
 
 export default async function CategoryContainer({ categoryId }: Props) {
-  const { name, description } = await getCategory(categoryId);
-  const { list: prayers } = await listPrayers({
-    page: 1,
-    pageSize: 100,
+  const { name, description } = await categoriesProviders.getCategory(
     categoryId,
-  });
+    { next: { ...cachedRequests.categories.get, tags: [categoryId] } }
+  );
+
+  const { list: prayers } = await prayersProviders.listPrayers(
+    {
+      page: 1,
+      pageSize: 100,
+      categoryId,
+    },
+    { next: { ...cachedRequests.prayers.list, tags: [categoryId] } }
+  );
 
   return (
     <PageContainer header={name} backButton="/categorias">

@@ -4,17 +4,19 @@ import ClaimContainer from "@components/Container/Claim";
 import HtmlDisplay from "@components/Html/HtmlDisplay";
 import { prayersProviders } from "@providers/api/prayers";
 import PrayerDescriptionContainer from "@sites/oracoes/[prayerId]/PrayerDescriptionContainer";
-import { getPrayer } from "@utils/cachedRequests/prayers/getPrayer";
 import Link from "next/link";
-import { cache } from "react";
 import HandleUserPrayerButton from "@components/Buttons/HandleUserPrayerButton";
+import cachedRequests from "@config/cachedRequests";
 
 interface Props {
   prayerId: string;
 }
 
 export default async function PrayerContainer({ prayerId }: Props) {
-  const prayer = await getPrayer(prayerId);
+  const prayer = await prayersProviders.getPrayer(
+    prayerId,
+    { next: cachedRequests.prayers.get }
+  );;
   const { title, description, body } = prayer;
 
   return (

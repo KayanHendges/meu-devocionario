@@ -3,7 +3,6 @@ import axios from "axios";
 import Router from "next/navigation";
 import { getCookie } from "cookies-next";
 import { config } from "@config/variables";
-import { NextResponse } from "next/server";
 
 const api2 = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -32,14 +31,25 @@ api2.interceptors.response.use((originalResponse) => {
 });
 
 interface ApiConfig extends RequestInit {
-  params?: Record<string, string | number | undefined | boolean>;
+  params?: any;
   method: string;
 }
 
 interface RequestConfig extends Omit<ApiConfig, "method"> {}
 
-interface ResponseAPI<T = unknown> extends Record<string, any> {
+interface ResponseAPI<T = any> extends Response {
   data: T;
+}
+
+export interface CacheConfig {
+  cache?: RequestCache;
+  next?: NextFetchRequestConfig;
+}
+
+export class FetchApiException extends Error {
+  constructor(public response: ResponseAPI) {
+    super(response.statusText);
+  }
 }
 
 class Api {
@@ -50,11 +60,45 @@ class Api {
     this.baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
   }
 
-  async get(path: string, options?: RequestConfig) {
-    this.request(path, { ...options, method: "get" });
+  async get<T = any>(path: string, options?: RequestConfig) {
+    return this.request<T>(path, { ...options, method: "GET" });
   }
 
-  private async request<T = unknown>(path: string, options?: ApiConfig) {
+  async post<T = any>(
+    path: string,
+    body: Record<string, any>,
+    options?: RequestConfig
+  ) {
+    return this.request<T>(path, {
+      ...options,
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+  }
+
+  async patch<T = any>(
+    path: string,
+    body: Record<string, any>,
+    options?: RequestConfig
+  ) {
+    return this.request<T>(path, {
+      ...options,
+      method: "PATCH",
+      body: JSON.stringify(body),
+    });
+  }
+
+  async delete<T = any>(path: string, options?: RequestConfig) {
+    return this.request<T>(path, {
+      ...options,
+      method: "DELETE",
+    });
+  }
+
+  private async request<T = unknown>(
+    path: string,
+    options?: ApiConfig
+  ): Promise<ResponseAPI<T>> {
     if (!this.token) {
       const token = getCookie(config.accessToken);
       if (token) this.token = token;
@@ -62,7 +106,9 @@ class Api {
 
     const headers = new Headers(options?.headers);
 
-    if (this.token) headers.set("Authorizathion", `Bearer ${this.token}`);
+    if (this.token) headers.set("Authorization", `Bearer ${this.token}`);
+    headers.set("Accept", "application/json");
+    headers.set("Content-Type", "application/json");
 
     const configOptions: RequestInit = options || {};
     const url = new URL(path, this.baseUrl);
@@ -71,11 +117,22 @@ class Api {
       ([key, value]) => value && url.searchParams.set(key, value.toString())
     );
 
-    const response = await fetch(url, configOptions);
-    return response.json() as unknown as ResponseAPI<T>;
+    const response = await fetch(url, {
+      ...configOptions,
+      headers,
+    });
+
+    const { status } = response;
+    const data = (await response.json()) || {};
+
+    const apiResponse = { ...response, data };
+
+    if (status >= 400) throw new FetchApiException(apiResponse);
+
+    return apiResponse;
   }
 }
 
 const api = new Api();
 
-export { api2 };
+export { api };

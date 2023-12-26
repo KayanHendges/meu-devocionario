@@ -1,4 +1,4 @@
-import { api } from "@providers/api";
+import { CacheConfig, api } from "@providers/api";
 import {
   CreatePrayerDTO,
   ListPrayersQueryDTO,
@@ -8,20 +8,21 @@ import {
 } from "project-common";
 
 class PrayersProviders {
-  listPrayers = async (params?: ListPrayersQueryDTO) =>
-    (await api.get<ResponseList<Prayer>>("prayers", { params })).data;
+  listPrayers = async (params?: ListPrayersQueryDTO, options?: CacheConfig) =>
+    (await api.get<ResponseList<Prayer>>("prayers", { params, ...options }))
+      .data;
 
-  getPrayer = async (prayerUnique: string) =>
-    (await api.get<Prayer>(`prayers/${prayerUnique}`)).data;
+  getPrayer = async (prayerUnique: string, options?: CacheConfig) =>
+    (await api.get<Prayer>(`prayers/${prayerUnique}`, options)).data;
 
-  createPrayer = async (payload: CreatePrayerDTO) =>
-    (await api.post<Prayer>("prayers", payload)).data;
+  createPrayer = async (payload: CreatePrayerDTO, options?: CacheConfig) =>
+    (await api.post<Prayer>("prayers", payload, options)).data;
 
-  updatePrayer = async (prayerUnique: string, payload: UpdatePrayerDTO) =>
-    (await api.patch<Prayer>(`prayers/${prayerUnique}`, payload)).data;
+  updatePrayer = async (prayerUnique: string, payload: UpdatePrayerDTO, options?: CacheConfig) =>
+    (await api.patch<Prayer>(`prayers/${prayerUnique}`, payload, options)).data;
 
-  deletePrayer = async (prayerUnique: string) =>
-    (await api.delete<Prayer>(`prayers/${prayerUnique}`)).data;
+  deletePrayer = async (prayerUnique: string, options?: CacheConfig) =>
+    (await api.delete<Prayer>(`prayers/${prayerUnique}`, options)).data;
 }
 
 export const prayersProviders = new PrayersProviders();

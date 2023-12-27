@@ -1,4 +1,6 @@
+import cachedRequests from "@config/cachedRequests";
 import { CacheConfig, api } from "@providers/api";
+import revalidateCacheByTag from "@utils/revalidateCacheByTag";
 import {
   CreatePrayerDTO,
   ListPrayersQueryDTO,
@@ -7,22 +9,53 @@ import {
   UpdatePrayerDTO,
 } from "project-common";
 
+interface InvalidateCacheProps {
+  categoryId?: string;
+  prayerId?: string;
+}
+
 class PrayersProviders {
   listPrayers = async (params?: ListPrayersQueryDTO, options?: CacheConfig) =>
     (await api.get<ResponseList<Prayer>>("prayers", { params, ...options }))
       .data;
 
-  getPrayer = async (prayerUnique: string, options?: CacheConfig) =>
-    (await api.get<Prayer>(`prayers/${prayerUnique}`, options)).data;
+  getPrayer = async (prayerId: string, options?: CacheConfig) =>
+    (await api.get<Prayer>(`prayers/${prayerId}`, options)).data;
 
-  createPrayer = async (payload: CreatePrayerDTO, options?: CacheConfig) =>
-    (await api.post<Prayer>("prayers", payload, options)).data;
+  createPrayer = async (payload: CreatePrayerDTO, options?: CacheConfig) => {
+    const { data } = await api.post<Prayer>("prayers", payload, options);
+    this.invalidateCache({ categoryId: data.categoryId });
+    return data;
+  };
 
-  updatePrayer = async (prayerUnique: string, payload: UpdatePrayerDTO, options?: CacheConfig) =>
-    (await api.patch<Prayer>(`prayers/${prayerUnique}`, payload, options)).data;
+  updatePrayer = async (
+    prayerId: string,
+    payload: UpdatePrayerDTO,
+    options?: CacheConfig
+  ) => {
+    const { data } = await api.patch<Prayer>(
+      `prayers/${prayerId}`,
+      payload,
+      options
+    );
+    this.invalidateCache({ prayerId, categoryId: data.categoryId });
+    return data;
+  };
 
-  deletePrayer = async (prayerUnique: string, options?: CacheConfig) =>
-    (await api.delete<Prayer>(`prayers/${prayerUnique}`, options)).data;
+  deletePrayer = async (prayerId: string, options?: CacheConfig) => {
+    const { data } = await api.delete<Prayer>(`prayers/${prayerId}`, options);
+    this.invalidateCache({ prayerId, categoryId: data.categoryId });
+    return data;
+  };
+
+  private invalidateCache = ({
+    prayerId,
+    categoryId,
+  }: InvalidateCacheProps) => {
+    if (prayerId) revalidateCacheByTag(prayerId);
+    if (categoryId) revalidateCacheByTag(categoryId);
+    cachedRequests.prayers.list.tags.forEach((it) => revalidateCacheByTag(it));
+  };
 }
 
 export const prayersProviders = new PrayersProviders();

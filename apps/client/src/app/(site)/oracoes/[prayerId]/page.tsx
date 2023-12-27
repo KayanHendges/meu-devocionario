@@ -10,7 +10,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { title, cleanDescription } = await prayersProviders.getPrayer(
     params.prayerId,
-    { next: cachedRequests.prayers.get }
+    { next: {...cachedRequests.prayers.get, tags: [params.prayerId]} }
   );
 
   return {

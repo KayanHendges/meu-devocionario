@@ -9,6 +9,7 @@ import Link from "next/link";
 import { categoriesProviders } from "@providers/api/categories";
 import cachedRequests from "@config/cachedRequests";
 import { prayersProviders } from "@providers/api/prayers";
+import DeleteCategoryButton from "@sites/categorias/[categoryId]/DeleteCategoryButton";
 
 interface Props {
   categoryId: string;
@@ -43,9 +44,9 @@ export default async function CategoryContainer({ categoryId }: Props) {
             <Button className="w-full">Editar</Button>
           </Link>
         </ClaimContainer>
-        <ClaimContainer requiredClaims={["category.delete"]}>
-          <Button>Excluir</Button>
-        </ClaimContainer>
+        <DeleteCategoryButton categoryId={categoryId}>
+          Excluir
+        </DeleteCategoryButton>
       </div>
     </PageContainer>
   );

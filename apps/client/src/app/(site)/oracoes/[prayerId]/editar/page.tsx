@@ -9,7 +9,8 @@ interface Props {
 
 export default async function EditPrayerPage({ params }: Props) {
   const prayer = await prayersProviders.getPrayer(
-    decodeURIComponent(params.prayerId)
+    decodeURIComponent(params.prayerId),
+    { cache: "no-cache" }
   );
 
   return (

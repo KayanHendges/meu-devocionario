@@ -1,6 +1,6 @@
+import revalidateCacheByTag from "@utils/revalidateCacheByTag";
 import cachedRequests from "@config/cachedRequests";
 import { CacheConfig, api } from "@providers/api";
-import { revalidateTag } from "next/cache";
 import {
   CreateCategoryDTO,
   ResponseList,
@@ -48,8 +48,8 @@ class CategoriesProviders {
   };
 
   private invalidateCache = (categoryId?: string) => {
-    if (categoryId) revalidateTag(categoryId);
-    cachedRequests.categories.list.tags.forEach((it) => revalidateTag(it));
+    if (categoryId) revalidateCacheByTag(categoryId);
+    cachedRequests.categories.list.tags.forEach((it) => revalidateCacheByTag(it));
   };
 }
 

@@ -1,5 +1,5 @@
 import PageContainer from "@components/Container/Page";
-import CreateOrUpdateCategoryForm from "@components/forms/CreateOrUpdateCategory";
+import CreateOrUpdateCategoryForm from "@components/Forms/CreateOrUpdateCategory";
 import { categoriesProviders } from "@providers/api/categories";
 
 interface Props {

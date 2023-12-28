@@ -1,5 +1,5 @@
 import PageContainer from "@components/Container/Page";
-import CreateOrUpdatePrayerForm from "@components/forms/CreateOrUpdatePrayer";
+import CreateOrUpdatePrayerForm from "@components/Forms/CreateOrUpdatePrayer";
 
 export default async function CreatePrayerPage() {
   return (

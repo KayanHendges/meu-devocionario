@@ -2,41 +2,49 @@
 import Joi from "joi";
 import { useRouter } from "next/navigation";
 import { ComponentProps, FormEvent, useContext, useState } from "react";
-import { CreateCategoryDTO, LoginUserDTO } from "project-common";
+import {
+  CreateCategoryDTO,
+  LoginUserDTO,
+  RegisterUserDTO,
+} from "project-common";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
-import FormContainer from "@components/forms/FormContainer";
+import FormContainer from "@components/Forms/FormContainer";
 import TextInput from "@components/Inputs/Text";
 import Button from "@components/Buttons/Button";
 import { AuthContext } from "@contexts/Auth/AuthContext";
 import { handleSubmit } from "@utils/forms";
 import Link from "next/link";
+import { authProvider } from "@providers/api/auth";
 
-export const loginFormSchema = Joi.object<LoginUserDTO>({
+export const registerFormSchema = Joi.object<RegisterUserDTO>({
+  name: Joi.string().min(2).max(200),
   email: Joi.string().email({ tlds: { allow: false } }),
-  password: Joi.string().optional(),
+  password: Joi.string().min(8).max(200),
 });
 
 interface Props extends ComponentProps<"form"> {
   redirectPath?: string;
 }
 
-export default function LoginForm({ redirectPath, ...props }: Props) {
+export default function RegisterForm({ redirectPath, ...props }: Props) {
   const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
   const { signIn } = useContext(AuthContext);
   const router = useRouter();
 
-  const form = useForm<LoginUserDTO>({
-    resolver: joiResolver(loginFormSchema),
+  const form = useForm<RegisterUserDTO>({
+    resolver: joiResolver(registerFormSchema),
   });
 
-  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+  const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmiting(true);
 
     try {
       const payload = await handleSubmit(form);
-      await signIn(payload);
+      const { email } = await authProvider.register(payload);
+
+      await signIn({ email, password: payload.password });
       router.push(redirectPath || "/meu-devocionario");
     } catch (error) {
       console.error(error);
@@ -46,8 +54,9 @@ export default function LoginForm({ redirectPath, ...props }: Props) {
   };
 
   return (
-    <FormContainer onSubmit={handleLogin} className="gap-8" {...props}>
+    <FormContainer onSubmit={handleRegister} className="gap-8" {...props}>
       <div className="flex flex-col gap-4">
+        <TextInput label="Nome" {...form.register("name")} />
         <TextInput label="Email" type="email" {...form.register("email")} />
         <TextInput
           label="Senha"
@@ -57,13 +66,8 @@ export default function LoginForm({ redirectPath, ...props }: Props) {
       </div>
       <div className="flex flex-col gap-4">
         <Button isLoading={isSubmiting} primary>
-          Entrar
+          Criar
         </Button>
-        <Link href={"/registrar"}>
-          <Button className="w-full" disabled={isSubmiting}>
-            Crie uma conta
-          </Button>
-        </Link>
       </div>
     </FormContainer>
   );

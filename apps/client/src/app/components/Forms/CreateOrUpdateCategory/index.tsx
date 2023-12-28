@@ -8,9 +8,9 @@ import { handleSubmit } from "@utils/forms";
 import HtmlEditor from "@components/Html/HtmlEditor";
 import Button from "@components/Buttons/Button";
 import { useRouter } from "next/navigation";
-import { CreateOrUpdateCategoryFormSchema } from "@components/forms/CreateOrUpdateCategory/CreateOrUpdateCategory";
+import { CreateOrUpdateCategoryFormSchema } from "@components/Forms/CreateOrUpdateCategory/CreateOrUpdateCategory";
 import { categoriesProviders } from "@providers/api/categories";
-import FormContainer from "@components/forms/FormContainer";
+import FormContainer from "@components/Forms/FormContainer";
 
 interface Props {
   category?: Category;

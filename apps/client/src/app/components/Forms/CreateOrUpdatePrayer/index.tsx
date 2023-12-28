@@ -9,10 +9,10 @@ import { handleSubmit } from "@utils/forms";
 import RelatedCategoriesSelect from "@components/Selects/RelatedCategories";
 import { prayersProviders } from "@providers/api/prayers";
 import HtmlEditor from "@components/Html/HtmlEditor";
-import { CreateOrUpdatePrayerFormSchema } from "@components/forms/CreateOrUpdatePrayer/CreateOrUpdatePrayer";
+import { CreateOrUpdatePrayerFormSchema } from "@components/Forms/CreateOrUpdatePrayer/CreateOrUpdatePrayer";
 import Button from "@components/Buttons/Button";
 import { useRouter } from "next/navigation";
-import FormContainer from "@components/forms/FormContainer";
+import FormContainer from "@components/Forms/FormContainer";
 
 interface Props {
   prayer?: Prayer;

@@ -1,5 +1,11 @@
 import { Public } from '@api/decorators/auth/public.route';
-import { LoginUserDTO, RegisterUserDTO, ValidateCodeDTO } from 'project-common';
+import {
+  LoginUserDTO,
+  RegisterUserDTO,
+  RequestCodeDTO,
+  ResetPasswordDTO,
+  ValidateCodeDTO,
+} from 'project-common';
 import { AuthService } from '@auth/auth.service';
 import { Body, Controller, Post } from '@nestjs/common';
 import { CurrentUser } from '@decorators/user/current.user.decorator';
@@ -21,16 +27,20 @@ export class AuthController {
     return this.authService.login(body);
   }
 
-  @Post('requestCode')
-  requestCode(@CurrentUser() currentUser: JwtPayload) {
-    return this.authService.requestCode(currentUser);
+  @Post('resetPassword')
+  resetPassword(@Body() body: ResetPasswordDTO, @CurrentUser() currentUser: JwtPayload) {
+    return this.authService.resetPassword(body, currentUser);
   }
 
-  @Post('validateCode')
-  validateCode(
-    @Body() body: ValidateCodeDTO,
-    @CurrentUser() currentUser: JwtPayload,
-  ) {
-    return this.authService.validateCode(body, currentUser);
+  @Public()
+  @Post('requestCode')
+  requestCode(@Body() body: RequestCodeDTO) {
+    return this.authService.requestCode(body);
+  }
+
+  @Public()
+  @Post('loginCode')
+  validateCode(@Body() body: ValidateCodeDTO) {
+    return this.authService.loginCode(body);
   }
 }

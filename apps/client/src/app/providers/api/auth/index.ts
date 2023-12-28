@@ -7,11 +7,14 @@ import {
 } from "project-common";
 
 class AuthProvider {
-  login = async (payload: LoginUserDTO, options?: CacheConfig): Promise<LoginResponse> =>
-    (await api.post("auth/login", payload, options)).data;
+  login = async (payload: LoginUserDTO): Promise<LoginResponse> =>
+    (await api.post("auth/login", payload)).data;
 
-  register = async (payload: RegisterUserDTO, options?: CacheConfig): Promise<User> =>
-    (await api.post("auth/register", payload, options)).data;
+  register = async (payload: RegisterUserDTO): Promise<User> =>
+    (await api.post("auth/register", payload)).data;
+
+  requestCode = async (): Promise<void> =>
+    (await api.post("auth/requestCode", {})).data;
 }
 
 export const authProvider = new AuthProvider();

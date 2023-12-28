@@ -11,6 +11,7 @@ import Button from "@components/Buttons/Button";
 import { AuthContext } from "@contexts/Auth/AuthContext";
 import { handleSubmit } from "@utils/forms";
 import Link from "next/link";
+import { Text } from "@components/Texts/Text";
 
 export const loginFormSchema = Joi.object<LoginUserDTO>({
   email: Joi.string().email({ tlds: { allow: false } }),
@@ -54,6 +55,9 @@ export default function LoginForm({ redirectPath, ...props }: Props) {
           type="password"
           {...form.register("password")}
         />
+        <Text className="underline text-primary dark:text-primary" asChild>
+          <Link href={"/redefinir-senha"}>Esqueci minha senha</Link>
+        </Text>
       </div>
       <div className="flex flex-col gap-4">
         <Button isLoading={isSubmiting} primary>

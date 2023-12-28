@@ -1,41 +1,40 @@
 import clsx from "clsx";
 import { Slot } from "@radix-ui/react-slot";
 import { ComponentProps, forwardRef } from "react";
+import { VariantProps, tv } from "tailwind-variants";
 
-export interface TextProps extends ComponentProps<"span"> {
-  size?: "sm" | "md" | "lg" | "xl";
+const text = tv({
+  base: "font-sans text-zinc-900 dark:text-zinc-200",
+  variants: {
+    size: {
+      sm: "text-xs",
+      md: "text-sm",
+      lg: "text-md",
+      xl: "text-lg",
+    },
+    truncate: { true: "truncate" },
+  },
+  defaultVariants: {
+    size: "md",
+  },
+});
+
+export interface TextProps
+  extends ComponentProps<"span">,
+    VariantProps<typeof text> {
   asChild?: boolean;
-  truncate?: boolean;
 }
 
 const Text = forwardRef<HTMLSpanElement, TextProps>(
   (
-    {
-      size = "md",
-      children,
-      asChild,
-      className,
-      truncate = true,
-      title,
-      ...props
-    },
+    { size, children, asChild, className, truncate = true, title, ...props },
     ref
   ) => {
     const Component = asChild ? Slot : "span";
 
     return (
       <Component
-        className={clsx(
-          "font-sans text-zinc-900 dark:text-zinc-200",
-          {
-            truncate,
-            "text-xs": size === "sm",
-            "text-sm": size === "md",
-            "text-md": size === "lg",
-            "text-lg": size === "xl",
-          },
-          className
-        )}
+        className={text({ size, truncate, className })}
         title={title}
         {...props}
         ref={ref}

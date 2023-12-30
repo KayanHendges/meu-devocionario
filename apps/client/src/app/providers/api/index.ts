@@ -123,7 +123,7 @@ class Api {
     });
 
     const { status } = response;
-    const data = (await response.json()) || {};
+    const data = (await response.json().catch(() => {})) || {};
 
     const apiResponse = { ...response, data };
 

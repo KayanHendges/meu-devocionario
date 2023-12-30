@@ -31,6 +31,9 @@ export default function LoginForm({ redirectPath, ...props }: Props) {
     resolver: joiResolver(loginFormSchema),
   });
 
+  const email = form.watch("email");
+  const forgotPasswordLink = `/redefinir-senha${email && `?email=${email}`}`;
+
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmiting(true);
@@ -56,7 +59,7 @@ export default function LoginForm({ redirectPath, ...props }: Props) {
           {...form.register("password")}
         />
         <Text className="underline text-primary dark:text-primary" asChild>
-          <Link href={"/redefinir-senha"}>Esqueci minha senha</Link>
+          <Link href={forgotPasswordLink}>Esqueci minha senha</Link>
         </Text>
       </div>
       <div className="flex flex-col gap-4">

@@ -3,7 +3,7 @@ import {
   RegisterUserDTO,
   User,
   LoginResponse,
-  ValidateCodeDTO,
+  LoginCodeDTO,
   RequestCodeDTO,
   ResetPasswordDTO,
 } from 'project-common';
@@ -109,7 +109,7 @@ export class AuthService {
     return;
   }
 
-  async loginCode({ code, email }: ValidateCodeDTO): Promise<LoginResponse> {
+  async loginCode({ code, email }: LoginCodeDTO): Promise<LoginResponse> {
     const user = await this.userRepository.find({ email });
 
     const foundCode = await this.authRepository.getValidationCode({

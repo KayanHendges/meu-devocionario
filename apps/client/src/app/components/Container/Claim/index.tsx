@@ -6,11 +6,14 @@ import { ReactNode, useContext } from "react";
 export type ClaimKeys = DeepestNestedKeys<Claim>;
 
 interface Props {
-  requiredClaims: ClaimKeys[];
-  children: ReactNode;
+  requiredClaims?: ClaimKeys[];
+  children?: ReactNode;
 }
 
-export default function ClaimContainer({ requiredClaims, children }: Props) {
+export default function ClaimContainer({
+  requiredClaims = [],
+  children,
+}: Props) {
   const { user } = useContext(UserContext);
 
   const canHandleContent =

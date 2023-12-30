@@ -1,10 +1,10 @@
 import PageContainer from "@components/Container/Page";
-import ResetPasswordForm from "@components/Forms/Auth/ResetPassword";
+import EmailCodeLoginForm from "@components/Forms/Auth/EmailCodeLogin";
 
 export default function ResetPassword() {
   return (
     <PageContainer header="Redefinir Senha">
-      <ResetPasswordForm />
+      <EmailCodeLoginForm />
     </PageContainer>
   );
 }

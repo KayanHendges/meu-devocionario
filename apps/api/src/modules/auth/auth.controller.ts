@@ -4,7 +4,7 @@ import {
   RegisterUserDTO,
   RequestCodeDTO,
   ResetPasswordDTO,
-  ValidateCodeDTO,
+  LoginCodeDTO,
 } from 'project-common';
 import { AuthService } from '@auth/auth.service';
 import { Body, Controller, Post } from '@nestjs/common';
@@ -28,7 +28,10 @@ export class AuthController {
   }
 
   @Post('resetPassword')
-  resetPassword(@Body() body: ResetPasswordDTO, @CurrentUser() currentUser: JwtPayload) {
+  resetPassword(
+    @Body() body: ResetPasswordDTO,
+    @CurrentUser() currentUser: JwtPayload,
+  ) {
     return this.authService.resetPassword(body, currentUser);
   }
 
@@ -40,7 +43,7 @@ export class AuthController {
 
   @Public()
   @Post('loginCode')
-  validateCode(@Body() body: ValidateCodeDTO) {
+  validateCode(@Body() body: LoginCodeDTO) {
     return this.authService.loginCode(body);
   }
 }

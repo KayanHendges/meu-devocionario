@@ -5,13 +5,21 @@ import FormContainer from "@components/Forms/FormContainer";
 import TextInput from "@components/Inputs/Text";
 import { Heading } from "@components/Texts/Heading";
 import { Text } from "@components/Texts/Text";
+import { emailFormField } from "@config/joiForms";
+import { AuthContext } from "@contexts/Auth/AuthContext";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { authProvider } from "@providers/api/auth";
 import { handleSubmit } from "@utils/forms";
 import Joi from "joi";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
-import { ComponentProps, FormEvent, useEffect, useState } from "react";
+import {
+  ComponentProps,
+  FormEvent,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useForm } from "react-hook-form";
 
 interface Props extends ComponentProps<"form"> {}
@@ -23,14 +31,17 @@ interface EmailCodeFormSchema {
   code: string;
 }
 
+const REDIRECT_DELAY = 3 * 1000; // 3 secs
+
 export const emailFormSchema = Joi.object<EmailCodeFormSchema>({
-  email: Joi.string().email({ tlds: { allow: false } }),
+  email: emailFormField,
   code: Joi.string().length(6),
 });
 
 export default function EmailCodeLoginForm({ className, ...props }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [resetStep, setResetStep] = useState<ResetSteps>("sendCode");
+  const { signInEmailCode } = useContext(AuthContext);
   const router = useRouter();
 
   const queryEmail = useSearchParams().get("email");
@@ -55,7 +66,7 @@ export default function EmailCodeLoginForm({ className, ...props }: Props) {
   const loginCode = async () => {
     const payload = await handleSubmit(form);
 
-    await authProvider.loginCode(payload);
+    await signInEmailCode(payload);
 
     setResetStep("success");
   };
@@ -78,7 +89,7 @@ export default function EmailCodeLoginForm({ className, ...props }: Props) {
 
   useEffect(() => {
     if (resetStep === "success")
-      setTimeout(() => router.push("/preferencias"), 5 * 1000);
+      setTimeout(() => router.push("/preferencias"), REDIRECT_DELAY);
   }, [resetStep, router]);
 
   return (

@@ -2,11 +2,7 @@
 import Joi from "joi";
 import { useRouter } from "next/navigation";
 import { ComponentProps, FormEvent, useContext, useState } from "react";
-import {
-  CreateCategoryDTO,
-  LoginUserDTO,
-  RegisterUserDTO,
-} from "project-common";
+import { RegisterUserDTO } from "project-common";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import FormContainer from "@components/Forms/FormContainer";
@@ -16,11 +12,16 @@ import { AuthContext } from "@contexts/Auth/AuthContext";
 import { handleSubmit } from "@utils/forms";
 import Link from "next/link";
 import { authProvider } from "@providers/api/auth";
+import {
+  emailFormField,
+  nameFormField,
+  passwordFormField,
+} from "@config/joiForms";
 
 export const registerFormSchema = Joi.object<RegisterUserDTO>({
-  name: Joi.string().min(2).max(200),
-  email: Joi.string().email({ tlds: { allow: false } }),
-  password: Joi.string().min(8).max(200),
+  name: nameFormField,
+  email: emailFormField,
+  password: passwordFormField,
 });
 
 interface Props extends ComponentProps<"form"> {

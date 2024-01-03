@@ -1,6 +1,11 @@
 "use client";
 import { authProvider } from "@providers/api/auth";
-import { LoginUserDTO } from "project-common";
+import {
+  LoginCodeDTO,
+  LoginResponse,
+  LoginUserDTO,
+  RequestCodeDTO,
+} from "project-common";
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { IAuthContext } from "src/app/contexts/Auth/types";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
@@ -20,17 +25,32 @@ export default function AuthContextProvider({
 
   const signIn = async (payload: LoginUserDTO) => {
     try {
-      const { accessToken } = await authProvider.login(payload);
+      const response = await authProvider.login(payload);
 
-      const { exp } = jwtDecode(accessToken);
-      const expires = typeof exp === "number" ? new Date(exp * 1000) : exp;
-
-      setCookie(config.accessToken, accessToken, { expires });
-      setIsAuthenticated(true);
+      handleLogin(response);
     } catch (error) {
       setIsAuthenticated(false);
       console.error(error);
     }
+  };
+
+  const signInEmailCode = async (payload: LoginCodeDTO) => {
+    try {
+      const response = await authProvider.loginCode(payload);
+
+      handleLogin(response);
+    } catch (error) {
+      setIsAuthenticated(false);
+      console.error(error);
+    }
+  };
+
+  const handleLogin = ({ accessToken }: LoginResponse) => {
+    const { exp } = jwtDecode(accessToken);
+    const expires = typeof exp === "number" ? new Date(exp * 1000) : exp;
+
+    setCookie(config.accessToken, accessToken, { expires });
+    setIsAuthenticated(true);
   };
 
   const signOut = async () => {
@@ -48,7 +68,9 @@ export default function AuthContextProvider({
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, signIn, signInEmailCode, signOut }}
+    >
       {children}
     </AuthContext.Provider>
   );

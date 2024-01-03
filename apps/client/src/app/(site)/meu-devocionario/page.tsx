@@ -5,7 +5,9 @@ import { Heading } from "@components/Texts/Heading";
 import { AuthContext } from "@contexts/Auth/AuthContext";
 import { UserContext } from "@contexts/User/UserContext";
 import UserPrayersList from "@sites/meu-devocionario/UserPrayersList";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Gear } from "phosphor-react";
 import { useContext, useEffect } from "react";
 
 export default function MyDevotionalBookPage() {
@@ -24,7 +26,12 @@ export default function MyDevotionalBookPage() {
     <PageContainer backButton={false}>
       <div className="flex items-center justify-between py-4 border-b border-gray-500">
         <Heading>{`Olá, ${user.name}!`}</Heading>
-        <Button onClick={() => signOut()}>Sair</Button>
+        <div className="flex items-center justify-center gap-4">
+          <Button onClick={() => signOut()}>Sair</Button>
+          <Link href={"/preferencias"}>
+            <Gear size={32} className="hover:bg-zinc-200 w-12 h-12 p-2 rounded transition-all" />
+          </Link>
+        </div>
       </div>
       <Heading>Minhas Orações</Heading>
       <UserPrayersList />

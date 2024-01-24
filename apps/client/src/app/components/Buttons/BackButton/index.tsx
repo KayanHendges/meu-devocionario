@@ -17,7 +17,7 @@ export default function BackButton({ backButton }: Props) {
         if (backButton === true) router.back();
         else if (typeof backButton === "string") router.push(backButton);
       }}
-      className="btn-square p-0"
+      className=""
     >
       <ArrowLeft size={24} />
     </Button>

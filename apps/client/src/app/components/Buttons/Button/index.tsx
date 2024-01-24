@@ -1,20 +1,53 @@
 import { Slot } from "@radix-ui/react-slot";
-import {
-  ComponentPropsWithRef,
-  ComponentPropsWithoutRef,
-  forwardRef,
-} from "react";
-import { twMerge } from "tailwind-merge";
+import { ComponentPropsWithRef, forwardRef } from "react";
+import { VariantProps, tv } from "tailwind-variants";
 
-export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
-  isLoading?: boolean;
-  primary?: boolean;
+const button = tv({
+  base: `
+  bg-zinc-200 hover:bg-zinc-300 text-zinc-900 hover:text-zinc-950
+  dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:text-zinc-100 dark:hover:text-white
+  before:loading before:absolute before:opacity-0
+  text-center rounded-lg transition-all`,
+  variants: {
+    primary: {
+      true: `
+    bg-primary hover:bg-primary text-zinc-100 hover:text-white
+    dark:bg-primary dark:hover:bg-primary`,
+    },
+    isLoading: {
+      true: "before:opacity-100",
+    },
+    size: {
+      sm: "p-1",
+      md: "p-2",
+      lg: "p-3",
+    },
+  },
+  defaultVariants: {
+    primary: false,
+    isLoading: false,
+    size: "md",
+  },
+});
+
+export interface ButtonProps
+  extends ComponentPropsWithRef<"button">,
+    VariantProps<typeof button> {
   asChild?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { className, isLoading, children, disabled, asChild, primary, ...props },
+    {
+      className,
+      isLoading,
+      size,
+      children,
+      disabled,
+      asChild,
+      primary,
+      ...props
+    },
     ref
   ) => {
     const Component = asChild ? Slot : "button";
@@ -24,14 +57,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         data-primary={primary}
         data-loading={isLoading || undefined}
-        className={twMerge(
-          "btn border-1 border-neutral-800 text-zinc-800 hover:text-white bg-neutral-50 hover:bg-neutral-800",
-          "before:loading before:absolute before:opacity-0 data-[loading]:before:opacity-100",
-          primary
-            ? "data-[primary]:btn-primary"
-            : "dark:bg-zinc-950 dark:hover:bg-white dark:border-white dark:text-zinc-50 dark:hover:text-black",
-          className
-        )}
+        className={button({ primary, isLoading, size, className })}
         {...props}
         disabled={disabled || isLoading}
       >

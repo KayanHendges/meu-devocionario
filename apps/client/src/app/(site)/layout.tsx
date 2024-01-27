@@ -1,5 +1,5 @@
 import ContainerApp from "@components/Container/App";
-import "../../../globals.css";
+import "../globals.css";
 import { Inter } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 import { Metadata } from "next";

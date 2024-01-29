@@ -16,15 +16,7 @@
     "incremental": true,
     "baseUrl": "./",
     "paths": {
-      "@sites/*": ["src/app/(site)/*"],
-      "@components/*": ["src/app/components/*"],
-      "@utils/*": ["src/utils/*"],
-      "@providers/*": ["src/app/providers/*"],
-      "@contexts/*": ["src/app/contexts/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@routes/*": ["src/routes/*"],
-      "@types": ["src/types.d.ts"],
-      "@config/*": ["src/config/*"],
+      "@/*": ["./*"]
     },
     "plugins": [
       {

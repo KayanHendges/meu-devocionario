@@ -1,7 +1,7 @@
 "use client";
 import LabelInput from "@/components/Inputs/Label";
-import { EditorContent, useEditor } from "@/tiptap/react";
-import StarterKit from "@/tiptap/starter-kit";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 import { replaceHtmlEntites } from "@/utils/formats/html";
 import { ComponentProps, Fragment } from "react";
 import { twMerge } from "tailwind-merge";

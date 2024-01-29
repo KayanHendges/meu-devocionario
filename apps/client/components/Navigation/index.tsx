@@ -56,7 +56,7 @@ export default function Navigation() {
             key={route.label}
             className={twMerge(
               "flex-1 h-full flex justify-center items-center hover:bg-zinc-100 transition",
-              selected ? "text-primary" : ""
+              selected ? "text-brand" : ""
             )}
             onClick={() => handleNavigation(route)}
           >
@@ -64,7 +64,7 @@ export default function Navigation() {
               className={twMerge(
                 "w-6 h-6",
                 selected
-                  ? "text-primary"
+                  ? "text-brand"
                   : "text-black dark:text-white transition-colors"
               )}
             >
@@ -75,7 +75,7 @@ export default function Navigation() {
       })}
       <span
         className={twMerge(
-          `absolute h-1 bg-primary top-0 left-0 rounded transition-all ease-in-out`
+          `absolute h-1 bg-brand top-0 left-0 rounded transition-all ease-in-out`
         )}
         style={indicatorStyle}
       />

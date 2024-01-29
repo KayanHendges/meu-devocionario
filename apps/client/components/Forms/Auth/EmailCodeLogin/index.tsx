@@ -124,7 +124,7 @@ export default function EmailCodeLoginForm({ className, ...props }: Props) {
             Você será redirecionado para alterar a sua senha em alguns segundos.
             <br />
             Se isso não acontecer,{" "}
-            <Link href={"/preferencias"} className="text-primary underline">
+            <Link href={"/preferencias"} className="text-brand underline">
               clique aqui para redirecionar
             </Link>
             .

@@ -16,7 +16,7 @@ const SingleSelect = forwardRef<HTMLSelectElement, SingleSelectProps>(
         <select
           ref={ref}
           className={twMerge(
-            "select select-bordered w-full select-primary bg-zinc-200 dark:bg-zinc-900",
+            "select select-bordered w-full select-brand bg-zinc-200 dark:bg-zinc-900",
             className
           )}
           {...props}

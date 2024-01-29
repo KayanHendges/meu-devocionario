@@ -1,10 +1,13 @@
 import ContainerApp from "@/components/Container/App";
 import "./globals.css";
-import { Inter } from "next/font/google";
-import { twMerge } from "tailwind-merge";
+import { Inter as FontSans } from "next/font/google";
 import { Metadata } from "next";
+import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+export const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   title: "Meu devocionário",
@@ -19,9 +22,9 @@ export default function RootLayout({
   return (
     <html lang="pt_BR" suppressHydrationWarning>
       <body
-        className={twMerge(
-          inter.className,
-          "w-screen h-screen flex flex-col overflow-hidden bg-zinc-100 dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50"
+        className={cn(
+          "w-screen h-screen flex flex-col overflow-hidden font-sans antialiased bg-zinc-100 dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50",
+          fontSans.variable
         )}
       >
         <ContainerApp>{children}</ContainerApp>

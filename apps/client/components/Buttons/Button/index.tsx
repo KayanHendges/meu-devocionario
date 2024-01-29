@@ -11,8 +11,8 @@ const button = tv({
   variants: {
     primary: {
       true: `
-    bg-primary hover:bg-primary text-zinc-100 hover:text-white
-    dark:bg-primary dark:hover:bg-primary`,
+    bg-brand hover:bg-brand text-zinc-100 hover:text-white
+    dark:bg-brand dark:hover:bg-brand`,
     },
     isLoading: {
       true: "before:opacity-100",
@@ -55,7 +55,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Component
         ref={ref}
-        data-primary={primary}
         data-loading={isLoading || undefined}
         className={button({ primary, isLoading, size, className })}
         {...props}

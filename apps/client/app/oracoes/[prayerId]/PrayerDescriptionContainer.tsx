@@ -76,8 +76,8 @@ export default function PrayerDescriptionContainer({
         <Text
           ref={dividerRef}
           className={twMerge(
-            "z-20 bg-white rounded-xl py-1 px-4 hover:bg-primary shadow hover:text-white transition-all",
-            "dark:bg-zinc-900 dark:hover:bg-primary dark:shadow-black",
+            "z-20 bg-white rounded-xl py-1 px-4 hover:bg-brand shadow hover:text-white transition-all",
+            "dark:bg-zinc-900 dark:hover:bg-brand dark:shadow-black",
             canHide ? "opacity-100" : "opacity-0"
           )}
           onClick={() => canHide && setHidden(!hidden)}

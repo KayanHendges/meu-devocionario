@@ -18,7 +18,7 @@ const TextInput = forwardRef<HTMLInputElement, InputTextProps>(
           ref={ref}
           type="text"
           className={twMerge(
-            "input input-bordered input-primary w-full bg-zinc-200 dark:bg-zinc-900",
+            "input input-bordered input-brand w-full bg-zinc-200 dark:bg-zinc-900",
             "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
             className
           )}

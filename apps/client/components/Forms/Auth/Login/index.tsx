@@ -58,7 +58,7 @@ export default function LoginForm({ redirectPath, ...props }: Props) {
           type="password"
           {...form.register("password")}
         />
-        <Text className="underline text-primary dark:text-primary" asChild>
+        <Text className="underline text-brand dark:text-brand" asChild>
           <Link href={forgotPasswordLink}>Esqueci minha senha</Link>
         </Text>
       </div>

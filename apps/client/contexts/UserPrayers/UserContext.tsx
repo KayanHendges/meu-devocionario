@@ -19,8 +19,6 @@ export default function UserPrayersProvider({
     data: prayers,
     mutate,
     isLoading: isFetchingPrayers,
-    error,
-    isValidating,
   } = useSWR(
     "userPrayers",
     () => {

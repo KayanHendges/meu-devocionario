@@ -7,7 +7,7 @@ import {
   RequestCodeDTO,
 } from "project-common";
 import { ReactNode, createContext, useEffect, useState } from "react";
-import { IAuthContext } from "src/app/contexts/Auth/types";
+import { IAuthContext } from "./types";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { jwtDecode } from "jwt-decode";
 import { config } from "@/config/variables";

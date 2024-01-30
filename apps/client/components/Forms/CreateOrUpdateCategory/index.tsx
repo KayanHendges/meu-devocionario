@@ -3,7 +3,7 @@ import { Category, CreateCategoryDTO } from "project-common";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { FormEvent, useMemo, useState } from "react";
-import TextInput from "@/components/Inputs/Text";
+import { Input } from "@/components/ui/input";
 import { handleSubmit } from "@/utils/forms";
 import HtmlEditor from "@/components/Html/HtmlEditor";
 import Button from "@/components/Buttons/Button";
@@ -55,7 +55,7 @@ export default function CreateOrUpdateCategoryForm({ category }: Props) {
 
   return (
     <FormContainer onSubmit={handleCategory}>
-      <TextInput label="Título da Oração" {...form.register("name")} />
+      <Input label="Título da Oração" {...form.register("name")} />
       <HtmlEditor
         label="Descrição (opcional)"
         onHtmlChange={(html: string) => form.setValue("description", html)}

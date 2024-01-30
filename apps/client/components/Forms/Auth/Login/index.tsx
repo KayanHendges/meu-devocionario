@@ -2,11 +2,11 @@
 import Joi from "joi";
 import { useRouter } from "next/navigation";
 import { ComponentProps, FormEvent, useContext, useState } from "react";
-import { CreateCategoryDTO, LoginUserDTO } from "project-common";
+import { LoginUserDTO } from "project-common";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import FormContainer from "@/components/Forms/FormContainer";
-import TextInput from "@/components/Inputs/Text";
+import { Input } from "@/components/ui/input";
 import Button from "@/components/Buttons/Button";
 import { AuthContext } from "@/contexts/Auth/AuthContext";
 import { handleSubmit } from "@/utils/forms";
@@ -52,8 +52,8 @@ export default function LoginForm({ redirectPath, ...props }: Props) {
   return (
     <FormContainer onSubmit={handleLogin} className="gap-8" {...props}>
       <div className="flex flex-col gap-2">
-        <TextInput label="Email" type="email" {...form.register("email")} />
-        <TextInput
+        <Input label="Email" type="email" {...form.register("email")} />
+        <Input
           label="Senha"
           type="password"
           {...form.register("password")}

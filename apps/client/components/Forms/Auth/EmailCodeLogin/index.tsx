@@ -2,7 +2,7 @@
 
 import Button from "@/components/Buttons/Button";
 import FormContainer from "@/components/Forms/FormContainer";
-import TextInput from "@/components/Inputs/Text";
+import { Input } from "@/components/ui/input";
 import { Heading } from "@/components/Texts/Heading";
 import { Text } from "@/components/Texts/Text";
 import { emailFormField } from "@/config/joiForms";
@@ -97,7 +97,7 @@ export default function EmailCodeLoginForm({ className, ...props }: Props) {
       {resetStep === "sendCode" && (
         <>
           <Text size="xl">Confirme seu email</Text>
-          <TextInput {...form.register("email")} />
+          <Input {...form.register("email")} />
           <Button isLoading={isLoading} primary>
             Confirmar
           </Button>
@@ -106,7 +106,7 @@ export default function EmailCodeLoginForm({ className, ...props }: Props) {
       {resetStep === "loginCode" && (
         <>
           <Text size="xl">Confirme o Código</Text>
-          <TextInput type="number" {...form.register("code")} />
+          <Input type="number" {...form.register("code")} />
           <Text className="text-center" truncate={false}>
             {`Um código de 6 dígitos foi enviado para o email ${email}`}
             <br />

@@ -1,7 +1,7 @@
 "use client";
 import Button from "@/components/Buttons/Button";
 import FormContainer from "@/components/Forms/FormContainer";
-import TextInput from "@/components/Inputs/Text";
+import { Input } from "@/components/ui/input";
 import { Heading } from "@/components/Texts/Heading";
 import { Text } from "@/components/Texts/Text";
 import { passwordFormField } from "@/config/joiForms";
@@ -66,12 +66,12 @@ export default function ChangePasswordForm(props: Props) {
       {step === "setPassword" && (
         <>
           <Heading>Redefinir Senha</Heading>
-          <TextInput
+          <Input
             type="password"
             label="Nova senha"
             {...form.register("password")}
           />
-          <TextInput
+          <Input
             type="password"
             label="Confirme a nova senha"
             {...form.register("confirmPassword")}

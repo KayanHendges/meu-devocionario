@@ -1,6 +1,7 @@
 "use client";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect } from "react";
+import { Switch } from "../ui/switch";
 
 export default function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
@@ -18,11 +19,10 @@ export default function ThemeSwitcher() {
 
   return (
     <div>
-      <input
-        type="checkbox"
+      <Switch
         className="toggle ml-auto"
         checked={theme === "dark"}
-        onChange={() => setTheme(theme === "light" ? "dark" : "light")}
+        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
       />
     </div>
   );

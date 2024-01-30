@@ -1,5 +1,5 @@
 import HandleUserPrayerButton from "@/components/Buttons/HandleUserPrayerButton";
-import Card from "@/components/Card";
+import { Card } from "@/components/ui/card";
 import { Heading } from "@/components/Texts/Heading";
 import { Text } from "@/components/Texts/Text";
 import Link from "next/link";
@@ -23,7 +23,7 @@ export default async function PrayersList({
           key={prayer.id}
           href={`/oracoes/${encodeURIComponent(prayer.id)}`}
         >
-          <Card>
+          <Card className="p-4">
             <Heading>{prayer.title}</Heading>
             <div className="flex items-center justify-between gap-4">
               {prayer.cleanBody && <Text className="flex-1">{prayer.cleanBody}</Text>}

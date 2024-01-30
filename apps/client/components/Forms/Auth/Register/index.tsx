@@ -6,11 +6,10 @@ import { RegisterUserDTO } from "project-common";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import FormContainer from "@/components/Forms/FormContainer";
-import TextInput from "@/components/Inputs/Text";
+import { Input } from "@/components/ui/input";
 import Button from "@/components/Buttons/Button";
 import { AuthContext } from "@/contexts/Auth/AuthContext";
 import { handleSubmit } from "@/utils/forms";
-import Link from "next/link";
 import { authProvider } from "@/providers/api/auth";
 import {
   emailFormField,
@@ -57,9 +56,9 @@ export default function RegisterForm({ redirectPath, ...props }: Props) {
   return (
     <FormContainer onSubmit={handleRegister} className="gap-8" {...props}>
       <div className="flex flex-col gap-4">
-        <TextInput label="Nome" {...form.register("name")} />
-        <TextInput label="Email" type="email" {...form.register("email")} />
-        <TextInput
+        <Input label="Nome" {...form.register("name")} />
+        <Input label="Email" type="email" {...form.register("email")} />
+        <Input
           label="Senha"
           type="password"
           {...form.register("password")}

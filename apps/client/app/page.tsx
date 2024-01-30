@@ -5,6 +5,9 @@ import PrayersList from "@/components/Lists/PrayersList";
 import Link from "next/link";
 import { prayersProviders } from "@/providers/api/prayers";
 import cachedRequests from "@/config/cachedRequests";
+import { Heading } from "@/components/Texts/Heading";
+import { Text } from "@/components/Texts/Text";
+import { Separator } from "@/components/ui/separator";
 
 export default async function Home() {
   const { list: prayers } = await prayersProviders.listPrayers({
@@ -13,7 +16,10 @@ export default async function Home() {
   }, { next: cachedRequests.prayers.list });
 
   return (
-    <PageContainer backButton={false} header="Orações" className="gap-4">
+    <PageContainer backButton={false} className="gap-4">
+      <Heading>Meu Devocionario</Heading>
+      <Separator />
+      <PrayersList list={prayers} />
       <ClaimContainer requiredClaims={["prayer.create"]}>
         <Link href={"criar-oracao"}>
           <Button className="w-full" primary type="button">
@@ -21,7 +27,6 @@ export default async function Home() {
           </Button>
         </Link>
       </ClaimContainer>
-      <PrayersList list={prayers} />
       <Link href={"/categorias"}>
         <Button className="w-full" primary>
           Categorias

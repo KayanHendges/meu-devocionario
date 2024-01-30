@@ -1,5 +1,5 @@
 import Button from "@/components/Buttons/Button";
-import Card from "@/components/Card";
+import { Card } from "@/components/ui/card";
 import PageContainer from "@/components/Container/Page";
 import ClaimContainer from "@/components/Container/Claim";
 import { Heading } from "@/components/Texts/Heading";
@@ -9,7 +9,9 @@ import { categoriesProviders } from "@/providers/api/categories";
 import cachedRequests from "@/config/cachedRequests";
 
 export default async function Page() {
-  const { list } = await categoriesProviders.listCategories({ next: cachedRequests.categories.list });
+  const { list } = await categoriesProviders.listCategories({
+    next: cachedRequests.categories.list,
+  });
 
   return (
     <PageContainer header="Categorias">
@@ -23,7 +25,7 @@ export default async function Page() {
         </ClaimContainer>
         {list.map(({ id, name, cleanDescription }) => (
           <Link key={id} href={`categorias/${encodeURIComponent(id)}`}>
-            <Card>
+            <Card className="p-4">
               <Heading>{name}</Heading>
               {cleanDescription && <Text>{cleanDescription}</Text>}
             </Card>

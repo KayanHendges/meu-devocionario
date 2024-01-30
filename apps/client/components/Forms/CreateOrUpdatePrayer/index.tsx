@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { FormEvent, useMemo, useState } from "react";
 import CategorySelect from "@/components/Selects/Category";
-import TextInput from "@/components/Inputs/Text";
+import { Input } from "@/components/ui/input";
 import { handleSubmit } from "@/utils/forms";
 import RelatedCategoriesSelect from "@/components/Selects/RelatedCategories";
 import { prayersProviders } from "@/providers/api/prayers";
@@ -61,7 +61,7 @@ export default function CreateOrUpdatePrayerForm({ prayer }: Props) {
 
   return (
     <FormContainer onSubmit={handlePrayer}>
-      <TextInput label="Título da Oração" {...form.register("title")} />
+      <Input label="Título da Oração" {...form.register("title")} />
       <HtmlEditor
         label="Descrição (opcional)"
         onHtmlChange={(html: string) => form.setValue("description", html)}

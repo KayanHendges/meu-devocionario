@@ -46,11 +46,6 @@ export default async function Home() {
         </ClaimContainer>
       </div>
       <PrayersList list={prayers} />
-      <Link href={"/categorias"}>
-        <Button className="w-full" primary>
-          Categorias
-        </Button>
-      </Link>
     </PageContainer>
   );
 }

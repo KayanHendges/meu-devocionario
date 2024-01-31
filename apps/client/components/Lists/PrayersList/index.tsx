@@ -17,21 +17,25 @@ export default async function PrayersList({
   ...props
 }: Props) {
   return (
-    <div className={twMerge("flex flex-col gap-4", className)} {...props}>
-      {list.map((prayer) => (
-        <Link
-          key={prayer.id}
-          href={`/oracoes/${encodeURIComponent(prayer.id)}`}
-        >
-          <Card className="p-4">
-            <Heading>{prayer.title}</Heading>
-            <div className="flex items-center justify-between gap-4">
-              {prayer.cleanBody && <Text className="flex-1">{prayer.cleanBody}</Text>}
-              <HandleUserPrayerButton prayer={prayer} />
-            </div>
-          </Card>
-        </Link>
-      ))}
+    <div className={twMerge("flex flex-wrap gap-4", className)} {...props}>
+      {list.map((prayer) => {
+        const description = prayer.cleanDescription || prayer.cleanBody;
+        return (
+          <Link
+            key={prayer.id}
+            href={`/oracoes/${encodeURIComponent(prayer.id)}`}
+            className="w-full max-w-md"
+          >
+            <Card className="p-4 w-full">
+              <Heading>{prayer.title}</Heading>
+              <div className="flex items-center justify-between gap-4">
+                {description && <Text className="flex-1">{description}</Text>}
+                <HandleUserPrayerButton prayer={prayer} />
+              </div>
+            </Card>
+          </Link>
+        );
+      })}
     </div>
   );
 }

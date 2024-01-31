@@ -24,7 +24,7 @@ export default function PageContainer({
       )}
       {...props}
     >
-      <div className="w-full flex-1 max-w-[720px] flex flex-col gap-4">
+      <div className="w-full flex-1 flex flex-col gap-4">
         {(header || backButton) && (
           <div
             className={clsx("flex items-center gap-4", {

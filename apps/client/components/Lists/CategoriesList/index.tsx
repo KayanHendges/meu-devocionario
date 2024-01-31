@@ -22,11 +22,13 @@ export default async function CategoryList({
           key={category.id}
           href={`/categorias/${encodeURIComponent(category.id)}`}
         >
-          <Badge className="bg-brand">{category.name}</Badge>
+          <Badge className="bg-brand dark:text-white dark:hover:text-brand dark:hover:bg-white">
+            {category.name}
+          </Badge>
         </Link>
       ))}
       <Link href={"/categorias"}>
-        <Badge className="bg-brand">
+        <Badge className="bg-brand dark:text-white dark:hover:text-brand dark:hover:bg-white">
           + mais categorias
         </Badge>
       </Link>

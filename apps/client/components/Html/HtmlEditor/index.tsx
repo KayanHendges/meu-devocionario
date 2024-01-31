@@ -1,10 +1,11 @@
 "use client";
-import LabelInput from "@/components/Inputs/Label";
+import { Label } from "@/components/ui/label";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { replaceHtmlEntites } from "@/utils/formats/html";
 import { ComponentProps, Fragment } from "react";
 import { twMerge } from "tailwind-merge";
+import { Textarea } from "@/components/ui/textarea";
 
 interface HtmlEditor extends Omit<ComponentProps<"div">, "ref"> {
   label?: string;
@@ -37,12 +38,8 @@ export default function HtmlEditor({
 
   return (
     <Container>
-      {label && <LabelInput>{label}</LabelInput>}
-      <div
-        data-focused={editor?.isFocused || undefined}
-        className="ring-1 bg-zinc-200 dark:bg-zinc-900 ring-brand rounded p-4 data-[focused]:ring-2 transition-all"
-        onClick={() => editor?.chain().focus().run()}
-      >
+      {label && <Label>{label}</Label>}
+      <Textarea onClick={() => editor?.chain().focus().run()}>
         <EditorContent
           className={twMerge(
             "w-full text-black dark:text-white prose-zinc dark:prose-invert",
@@ -51,7 +48,7 @@ export default function HtmlEditor({
           editor={editor}
           {...props}
         />
-      </div>
+      </Textarea>
     </Container>
   );
 }

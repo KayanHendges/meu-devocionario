@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { X } from "phosphor-react";
 import { categoriesProviders } from "@/providers/api/categories";
+import { Badge } from "@/components/ui/badge";
 
 export default function RelatedCategoriesSelect({
   className,
@@ -77,17 +78,14 @@ export default function RelatedCategoriesSelect({
       </SingleSelect>
       <div className="flex flex-wrap gap-1">
         {selected.map(({ id, name }) => (
-          <div
+          <Badge
             key={id}
-            className={twMerge(
-              "badge flex items-center py-4 gap-1 cursor-pointer",
-              "text-white dark:text-black dark:bg-zinc-200"
-            )}
+            className="gap-2"
             onClick={() => handleRemoveItem(id)}
           >
-            <X size={16} />
             {name}
-          </div>
+            <X size={16} />
+          </Badge>
         ))}
       </div>
     </div>

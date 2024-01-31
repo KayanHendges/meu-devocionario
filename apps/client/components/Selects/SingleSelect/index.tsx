@@ -1,6 +1,6 @@
 "use client";
 
-import LabelInput from "@/components/Inputs/Label";
+import { Label } from "@/components/ui/label";
 import { SingleSelectProps } from "@/components/Selects/SingleSelect/types";
 import { Text } from "@/components/Texts/Text";
 import { Fragment, forwardRef } from "react";
@@ -12,7 +12,7 @@ const SingleSelect = forwardRef<HTMLSelectElement, SingleSelectProps>(
 
     return (
       <Container>
-        {label && <LabelInput>{label}</LabelInput>}
+        {label && <Label>{label}</Label>}
         <select
           ref={ref}
           className={twMerge(
@@ -21,9 +21,7 @@ const SingleSelect = forwardRef<HTMLSelectElement, SingleSelectProps>(
           )}
           {...props}
         >
-          <option hidden>
-            Selecionar
-          </option>
+          <option hidden>Selecionar</option>
           {children}
         </select>
       </Container>

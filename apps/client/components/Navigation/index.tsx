@@ -55,7 +55,7 @@ export default function Navigation() {
           <button
             key={route.label}
             className={twMerge(
-              "flex-1 h-full flex justify-center items-center hover:bg-zinc-100 transition",
+              "flex-1 h-full flex justify-center items-center hover:bg-zinc-100 dark:hover:bg-zinc-900 transition",
               selected ? "text-brand" : ""
             )}
             onClick={() => handleNavigation(route)}

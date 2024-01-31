@@ -16,6 +16,7 @@ const text = tv({
   },
   defaultVariants: {
     size: "md",
+    truncate: true,
   },
 });
 
@@ -26,10 +27,7 @@ export interface TextProps
 }
 
 const Text = forwardRef<HTMLSpanElement, TextProps>(
-  (
-    { size, children, asChild, className, truncate = true, title, ...props },
-    ref
-  ) => {
+  ({ size, children, asChild, className, truncate, title, ...props }, ref) => {
     const Component = asChild ? Slot : "span";
 
     return (

@@ -4,11 +4,13 @@ import { ComponentProps, ReactNode } from "react";
 
 export interface HeadingProps extends ComponentProps<"h2"> {
   size?: "sm" | "md" | "lg";
+  truncate?: boolean;
   asChild?: boolean;
 }
 
 export function Heading({
   size = "md",
+  truncate = true,
   children,
   asChild,
   className,
@@ -23,6 +25,7 @@ export function Heading({
           "text-lg": size === "sm",
           "text-xl": size === "md",
           "text-2xl": size === "lg",
+          "truncate": truncate
         },
         className
       )}

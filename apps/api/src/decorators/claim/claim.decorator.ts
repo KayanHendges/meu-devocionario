@@ -1,4 +1,4 @@
-import { ClaimKeys } from 'project-common';
+import { ClaimKeys } from '@guards/claim/claim.guard';
 import { SetMetadata } from '@nestjs/common';
 
 export const CLAIM_KEY = 'claim';

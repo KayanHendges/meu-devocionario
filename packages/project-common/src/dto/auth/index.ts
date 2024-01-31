@@ -19,17 +19,16 @@ export class RegisterUserDTO extends PickClass(User, ["name", "email"]) {
   password: string;
 }
 
-export class LoginUserDTO {
-  @IsString()
-  @IsNotEmpty()
-  email: string;
+export class LoginUserDTO extends PickClass(RegisterUserDTO, [
+  "email",
+  "password",
+]) {}
 
-  @IsString()
-  @IsNotEmpty()
-  password: string;
-}
+export class ResetPasswordDTO extends PickClass(RegisterUserDTO, ["password"]) {}
 
-export class ValidateCodeDTO {
+export class RequestCodeDTO extends PickClass(User, ["email"]) {}
+
+export class LoginCodeDTO extends PickClass(User, ["email"]) {
   @IsString()
   @Matches(/^\d{6}$/)
   code: string;

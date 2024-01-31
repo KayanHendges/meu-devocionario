@@ -3,7 +3,9 @@ import {
   RegisterUserDTO,
   User,
   LoginResponse,
-  ValidateCodeDTO,
+  LoginCodeDTO,
+  RequestCodeDTO,
+  ResetPasswordDTO,
 } from 'project-common';
 import { JwtPayload } from '@auth/types';
 import {
@@ -17,6 +19,7 @@ import { IUserCredentialRepository } from '@repositories/userCredential/user.cre
 import * as bcrypt from 'bcrypt';
 import { IAuthRepository } from '@repositories/auth/auth.repository.interface';
 import { MailerService } from '@nestjs-modules/mailer';
+import { config } from '@config/index';
 
 @Injectable()
 export class AuthService {
@@ -30,7 +33,7 @@ export class AuthService {
 
   async register(user: RegisterUserDTO): Promise<User> {
     const { password, ...payload } = user;
-    const passwordHash = bcrypt.hashSync(password, 8);
+    const passwordHash = this.generatePasswordHash(password);
 
     const createdUser = await this.userRepository.create({
       ...payload,
@@ -69,45 +72,49 @@ export class AuthService {
 
     if (!passwordMatch) throw new UnauthorizedException();
 
-    const payload: JwtPayload = {
-      id: userFound.id,
-      role: userFound.role,
-    };
-
-    const accessToken = await this.jwtService.signAsync(payload);
-
-    return { accessToken };
+    return this.generateToken(userFound);
   }
 
-  async requestCode({ id }: JwtPayload): Promise<void> {
-    const { email } = await this.userRepository.find({ id });
-    await this.authRepository.invalidadeCode({ userId: id });
+  async resetPassword(
+    { password }: ResetPasswordDTO,
+    { id }: JwtPayload,
+  ): Promise<void> {
+    const passwordHash = this.generatePasswordHash(password);
 
-    const code = Math.random().toString().substring(2, 8);
-    await this.authRepository.createValidationCode({ userId: id, code });
-
-    await this.mailerService
-      .sendMail({
-        from: 'naoresponda@meudevocionario.com.br',
-        to: email,
-        subject: 'Seu código de verificação',
-        html: `<h2>${code}</h2>`,
-      })
-      .catch((err) => {
-        console.log(err);
-        throw err;
-      });
+    await this.userCredentialRepository.update(
+      { userId: id },
+      { password: passwordHash },
+    );
 
     return;
   }
 
-  async validateCode(
-    { code }: ValidateCodeDTO,
-    { id }: JwtPayload,
-  ): Promise<void> {
+  async requestCode({ email }: RequestCodeDTO): Promise<void> {
+    const userFound = await this.userRepository.find({ email });
+    await this.authRepository.invalidadeCode({ userId: userFound.id });
+
+    const code = Math.random().toString().substring(2, 8);
+    await this.authRepository.createValidationCode({
+      userId: userFound.id,
+      code,
+    });
+
+    await this.mailerService.sendMail({
+      from: config.SMTP_EMAIL,
+      to: userFound.email,
+      subject: 'Seu código de verificação',
+      html: `<h2>${code}</h2>`,
+    });
+
+    return;
+  }
+
+  async loginCode({ code, email }: LoginCodeDTO): Promise<LoginResponse> {
+    const user = await this.userRepository.find({ email });
+
     const foundCode = await this.authRepository.getValidationCode({
       code,
-      userId: id,
+      userId: user.id,
     });
 
     if (!foundCode.active)
@@ -115,9 +122,24 @@ export class AuthService {
 
     await this.authRepository.invalidadeCode({
       code: foundCode.code,
-      userId: id,
+      userId: user.id,
     });
 
-    return;
+    return this.generateToken(user);
+  }
+
+  private generatePasswordHash(password: string): string {
+    return bcrypt.hashSync(password, 8);
+  }
+
+  private async generateToken({ id, role }: User): Promise<LoginResponse> {
+    const payload: JwtPayload = {
+      id,
+      role,
+    };
+
+    const accessToken = await this.jwtService.signAsync(payload);
+
+    return { accessToken };
   }
 }

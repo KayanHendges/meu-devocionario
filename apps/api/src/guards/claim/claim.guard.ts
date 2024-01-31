@@ -1,8 +1,10 @@
 import { JwtPayload } from '@auth/types';
 import { CLAIM_KEY } from '@decorators/claim/claim.decorator';
-import { ClaimKeys, validateRoleClaim } from 'project-common';
+import { Claim, validateRoleClaim } from 'project-common';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+
+export type ClaimKeys = DeepestNestedKeys<Claim>;
 
 @Injectable()
 export class ClaimGuard implements CanActivate {

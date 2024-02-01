@@ -2,8 +2,13 @@
 import { useTheme } from "next-themes";
 import { useCallback, useEffect } from "react";
 import { Switch } from "../ui/switch";
+import { twMerge } from "tailwind-merge";
 
-export default function ThemeSwitcher() {
+interface Props {
+  className?: string;
+}
+
+export default function ThemeSwitcher({ className }: Props) {
   const { theme, setTheme } = useTheme();
 
   const watchMatchMedia = useCallback(
@@ -18,12 +23,10 @@ export default function ThemeSwitcher() {
   }, [watchMatchMedia]);
 
   return (
-    <div>
-      <Switch
-        className="toggle ml-auto"
-        checked={theme === "dark"}
-        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      />
-    </div>
+    <Switch
+      className={twMerge(className)}
+      checked={theme === "dark"}
+      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+    />
   );
 }

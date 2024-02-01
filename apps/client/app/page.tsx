@@ -8,7 +8,7 @@ import { Heading } from "@/components/Texts/Heading";
 import { Separator } from "@/components/ui/separator";
 import PrayersList from "@/components/Lists/PrayersList";
 import { categoriesProviders } from "@/providers/api/categories";
-import CategoryList from "@/components/Lists/CategoriesList";
+import CategoryList from "@/components/Lists/CategoryList";
 
 export default async function Home() {
   const { list: prayers } = await prayersProviders.listPrayers(

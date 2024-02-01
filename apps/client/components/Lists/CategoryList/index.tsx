@@ -29,7 +29,7 @@ export default async function CategoryList({
       ))}
       <Link href={"/categorias"}>
         <Badge className="bg-brand dark:text-white dark:hover:text-brand dark:hover:bg-white">
-          + mais categorias
+          + categorias
         </Badge>
       </Link>
     </div>

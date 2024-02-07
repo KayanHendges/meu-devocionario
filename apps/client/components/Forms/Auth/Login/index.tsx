@@ -53,11 +53,7 @@ export default function LoginForm({ redirectPath, ...props }: Props) {
     <FormContainer onSubmit={handleLogin} className="gap-8" {...props}>
       <div className="flex flex-col gap-2">
         <Input label="Email" type="email" {...form.register("email")} />
-        <Input
-          label="Senha"
-          type="password"
-          {...form.register("password")}
-        />
+        <Input label="Senha" type="password" {...form.register("password")} />
         <Text className="underline text-brand dark:text-brand" asChild>
           <Link href={forgotPasswordLink}>Esqueci minha senha</Link>
         </Text>
@@ -66,9 +62,11 @@ export default function LoginForm({ redirectPath, ...props }: Props) {
         <Button className="w-full" isLoading={isSubmiting} primary>
           Entrar
         </Button>
-        <Button className="w-full" disabled={isSubmiting}>
-          <Link href={"/registrar"}>Crie uma conta</Link>
-        </Button>
+        <Link href={"/registrar"} className="w-full">
+          <Button type="button" className="w-full" disabled={isSubmiting}>
+            Crie uma conta
+          </Button>
+        </Link>
       </div>
     </FormContainer>
   );

@@ -1,12 +1,12 @@
 import { Slot } from "@radix-ui/react-slot";
 import { ComponentPropsWithRef, forwardRef } from "react";
+import { twMerge } from "tailwind-merge";
 import { VariantProps, tv } from "tailwind-variants";
 
 const button = tv({
   base: `
   bg-zinc-200 hover:bg-zinc-300 text-zinc-900 hover:text-zinc-950
   dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:text-zinc-100 dark:hover:text-white
-  before:loading before:absolute before:opacity-0
   text-center rounded-lg transition-all`,
   variants: {
     primary: {
@@ -15,7 +15,7 @@ const button = tv({
     dark:bg-brand dark:hover:bg-brand`,
     },
     isLoading: {
-      true: "before:opacity-100",
+      true: "",
     },
     size: {
       sm: "p-1",
@@ -60,11 +60,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
         disabled={disabled || isLoading}
       >
-        <div
-          className={isLoading ? "opacity-0" : "opacity-100 transition-opacity"}
-        >
-          {children}
-        </div>
+        {isLoading ? "Carregando" : children }
       </Component>
     );
   }

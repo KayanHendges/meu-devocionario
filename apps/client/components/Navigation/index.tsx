@@ -6,25 +6,13 @@ import { CSSProperties, useMemo, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
-  className?: string
+  className?: string;
 }
 
 export default function Navigation({ className }: Props) {
-  const { routes, currentRoute } = useRoutes();
-  const pathname = usePathname();
-  const router = useRouter();
+  const { routes, currentRoute, selectedItemIndex, handleNavigation } =
+    useRoutes();
   const navRef = useRef<HTMLDivElement>(null);
-
-  const selectedItemIndex = routes.findIndex(
-    (route) => currentRoute?.path === route?.path
-  );
-
-  const handleNavigation = ({ path, action }: RouteItem) => {
-    if (pathname === path) return;
-
-    if (action) return action();
-    if (path) router.push(path);
-  };
 
   const calcWidth = () => {
     const fallback = { width: 0, left: 0 };
@@ -51,7 +39,7 @@ export default function Navigation({ className }: Props) {
         "rounded-t-xl border border-b-0 border-zinc-300 dark:border-zinc-800",
         "fixed left-0 bottom-0 px-2",
         "drop-shadow-2xl bg-white shadow-black dark:bg-black dark:shadow-white",
-        className,
+        className
       )}
     >
       {routes.map((route) => {

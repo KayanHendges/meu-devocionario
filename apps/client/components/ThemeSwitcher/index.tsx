@@ -25,7 +25,7 @@ export default function ThemeSwitcher({ className }: Props) {
   return (
     <Switch
       className={twMerge(className)}
-      checked={theme === "dark"}
+      checked={theme !== "light"}
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
     />
   );

@@ -6,8 +6,10 @@ import RegisterForm from "@/components/Forms/Auth/Register";
 
 export default function LoginPage() {
   return (
-    <PageContainer header="Criar uma conta">
-      <RegisterForm />
-    </PageContainer>
+    <div className="flex justify-center">
+      <PageContainer className="max-w-[720px]" header="Criar uma conta">
+        <RegisterForm />
+      </PageContainer>
+    </div>
   );
 }

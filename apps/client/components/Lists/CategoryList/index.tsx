@@ -13,7 +13,7 @@ export default async function CategoryList({
   className,
   ...props
 }: Props) {
-  Array.from({ length: 8 }).forEach(() => list.push(list[0]));
+  // Array.from({ length: 8 }).forEach(() => list.push(list[0]));
 
   return (
     <div className={twMerge("flex flex-wrap gap-2", className)} {...props}>

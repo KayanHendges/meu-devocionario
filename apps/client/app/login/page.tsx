@@ -5,8 +5,10 @@ import LoginForm from "@/components/Forms/Auth/Login";
 
 export default function LoginPage() {
   return (
-    <PageContainer header="Entre com sua conta">
-      <LoginForm />
-    </PageContainer>
+    <div className="flex justify-center">
+      <PageContainer className="max-w-[720px]" header="Entre com sua conta">
+        <LoginForm />
+      </PageContainer>
+    </div>
   );
 }

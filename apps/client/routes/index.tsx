@@ -19,6 +19,13 @@ export default function useRoutes() {
     [router]
   );
 
+  const handleNavigation = ({ path, action }: RouteItem) => {
+    if (pathname === path) return;
+
+    if (action) return action();
+    if (path) router.push(path);
+  };
+
   const routes = useMemo<RouteItem[]>(
     () => [
       {
@@ -50,5 +57,9 @@ export default function useRoutes() {
     [pathname, routes]
   );
 
-  return { routes, currentRoute };
+  const selectedItemIndex = routes.findIndex(
+    (route) => currentRoute?.path === route?.path
+  );
+
+  return { routes, currentRoute, selectedItemIndex, handleNavigation };
 }

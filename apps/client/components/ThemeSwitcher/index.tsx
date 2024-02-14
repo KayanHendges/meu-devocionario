@@ -22,10 +22,12 @@ export default function ThemeSwitcher({ className }: Props) {
     return () => mq.removeEventListener("change", watchMatchMedia);
   }, [watchMatchMedia]);
 
+  const checked = theme !== "light";
+
   return (
     <Switch
       className={twMerge(className)}
-      checked={theme !== "light"}
+      checked={checked}
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
     />
   );

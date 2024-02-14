@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/Buttons/Button";
+import { Button } from "@/components/ui/button";
 import ClaimContainer from "@/components/Container/Claim";
 import { categoriesProviders } from "@/providers/api/categories";
 import { useRouter } from "next/navigation";

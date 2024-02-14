@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/Buttons/Button";
+import { Button } from "@/components/ui/button";
 import FormContainer from "@/components/Forms/FormContainer";
 import { Input } from "@/components/ui/input";
 import { Heading } from "@/components/Texts/Heading";
@@ -98,7 +98,7 @@ export default function EmailCodeLoginForm({ className, ...props }: Props) {
         <>
           <Text size="xl">Confirme seu email</Text>
           <Input {...form.register("email")} />
-          <Button isLoading={isLoading} primary>
+          <Button isLoading={isLoading} variant={"primary"}>
             Confirmar
           </Button>
         </>
@@ -112,7 +112,7 @@ export default function EmailCodeLoginForm({ className, ...props }: Props) {
             <br />
             Quando receber, confirme o código.
           </Text>
-          <Button isLoading={isLoading} primary>
+          <Button isLoading={isLoading} variant={"primary"}>
             Confirmar
           </Button>
         </>

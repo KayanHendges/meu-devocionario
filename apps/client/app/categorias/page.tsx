@@ -1,4 +1,4 @@
-import Button from "@/components/Buttons/Button";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import PageContainer from "@/components/Container/Page";
 import ClaimContainer from "@/components/Container/Claim";

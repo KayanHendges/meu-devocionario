@@ -1,6 +1,6 @@
 "use client";
 import { AuthContext } from "@/contexts/Auth/AuthContext";
-import { Prayer, User } from "project-common";
+import { User } from "project-common";
 import {
   ReactNode,
   createContext,
@@ -37,7 +37,10 @@ export default function UserProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (isAuthenticated) getCurrentUser();
-    else setUser(null);
+    else {
+      setUser(null);
+      setIsFetchingUser(false);
+    }
   }, [getCurrentUser, isAuthenticated]);
 
   return (

@@ -1,8 +1,8 @@
 "use client";
-import Button, { ButtonProps } from "@/components/Buttons/Button";
+import { SignInDialogContext } from "@/components/Dialogs/SignIn";
+import { Button, ButtonProps } from "@/components/ui/button";
 import { UserContext } from "@/contexts/User/UserContext";
 import { UserPrayersContext } from "@/contexts/UserPrayers/UserContext";
-import { useRouter } from "next/navigation";
 import { Prayer } from "project-common";
 import { MouseEvent, useContext, useState } from "react";
 
@@ -20,7 +20,7 @@ export default function HandleUserPrayerButton({
   const { includePrayer, removePrayer, prayers } =
     useContext(UserPrayersContext);
 
-  const router = useRouter();
+  const { handleOpen } = useContext(SignInDialogContext);
 
   const isIncluded = prayers.some(({ id }) => id === prayer.id);
   const label = isIncluded ? "remover" : "adicionar";
@@ -30,7 +30,7 @@ export default function HandleUserPrayerButton({
   ) => {
     e.preventDefault();
 
-    if (!user) return router.push("/login");
+    if (!user) return handleOpen(true);
 
     if (isLoading) return;
     setIsLoading(true);
@@ -46,8 +46,10 @@ export default function HandleUserPrayerButton({
   };
 
   return (
-    <Button onClick={handleClick} isLoading={isLoading} {...props}>
-      {label}
-    </Button>
+    <>
+      <Button onClick={handleClick} isLoading={isLoading} {...props}>
+        {label}
+      </Button>
+    </>
   );
 }

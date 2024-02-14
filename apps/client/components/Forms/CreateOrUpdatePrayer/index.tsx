@@ -10,7 +10,7 @@ import RelatedCategoriesSelect from "@/components/Selects/RelatedCategories";
 import { prayersProviders } from "@/providers/api/prayers";
 import HtmlEditor from "@/components/Html/HtmlEditor";
 import { CreateOrUpdatePrayerFormSchema } from "@/components/Forms/CreateOrUpdatePrayer/CreateOrUpdatePrayer";
-import Button from "@/components/Buttons/Button";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import FormContainer from "@/components/Forms/FormContainer";
 
@@ -87,7 +87,7 @@ export default function CreateOrUpdatePrayerForm({ prayer }: Props) {
           )
         }
       />
-      <Button isLoading={isSubmiting} primary>
+      <Button isLoading={isSubmiting} variant={"primary"}>
         {buttonlabel.default}
       </Button>
     </FormContainer>

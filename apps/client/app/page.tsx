@@ -1,4 +1,4 @@
-import Button from "@/components/Buttons/Button";
+import { Button } from "@/components/ui/button";
 import PageContainer from "@/components/Container/Page";
 import ClaimContainer from "@/components/Container/Claim";
 import Link from "next/link";
@@ -6,9 +6,9 @@ import { prayersProviders } from "@/providers/api/prayers";
 import cachedRequests from "@/config/cachedRequests";
 import { Heading } from "@/components/Texts/Heading";
 import { Separator } from "@/components/ui/separator";
-import PrayersList from "@/components/Lists/PrayersList";
+import { PrayersList, Loading } from "@/components/Lists/PrayersList";
 import { categoriesProviders } from "@/providers/api/categories";
-import CategoryList from "@/components/Lists/CategoriesList";
+import CategoryList from "@/components/Lists/CategoryList";
 
 export default async function Home() {
   const { list: prayers } = await prayersProviders.listPrayers(

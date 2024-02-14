@@ -19,7 +19,7 @@ export default function PageContainer({
   return (
     <div
       className={twMerge(
-        "w-full flex-1 flex flex-col items-center p-3",
+        "flex-1 flex flex-col p-3",
         className
       )}
       {...props}
@@ -27,7 +27,7 @@ export default function PageContainer({
       <div className="w-full flex-1 flex flex-col gap-4">
         {(header || backButton) && (
           <div
-            className={clsx("flex items-center gap-4", {
+            className={clsx("flex w-full items-center gap-4", {
               "justify-start": backButton,
               "justify-center": header && !backButton,
             })}

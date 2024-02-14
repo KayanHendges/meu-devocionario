@@ -13,7 +13,7 @@ export default async function CategoryList({
   className,
   ...props
 }: Props) {
-  Array.from({ length: 8 }).forEach(() => list.push(list[0]));
+  // Array.from({ length: 8 }).forEach(() => list.push(list[0]));
 
   return (
     <div className={twMerge("flex flex-wrap gap-2", className)} {...props}>
@@ -29,7 +29,7 @@ export default async function CategoryList({
       ))}
       <Link href={"/categorias"}>
         <Badge className="bg-brand dark:text-white dark:hover:text-brand dark:hover:bg-white">
-          + mais categorias
+          + categorias
         </Badge>
       </Link>
     </div>

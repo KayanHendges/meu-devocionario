@@ -1,12 +1,12 @@
-"use client";
-
 import PageContainer from "@/components/Container/Page";
-import LoginForm from "@/components/Forms/Auth/Login";
+import SignInForm from "@/components/Forms/Auth/SignIn";
 
 export default function LoginPage() {
   return (
-    <PageContainer header="Entre com sua conta">
-      <LoginForm />
-    </PageContainer>
+    <div className="flex justify-center">
+      <PageContainer className="max-w-[720px]" header="Entre com sua conta">
+        <SignInForm defaultValue="login" />
+      </PageContainer>
+    </div>
   );
 }

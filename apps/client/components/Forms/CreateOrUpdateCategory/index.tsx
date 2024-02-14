@@ -6,7 +6,7 @@ import { FormEvent, useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { handleSubmit } from "@/utils/forms";
 import HtmlEditor from "@/components/Html/HtmlEditor";
-import Button from "@/components/Buttons/Button";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { CreateOrUpdateCategoryFormSchema } from "@/components/Forms/CreateOrUpdateCategory/CreateOrUpdateCategory";
 import { categoriesProviders } from "@/providers/api/categories";
@@ -61,7 +61,7 @@ export default function CreateOrUpdateCategoryForm({ category }: Props) {
         onHtmlChange={(html: string) => form.setValue("description", html)}
         initialContent={form.getValues("description") || ""}
       />
-      <Button isLoading={isSubmiting} primary>
+      <Button isLoading={isSubmiting} variant={"primary"}>
         {buttonlabel.default}
       </Button>
     </FormContainer>

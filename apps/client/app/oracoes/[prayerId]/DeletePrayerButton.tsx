@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/Buttons/Button";
+import { Button } from "@/components/ui/button";
 import { prayersProviders } from "@/providers/api/prayers";
 import { useRouter } from "next/navigation";
 import { ComponentPropsWithoutRef, useState } from "react";

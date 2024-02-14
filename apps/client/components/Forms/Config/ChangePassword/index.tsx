@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/components/Buttons/Button";
+import { Button } from "@/components/ui/button";
 import FormContainer from "@/components/Forms/FormContainer";
 import { Input } from "@/components/ui/input";
 import { Heading } from "@/components/Texts/Heading";
@@ -76,7 +76,7 @@ export default function ChangePasswordForm(props: Props) {
             label="Confirme a nova senha"
             {...form.register("confirmPassword")}
           />
-          <Button primary>Redefinir</Button>
+          <Button variant={"primary"}>Redefinir</Button>
         </>
       )}
       {step === "success" && <Text>Sua senha foi redefinida com sucesso.</Text>}

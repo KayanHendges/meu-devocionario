@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/components/Buttons/Button";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "phosphor-react";
 

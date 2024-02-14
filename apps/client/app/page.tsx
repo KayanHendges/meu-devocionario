@@ -6,7 +6,7 @@ import { prayersProviders } from "@/providers/api/prayers";
 import cachedRequests from "@/config/cachedRequests";
 import { Heading } from "@/components/Texts/Heading";
 import { Separator } from "@/components/ui/separator";
-import PrayersList from "@/components/Lists/PrayersList";
+import { PrayersList, Loading } from "@/components/Lists/PrayersList";
 import { categoriesProviders } from "@/providers/api/categories";
 import CategoryList from "@/components/Lists/CategoryList";
 

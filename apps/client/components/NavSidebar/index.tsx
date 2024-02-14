@@ -7,9 +7,8 @@ import { Text } from "../Texts/Text";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useContext } from "react";
 import { UserContext } from "@/contexts/User/UserContext";
-import { Gear } from "phosphor-react";
 import { Separator } from "../ui/separator";
-import SignInDialog from "../Dialogs/SignIn";
+import { SignInDialogTriggerButton } from "../Dialogs/SignIn";
 import SignOutButton from "../Buttons/SignOut";
 import PreferenceDialog from "../Dialogs/Preference";
 
@@ -40,7 +39,7 @@ export default function NavSideBar({ className }: Props) {
         <Text size="xl">
           Olá, <strong>{user?.name || "convidado"}</strong>!
         </Text>
-        {!user?.name && <SignInDialog />}
+        {!user?.name && <SignInDialogTriggerButton />}
       </div>
       <Separator />
       <div className="flex flex-col gap-2">

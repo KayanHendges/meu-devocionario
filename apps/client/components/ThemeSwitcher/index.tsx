@@ -1,34 +1,66 @@
 "use client";
-import { useTheme } from "next-themes";
-import { useCallback, useEffect } from "react";
-import { Switch } from "../ui/switch";
-import { twMerge } from "tailwind-merge";
+import { useCallback, useEffect, useState } from "react";
+import { Moon, Sun } from "phosphor-react";
+import { Button, ButtonProps } from "../ui/button";
 
-interface Props {
+interface Props extends ButtonProps {
   className?: string;
 }
 
-export default function ThemeSwitcher({ className }: Props) {
-  const { theme, setTheme } = useTheme();
+type Theme = "light" | "dark";
+
+export default function ThemeSwitcher(props: Props) {
+  const getPreferenceTheme = (): Theme | null => {
+    const preferenceTheme = localStorage.getItem("theme");
+    if (preferenceTheme === "light") return "light";
+    if (preferenceTheme === "dark") return "light";
+    return null;
+  };
+
+  const [theme, setTheme] = useState<Theme>(
+    () => getPreferenceTheme() || "light"
+  );
+
+  const handleTheme = useCallback((value: Theme) => {
+    setTheme(value);
+    if (value === "dark") document.documentElement.classList.add("dark");
+    else document.documentElement.classList.remove("dark");
+  }, []);
+
+  const handleLocalStorage = (value: Theme) => {
+    localStorage.setItem("theme", value);
+    handleTheme(value);
+  };
 
   const watchMatchMedia = useCallback(
-    (event: MediaQueryListEvent) => setTheme(event.matches ? "dark" : "light"),
-    [setTheme]
+    (event: MediaQueryListEvent) => {
+      const systemTheme = event.matches ? "dark" : "light";
+      handleTheme(systemTheme);
+    },
+    [handleTheme]
   );
 
   useEffect(() => {
+    const preferenceTheme = getPreferenceTheme();
+    if (preferenceTheme) return;
+
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
     mq.addEventListener("change", watchMatchMedia);
     return () => mq.removeEventListener("change", watchMatchMedia);
-  }, [watchMatchMedia]);
+  }, [handleTheme, watchMatchMedia]);
 
-  const checked = theme !== "light";
+  const isDark = theme !== "light";
+  const size = 24;
 
   return (
-    <Switch
-      className={twMerge(className)}
-      checked={checked}
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-    />
+    <Button
+      variant={"ghost"}
+      size={"icon"}
+      onClick={() => handleLocalStorage(theme === "light" ? "dark" : "light")}
+      {...props}
+    >
+      {isDark && <Moon size={size} />}
+      {!isDark && <Sun size={size} />}
+    </Button>
   );
 }

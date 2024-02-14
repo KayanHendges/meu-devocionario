@@ -1,9 +1,8 @@
 "use client";
-import SignInDialog from "@/components/Dialogs/SignIn";
+import { SignInDialogContext } from "@/components/Dialogs/SignIn";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { UserContext } from "@/contexts/User/UserContext";
 import { UserPrayersContext } from "@/contexts/UserPrayers/UserContext";
-import { useRouter } from "next/navigation";
 import { Prayer } from "project-common";
 import { MouseEvent, useContext, useState } from "react";
 
@@ -21,9 +20,7 @@ export default function HandleUserPrayerButton({
   const { includePrayer, removePrayer, prayers } =
     useContext(UserPrayersContext);
 
-  const [isSignInOpen, setIsSignInOpen] = useState<boolean>(false);
-
-  const router = useRouter();
+  const { handleOpen } = useContext(SignInDialogContext);
 
   const isIncluded = prayers.some(({ id }) => id === prayer.id);
   const label = isIncluded ? "remover" : "adicionar";
@@ -33,7 +30,7 @@ export default function HandleUserPrayerButton({
   ) => {
     e.preventDefault();
 
-    if (!user) return setIsSignInOpen(true);
+    if (!user) return handleOpen(true);
 
     if (isLoading) return;
     setIsLoading(true);
@@ -53,11 +50,6 @@ export default function HandleUserPrayerButton({
       <Button onClick={handleClick} isLoading={isLoading} {...props}>
         {label}
       </Button>
-      <SignInDialog
-        displayTrigger={false}
-        isOpen={isSignInOpen}
-        onChange={(value) => setIsSignInOpen(value)}
-      ></SignInDialog>
     </>
   );
 }

@@ -1,28 +1,26 @@
 "use client";
 import SignInForm from "@/components/Forms/Auth/SignIn";
 import { Heading } from "@/components/Texts/Heading";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { DialogProps } from "@radix-ui/react-dialog";
-import { useState } from "react";
+import { Button, ButtonProps } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
+import { ReactNode, createContext, useContext, useState } from "react";
 
 interface Props {
-  buttonText?: string;
-  displayTrigger?: boolean;
   isOpen?: boolean;
   onChange?: (value: boolean) => void;
+  children?: ReactNode;
 }
 
-export default function SignInDialog({
-  buttonText = "Entre com sua conta",
-  displayTrigger = true,
+interface ISignInDialogContext {
+  handleOpen: (value: boolean) => void;
+}
+
+export const SignInDialogContext = createContext({} as ISignInDialogContext);
+
+export function SignInDialogProvider({
   onChange,
   isOpen: isOpenProps,
+  children,
   ...props
 }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -33,26 +31,40 @@ export default function SignInDialog({
   };
 
   return (
-    <Dialog
-      open={isOpenProps || isOpen}
-      onOpenChange={() => handleOpen(false)}
+    <SignInDialogContext.Provider value={{ handleOpen }}>
+      {children}
+      <Dialog
+        open={isOpenProps || isOpen}
+        onOpenChange={() => handleOpen(false)}
+        {...props}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <Heading>Faça o seu login</Heading>
+          </DialogHeader>
+          <SignInForm defaultValue="login" onFinish={() => handleOpen(false)} />
+        </DialogContent>
+      </Dialog>
+    </SignInDialogContext.Provider>
+  );
+}
+
+interface TriggerButtonProps extends ButtonProps {}
+
+export function SignInDialogTriggerButton({
+  children,
+  ...props
+}: TriggerButtonProps) {
+  const { handleOpen } = useContext(SignInDialogContext);
+
+  return (
+    <Button
+      size={"sm"}
+      variant={"default"}
+      onClick={() => handleOpen(true)}
       {...props}
     >
-      {displayTrigger && (
-        <Button
-          size={"sm"}
-          variant={"default"}
-          onClick={() => handleOpen(true)}
-        >
-          {buttonText}
-        </Button>
-      )}
-      <DialogContent>
-        <DialogHeader>
-          <Heading>Faça o seu login</Heading>
-        </DialogHeader>
-        <SignInForm defaultValue="login" onFinish={() => handleOpen(false)} />
-      </DialogContent>
-    </Dialog>
+      {children || "Entre com sua conta"}
+    </Button>
   );
 }

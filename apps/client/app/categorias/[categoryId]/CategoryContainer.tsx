@@ -3,7 +3,7 @@ import PageContainer from "@/components/Container/Page";
 import ClaimContainer from "@/components/Container/Claim";
 import LineDivider from "@/components/Dividers/Line";
 import HtmlDisplay from "@/components/Html/HtmlDisplay";
-import PrayersList from "@/components/Lists/PrayersList";
+import { PrayersList } from "@/components/Lists/PrayersList";
 import { Heading } from "@/components/Texts/Heading";
 import Link from "next/link";
 import { categoriesProviders } from "@/providers/api/categories";

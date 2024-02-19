@@ -18,7 +18,7 @@ export default async function Page() {
       <div className="flex flex-col gap-4">
         <ClaimContainer requiredClaims={["category.create"]}>
           <Link href={"criar-categoria"}>
-            <Button className="w-full" primary type="button">
+            <Button className="w-full" variant={"primary"} type="button">
               Criar Categoria
             </Button>
           </Link>

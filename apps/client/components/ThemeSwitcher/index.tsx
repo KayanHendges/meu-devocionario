@@ -11,7 +11,8 @@ type Theme = "light" | "dark";
 
 export default function ThemeSwitcher(props: Props) {
   const getPreferenceTheme = (): Theme | null => {
-    const preferenceTheme = localStorage.getItem("theme");
+    const preferenceTheme =
+      typeof window !== "undefined" && localStorage.getItem("theme");
     if (preferenceTheme === "light") return "light";
     if (preferenceTheme === "dark") return "light";
     return null;
@@ -28,7 +29,7 @@ export default function ThemeSwitcher(props: Props) {
   }, []);
 
   const handleLocalStorage = (value: Theme) => {
-    localStorage.setItem("theme", value);
+    if (typeof window !== "undefined") localStorage.setItem("theme", value);
     handleTheme(value);
   };
 

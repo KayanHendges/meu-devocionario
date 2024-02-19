@@ -1,13 +1,15 @@
+'use client'
 import { Heading } from "../Texts/Heading";
 import { useContext } from "react";
 import { AppContext } from "@/contexts/App/AppContext";
 import { twMerge } from "tailwind-merge";
-import { Button } from "../ui/button";
-import { Avatar } from "../ui/avatar";
-import { List } from "phosphor-react";
+import MobileSidebar from "../MobileSidebar";
+import { titles } from "./headerTitles";
 
 export default function Header() {
   const { header } = useContext(AppContext);
+
+  const headerTitle = header || titles[0].value;
 
   return (
     <div
@@ -16,10 +18,10 @@ export default function Header() {
         "bg-white dark:bg-zinc-900 border-b-zinc-500 "
       )}
     >
-      {header && <Heading>{header}</Heading>}
-      <Button className="ml-auto p-2" variant={"ghost"}>
-        <List size={32} />
-      </Button>
+      {headerTitle && <Heading>{headerTitle}</Heading>}
+      <div className="hidden mobile:flex ml-auto">
+        <MobileSidebar />
+      </div>
     </div>
   );
 }

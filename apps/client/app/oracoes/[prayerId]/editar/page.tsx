@@ -1,5 +1,3 @@
-import PageContainer from "@/components/Container/Page";
-import { Heading } from "@/components/Texts/Heading";
 import CreateOrUpdatePrayerForm from "@/components/Forms/CreateOrUpdatePrayer";
 import { prayersProviders } from "@/providers/api/prayers";
 
@@ -14,12 +12,9 @@ export default async function EditPrayerPage({ params }: Props) {
   );
 
   return (
-    <PageContainer
-      header="Editar Oração"
-      backButton={`../${encodeURIComponent(prayer.id)}`}
-    >
+    <>
       <title>{prayer.title}</title>
       <CreateOrUpdatePrayerForm prayer={prayer} />
-    </PageContainer>
+    </>
   );
 }

@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import PageContainer from "@/components/Container/Page";
 import ClaimContainer from "@/components/Container/Claim";
 import Link from "next/link";
 import { prayersProviders } from "@/providers/api/prayers";
@@ -24,9 +23,7 @@ export default async function Home() {
   });
 
   return (
-    <PageContainer backButton={false} className="gap-4">
-      <Heading size="lg">Meu Devocionario</Heading>
-      <Separator />
+    <>
       <div className="flex items-center justify-between">
         <Heading>Categorias</Heading>
         <ClaimContainer requiredClaims={["category.create"]}>
@@ -46,6 +43,6 @@ export default async function Home() {
         </ClaimContainer>
       </div>
       <PrayersList list={prayers} />
-    </PageContainer>
+    </>
   );
 }

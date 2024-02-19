@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import PageContainer from "@/components/Container/Page";
 import ClaimContainer from "@/components/Container/Claim";
 import HtmlDisplay from "@/components/Html/HtmlDisplay";
 import { prayersProviders } from "@/providers/api/prayers";
@@ -20,24 +19,22 @@ export default async function PrayerContainer({ prayerId }: Props) {
   const { title, description, body } = prayer;
 
   return (
-    <PageContainer header={title} backButton>
-      <div className="flex flex-col w-full gap-4">
-        {description && (
-          <PrayerDescriptionContainer>{description}</PrayerDescriptionContainer>
-        )}
-        <HtmlDisplay>{body}</HtmlDisplay>
-        <div className="flex flex-col gap-2">
-          <ClaimContainer requiredClaims={["prayer.update"]}>
-            <Link href={`${prayerId}/editar`}>
-              <Button className="w-full">Editar</Button>
-            </Link>
-          </ClaimContainer>
-          <ClaimContainer requiredClaims={["prayer.delete"]}>
-            <DeletePrayerButton prayerId={prayerId}>Excluir</DeletePrayerButton>
-          </ClaimContainer>
-          <HandleUserPrayerButton prayer={prayer} />
-        </div>
+    <div className="flex flex-col w-full gap-4">
+      {description && (
+        <PrayerDescriptionContainer>{description}</PrayerDescriptionContainer>
+      )}
+      <HtmlDisplay>{body}</HtmlDisplay>
+      <div className="flex flex-col gap-2">
+        <ClaimContainer requiredClaims={["prayer.update"]}>
+          <Link href={`${prayerId}/editar`}>
+            <Button className="w-full">Editar</Button>
+          </Link>
+        </ClaimContainer>
+        <ClaimContainer requiredClaims={["prayer.delete"]}>
+          <DeletePrayerButton prayerId={prayerId}>Excluir</DeletePrayerButton>
+        </ClaimContainer>
+        <HandleUserPrayerButton prayer={prayer} />
       </div>
-    </PageContainer>
+    </div>
   );
 }

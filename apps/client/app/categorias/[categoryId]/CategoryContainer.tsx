@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import PageContainer from "@/components/Container/Page";
 import ClaimContainer from "@/components/Container/Claim";
 import LineDivider from "@/components/Dividers/Line";
 import HtmlDisplay from "@/components/Html/HtmlDisplay";
@@ -31,7 +30,7 @@ export default async function CategoryContainer({ categoryId }: Props) {
   );
 
   return (
-    <PageContainer header={name} backButton="/categorias">
+    <>
       <div className="flex flex-col w-full gap-4">
         {description && <HtmlDisplay>{description}</HtmlDisplay>}
       </div>
@@ -48,6 +47,6 @@ export default async function CategoryContainer({ categoryId }: Props) {
           Excluir
         </DeleteCategoryButton>
       </div>
-    </PageContainer>
+    </>
   );
 }
